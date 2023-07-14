@@ -35,10 +35,10 @@
       ==  ::  end of -.action branches
   ==  ::  end of mark branches
 ::
-++  on-watch  on-watch:def
-  ::|=  =path
-  ::^-  (quip card _this)
-  ::`this
+++  on-watch
+  |=  =path
+  ^-  (quip card _this)
+  `this
   ::  XX think about sub paths
 ++  on-peek  on-peek:def
   ::|=  =path
