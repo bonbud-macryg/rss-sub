@@ -27,13 +27,22 @@
       =/  action  !<(rss-sub-action vase)
       ?-  -.action
         %add-rss-feed
-          `this
+          :-  ~
+          %=  this
+            rss-state  (add-rss-feed url.action rss-state)
+          ==
         %del-rss-feed
-          `this
-        %rss-refresh
-          `this
+          :-  ~
+          %=  this
+            rss-state  (del-rss-feed url.action rss-state)
+          ==
+        %rss-refresh-now
+          :-  ~  this
         %set-rss-refresh
-          `this
+        ::  XX add logic here
+        ::       need to cancel current timer
+        ::       need to add new timer
+          :-  ~  this
       ==  ::  end of -.action branches
   ==  ::  end of mark branches
 ::
