@@ -39,11 +39,16 @@
   |=  =path
   ^-  (quip card _this)
   `this
-  ::  XX think about sub paths
+  ::  XX "subscribe to items/entries" path
+::
 ++  on-peek  on-peek:def
   ::|=  =path
   ::^-  (unit (unit cage))
-  ::  XX think about scry paths
+  ::
+  ::  XX "scry feeds" path
+  ::  XX "scry refresh time" path
+  ::  XX "scry rss-channel at url" path
+  ::  XX "scry rss entries at url" path
 ++  on-arvo  on-arvo:def
   ::  XX accept refresh timers from behn
 ++  on-agent  on-agent:def
