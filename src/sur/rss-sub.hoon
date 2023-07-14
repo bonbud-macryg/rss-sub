@@ -1,5 +1,5 @@
 |%
-+$  sub-actions
++$  sub-action
   $%  [%add-feed url=@t]
       [%del-feed url=@t]
       [%set-refresh refresh=@dr]
