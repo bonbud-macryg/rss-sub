@@ -52,7 +52,7 @@
       ::  [%rating !!]
       [%text-input title=@t description=@t name=@t link=url]
       [%skip-hours (set @ud)]
-      [%skip-days (set ?(%'Monday' %'Tuesday' %'Wednesday' %'Thursday' %'Friday' %'Saturday' %'Sunday')]
+      [%skip-days (set ?(%'Monday' %'Tuesday' %'Wednesday' %'Thursday' %'Friday' %'Saturday' %'Sunday'))]
       $:  %cloud
           domain=url
           port=@t
