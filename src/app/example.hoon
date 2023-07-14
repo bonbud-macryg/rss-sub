@@ -1,10 +1,12 @@
 ::
 ::  rss-sub example app
 ::
-/-  *example
 /+  default-agent, dbug, *rss-sub
 |%
-+$  state  *
++$  state
+  $:  =rss-state
+      =rss-refresh
+  ==
 --
 %-  agent:dbug
 =|  state
@@ -21,16 +23,16 @@
   |=  [=mark =vase]
   ^-  (quip card _this)
   ?+  mark  (on-poke:def mark vase)
-    %sub-action
-      =/  action  !<(ex-action vase)
+    %rss-sub
+      =/  action  !<(rss-sub-action vase)
       ?-  -.action
-        %ex-add-feed
+        %add-rss-feed
           `this
-        %ex-del-feed
+        %del-rss-feed
           `this
-        %ex-refresh
+        %rss-refresh
           `this
-        %ex-set-refresh
+        %set-rss-refresh
           `this
       ==  ::  end of -.action branches
   ==  ::  end of mark branches

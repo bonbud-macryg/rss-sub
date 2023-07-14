@@ -14,6 +14,7 @@
 +|  %rss-types
 ::
 +$  rss-channel
+  $~  [`(set rss-channel-element)`~ `(set rss-item)`~]
   $:  elems=(set rss-channel-element)
       items=(set rss-item)
   ==

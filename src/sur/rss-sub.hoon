@@ -1,8 +1,12 @@
+/-  *rss
 |%
++$  rss-refresh  @dr
++$  rss-state    (map url rss-channel)
+::
 +$  sub-action
-  $%  [%add-feed url=@t]
-      [%del-feed url=@t]
-      [%set-refresh refresh=@dr]
-      [%refresh url=(unit @t)]
+  $%  [%add-rss-feed =url]
+      [%del-rss-feed =url]
+      [%rss-refresh url=(unit @t)]
+      [%set-rss-refresh refresh=@dr]
   ==
 --
