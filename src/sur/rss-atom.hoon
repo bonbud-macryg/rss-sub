@@ -8,7 +8,6 @@
 +$  url        @t
 +$  name       @t
 +$  email      @t
-+$  timestamp  @da
 ::
 ::  RSS 2.X
 +|  %rss-types
@@ -30,7 +29,7 @@
       [%comments url]
       [%enclosure url length=@t type=@t]
       [%guid url]
-      [%pub-date timestamp]
+      [%pub-date time]
       [%source url @t]
   ==
 ::
@@ -39,8 +38,8 @@
       [%link url]
       [%description @t]
       [%language @t]
-      [%pub-date timestamp]
-      [%last-build-date timestamp]
+      [%pub-date time]
+      [%last-build-date time]
       [%docs url]
       [%generator @t]
       [%managing-editor email]
@@ -51,7 +50,7 @@
       ::  XX find PICS rating example
       ::  [%rating !!]
       [%text-input title=@t description=@t name=@t link=url]
-      [%skip-hours (set @ud)]
+      [%skip-hours (set ?(%'0' %'1' %'2' %'3' %'4' %'5' %'6' %'7' %'8' %'9' %'10' %'11' %'12' %'13' %'14' %'15' %'16' %'17' %'18' %'19' %'20' %'21' %'22' %'23'))]
       [%skip-days (set ?(%'Monday' %'Tuesday' %'Wednesday' %'Thursday' %'Friday' %'Saturday' %'Sunday'))]
       $:  %cloud
           domain=url
@@ -67,6 +66,57 @@
           width=(unit @ud)
           height=(unit @ud)
           description=(unit @t)
+      ==
+  ==
+::
+::  Atom 1.0
++|  %atom-types
+::
++$  atom-feed
+  $:  elems=(set atom-feed-element)
+      entries=(set atom-entry)
+  ==
+::
++$  atom-entry
+  [%entry (set atom-entry-element)]
+::
++$  atom-feed-element
+  $%  [%id @t]
+      [%title @t]
+      [%updated time]
+      [%link rel=url href=url]
+      [%author =name =email =uri]
+      [%category @t]
+      [%contributor =name]
+      [%generator =uri version=@t]
+      [%icon =url] 
+      [%logo =url]
+      [%rights @t]
+      [%subtitle @t]
+  ==
+::
++$  atom-entry-element
+  $%  [%id @t]
+      [%title @t]
+      [%updated time]
+      [%author name]
+      [%summary @t]
+      [%contributor name]
+      [%published time]
+      [%rights @t]
+      [%source id=url title=@t updated=time]
+      [%category term=@t scheme=(unit uri) label=(unit @t)]
+      $:  %content
+          type=@t
+          src=(unit uri)
+      ==
+      $:  %link
+          href=uri
+          rel=(unit ?(uri %'alternate' %'enclosure' %'related' %'self' %'via'))
+          type=@t
+          hreflang=@t
+          title=@t
+          length=@t
       ==
   ==
 --
