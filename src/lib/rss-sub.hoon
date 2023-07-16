@@ -34,5 +34,26 @@
   ::  XX run thread on all urls
   !!
 ::
-::+|  %parsers
+::+|  %validate
+::
+::  XX validate rss-channel
+::  XX validate rss-item
+::  XX validate atom-feed
+::  XX valdiate atom-entry
+::
+::+|  %parsing-helpers
+::
+::  XX can write/test parsers for indiv. elements independent of thread
+::
+::  as a rule: parsers should be independent components that
+::  devs can use to do whatever they want
+::
+::  XX rss-channel barket
+::    XX  rss-item barket
+::      XX rss-item element parsers
+::
+::  XX atom-feed barket
+::    XX atom-entry barket
+::      XX atom-entry element parsers
+::
 --

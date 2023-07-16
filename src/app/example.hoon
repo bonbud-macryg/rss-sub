@@ -57,6 +57,9 @@
   |=  =path
   ^-  (quip card _this)
   `this
+  ::  XX what does the frontend need?
+  ::       assuming its subscribing to these watch paths to get backend info
+  ::
   ::  XX "subscribe to updates for this url" path?
   ::       would need to have refresh send %facts with each new rss-item or atom-entry
   ::       we know the url from the path so would need no further info
