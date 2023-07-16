@@ -11,7 +11,7 @@
   $%  [%add-rss-feed =url]
       [%del-rss-feed =url]
       [%set-rss-refresh refresh=@dr]
-      [%rss-refresh-now url=(list url)]
+      [%rss-refresh-now urls=(list url)]
   ==
 ::
 +|  %actions
@@ -27,10 +27,9 @@
 ::
 ++  rss-refresh-now
   |=  urls=(list url)
-  ::  XX narrow down type
-  ^-  *
+  ^-  rss-state
   ?.  =(~ urls)
-    ::  XX run thread on one url
+    ::  XX run thread on these urls
     !!
   ::  XX run thread on all urls
   !!

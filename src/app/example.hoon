@@ -27,6 +27,8 @@
     %rss-sub
       =/  action  !<(rss-sub-action vase)
       ?-  -.action
+        ::  XX could remove "rss" from these action types,
+        ::     since we're routing on the wire
         %add-rss-feed
           :-  ~
           %=  this
@@ -38,7 +40,10 @@
             rss-state  (~(del by rss-state) url.action)
           ==
         %rss-refresh-now
-          :-  ~  this
+          :-  ~
+          %=  this
+            rss-state  (rss-refresh-now urls.action)
+          ==
         %set-rss-refresh
         ::  XX add logic here
         ::       need to cancel current timer
@@ -52,16 +57,21 @@
   |=  =path
   ^-  (quip card _this)
   `this
-  ::  XX "subscribe to items/entries" path
+  ::  XX "subscribe to updates for this url" path?
+  ::       would need to have refresh send %facts with each new rss-item or atom-entry
+  ::       we know the url from the path so would need no further info
+  ::       would make refresh logic slightly more complex
+  ::       but could be worth it have dedicated "fetch" infra sending new items to subscribers?
+  ::       would be easy to add "subscribe to updates for all urls" path
 ::
 ++  on-peek  on-peek:def
   ::|=  =path
   ::^-  (unit (unit cage))
   ::
-  ::  XX "scry feeds" path
+  ::  XX "scry urls" path
   ::  XX "scry refresh time" path
-  ::  XX "scry rss-channel at url" path
-  ::  XX "scry rss entries at url" path
+  ::  XX "scry rss-feed at url" path
+  ::  XX "scry items/entries at url" path
 ++  on-arvo  on-arvo:def
   ::  XX accept refresh timers from behn
 ++  on-agent  on-agent:def
