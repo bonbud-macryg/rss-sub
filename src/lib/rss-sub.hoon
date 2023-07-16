@@ -4,15 +4,14 @@
 +|  %state
 ::
 +$  rss-refresh  @dr
-::  XX need to accomodate atom-feeds too
-+$  rss-state    (map url rss-channel)
-::+$  rss-feed     ?(rss-channel atom-feed)
++$  rss-state    (map url rss-feed)
++$  rss-feed     (each rss-channel atom-feed)
 ::
 +$  rss-sub-action
   $%  [%add-rss-feed =url]
       [%del-rss-feed =url]
-      [%rss-refresh-now url=(unit @t)]
       [%set-rss-refresh refresh=@dr]
+      [%rss-refresh-now url=(unit url)]
   ==
 ::
 +|  %actions
@@ -20,9 +19,11 @@
 ++  add-rss-feed
   |=  [=url =rss-state]
   ^+  rss-state
-  ::  XX bunt of rss-channel a hack
-  ::       need to accomodate atom-feeds too
-  (~(put by rss-state) url *rss-channel)
+  ::  XX accomodate atom
+  ::       request to feed at url
+  ::       check if rss or atom
+  ::       branch on result
+  !!
 ::
 ++  del-rss-feed
   |=  [=url =rss-state]

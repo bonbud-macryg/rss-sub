@@ -42,6 +42,7 @@
         ::  XX add logic here
         ::       need to cancel current timer
         ::       need to add new timer
+        ::       needs to only cancel the timer for this app, not others
           :-  ~  this
       ==  ::  end of -.action branches
   ==  ::  end of mark branches
