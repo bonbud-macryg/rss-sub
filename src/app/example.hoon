@@ -17,6 +17,7 @@
     def   ~(. (default-agent this %.n) bowl)
 ::
 ++  on-init  on-init:def
+  ::  XX start refresh timer on init
 ++  on-save  on-save:def
 ++  on-load  on-load:def
 ++  on-poke
@@ -34,7 +35,7 @@
         %del-rss-feed
           :-  ~
           %=  this
-            rss-state  (del-rss-feed url.action rss-state)
+            rss-state  (~(del by rss-state) url.action)
           ==
         %rss-refresh-now
           :-  ~  this
