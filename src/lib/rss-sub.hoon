@@ -3,9 +3,10 @@
 ::
 +|  %state
 ::
++$  last-update  @da
 +$  rss-refresh  @dr
-+$  rss-state    (map url rss-feed)
 +$  rss-feed     (each rss-channel atom-feed)
++$  rss-state    (map url (pair last-update rss-feed))
 ::
 +$  rss-sub-action
   $%  [%add-rss-feed =url]
@@ -36,10 +37,16 @@
 ::
 ::+|  %validate
 ::
-::  XX validate rss-channel
-::  XX validate rss-item
-::  XX validate atom-feed
-::  XX valdiate atom-entry
+::  should specify the terms we're looking for?
+::    would make these more general
+::    if so, just need one arm cause only the terms change;
+::    they're all sets of head-tagged cells
+::
+::  XX validate set of elements
+::  |=  [elems=(list @tas) set=(set ?(rss-channel rss-item atom-feed atom-entry))]
+::  ^-  ?
+::  iterate over every elem in elems
+::  check if it's in set
 ::
 ::+|  %parsing-helpers
 ::
@@ -49,7 +56,7 @@
 ::  devs can use to do whatever they want
 ::
 ::  XX rss-channel barket
-::    XX  rss-item barket
+::    XX rss-item barket
 ::      XX rss-item element parsers
 ::
 ::  XX atom-feed barket

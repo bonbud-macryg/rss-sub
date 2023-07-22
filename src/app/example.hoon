@@ -73,6 +73,7 @@
   ::
   ::  XX "scry urls" path
   ::  XX "scry refresh time" path
+  ::  XX "scry last update at url" path
   ::  XX "scry rss-feed at url" path
   ::  XX "scry items/entries at url" path
 ++  on-arvo  on-arvo:def
