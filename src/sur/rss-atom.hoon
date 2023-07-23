@@ -9,6 +9,8 @@
 +$  name       @t
 +$  email      @t
 ::
+::  XX handle other RSS versions from before 2.0 / 2.0.1
+::
 ::  RSS 2.X
 +|  %rss-types
 ::
@@ -24,10 +26,11 @@
   $%  [%title @t]
       [%link url]
       [%description @t]
+      ::  XX check cases like 'neil.armstrong@example.com (Neil Armstrong)' from example
       [%author email]
       [%category domain=(unit url) @t]
       [%comments url]
-      [%enclosure url length=@t type=@t]
+      [%enclosure =url length=@t type=@t]
       [%guid url]
       [%pub-date time]
       [%source url @t]
@@ -73,6 +76,9 @@
 +|  %atom-types
 ::
 +$  atom-feed
+  ::  XX what about these?
+  ::       <?xml version="1.0" encoding="utf-8"?>
+  ::       <feed xmlns="http://www.w3.org/2005/Atom">
   $:  elems=(list atom-feed-element)
       entries=(list atom-entry)
   ==
@@ -96,6 +102,8 @@
   ==
 ::
 +$  atom-entry-element
+  ::  XX what format is urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a?
+  ::       that should be a @t type face at the top of this file
   $%  [%id @t]
       [%title @t]
       [%updated time]
