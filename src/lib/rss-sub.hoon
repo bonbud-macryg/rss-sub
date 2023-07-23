@@ -48,6 +48,51 @@
 ::  iterate over every elem in elems
 ::  check if it's in set
 ::
+::+|  %helpers
+::
+::++  validate-rss-channel
+::  |=  [terms=(list @tas) channel=rss-channel]
+::  ^-  ?
+::  %+  levy
+::    terms
+::  |=  =term
+::  ^-  ?
+::  ::  XX i think elems hates being a set
+::  ::       could be a list or map
+::  ~!  elems.channel
+::  (~(has in elems.channel) [term *])
+::
+::++  validate-feed
+::  ::  check elements in rss-channel or atom-feed
+::  |=  [terms=(list @tas) feed=rss-feed]
+::  ^-  ?
+::  %+  levy
+::    terms
+::  |=  =term
+::  ^-  ?
+::  (~(has in `(set rss)(head feed)) [term *])
+::
+::++  validate-item
+::  ::  check elements in rss-item
+::  |=  [terms=(list @tas) item=rss-item]
+::  ^-  ?
+::  %+  levy
+::    terms
+::  |=  =term
+::  ^-  ?
+::  (~(has in (tail item)) [term *])
+::
+::++  validate-entry
+::  ::  check elements in atom-entry
+::  |=  [terms=(list @tas) entry=atom-entry]
+::  ^-  ?
+::  %+  levy
+::    terms
+::  |=  =term
+::  ^-  ?
+::  (~(has in (tail entry)) [term *])
+::
+::
 ::+|  %parsing-helpers
 ::
 ::  XX can write/test parsers for indiv. elements independent of thread

@@ -13,12 +13,12 @@
 +|  %rss-types
 ::
 +$  rss-channel
-  $:  elems=(set rss-channel-element)
-      items=(set rss-item)
+  $:  elems=(list rss-channel-element)
+      items=(list rss-item)
   ==
 ::
 +$  rss-item
-  [%item (set rss-item-element)]
+  [%item (list rss-item-element)]
 ::
 +$  rss-item-element
   $%  [%title @t]
@@ -73,12 +73,12 @@
 +|  %atom-types
 ::
 +$  atom-feed
-  $:  elems=(set atom-feed-element)
-      entries=(set atom-entry)
+  $:  elems=(list atom-feed-element)
+      entries=(list atom-entry)
   ==
 ::
 +$  atom-entry
-  [%entry (set atom-entry-element)]
+  [%entry (list atom-entry-element)]
 ::
 +$  atom-feed-element
   $%  [%id @t]
