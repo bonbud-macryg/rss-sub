@@ -48,7 +48,10 @@
       [%managing-editor email]
       [%web-master email]
       [%copyright @t]
+      ::  XX remove all units
+      ::       should just be empty strings
       [%category domain=(unit url) @t]
+      ::  XX @uds should be @ts (consistent w/ %skip-hours string literals)
       [%ttl @ud]
       ::  XX find PICS rating example
       ::  [%rating !!]
@@ -66,6 +69,7 @@
           =url
           title=@t
           link=url
+          ::  XX @uds should be @ts (consistent w/ %skip-hours string literals)
           width=(unit @ud)
           height=(unit @ud)
           description=(unit @t)
