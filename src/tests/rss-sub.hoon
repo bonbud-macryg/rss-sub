@@ -42,8 +42,8 @@
 ++  test-check-entry
   %+  expect-eq
     !>  %.y
-  ::  XX this line is passing in (head test-atom-entries) as a null-terminated tuple
-  !>  (check-entry ~[%title %link %summary] `(list atom-entry-element)`(head test-atom-entries))
+  ::  XX i think this line is passing in the tail of (head test-atom-entries) as a null-terminated tuple
+  !>  (check-entry ~[%title %link %summary] (head test-atom-entries))
   ::;:  weld
   ::  %+  expect-eq
   ::    !>  %.y
