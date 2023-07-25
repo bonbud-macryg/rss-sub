@@ -6,7 +6,7 @@
 ++  test-check-channel
   %+  expect-eq
     !>  %.y
-  !>  (check-channel ~[%title %link %description] [~ ~])
+  !>  (check-channel ~[%title %link %description] [~[[%title 'foo'] [%link 'bar']] ~[[%item ~[[%title 'foo'] [%author 'bar']]]]])
   ::;:  weld
   ::  %+  expect-eq
   ::    !>  %.y
@@ -18,7 +18,7 @@
 ++  test-check-item
   %+  expect-eq
     !>  %.y
-  !>  (check-item ~[%title %link %description] [%item ~])
+  !>  (check-item ~[%title %link %description] [%item ~[[%title 'foo'] [%author 'bar']]])
   ::;:  weld
   ::  %+  expect-eq
   ::    !>  %.y
@@ -30,7 +30,7 @@
 ++  test-check-feed
   %+  expect-eq
     !>  %.y
-  !>  (check-feed ~[%title %link %updated] [~ ~])
+  !>  (check-feed ~[%title %link %updated] [~[[%id 'foo'] [%title 'bar']] ~[[%entry ~[[%author 'foo'] [%title 'bar'] [%summary 'baz']]]]])
   ::;:  weld
   ::  %+  expect-eq
   ::    !>  %.y
@@ -42,8 +42,7 @@
 ++  test-check-entry
   %+  expect-eq
     !>  %.y
-  ::  XX i think this line was passing in the tail of (head test-atom-entries) as a null-terminated tuple
-  !>  (check-entry ~[%title %link %summary] [%entry ~])
+  !>  (check-entry ~[%title %link %summary] [%entry ~[[%author 'foo'] [%title 'bar'] [%summary 'baz']]])
   ::;:  weld
   ::  %+  expect-eq
   ::    !>  %.y
