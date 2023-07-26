@@ -8,9 +8,12 @@
 ::
 +$  uri        @t  ::  URI, which could be a URL
 +$  url        @t  ::  URL
-+$  lang       @t  ::  XX language format
++$  lang       @t  ::  language tag
++$  mime       @t  ::  MIME type
 +$  name       @t  ::  John, John Doe, etc.
 +$  numb       @t  ::  number
++$  text       @t  ::  misc. human-readable text
++$  vers       @t  ::  semantic version number
 +$  email      @t  ::  email address
 ::
 ::  XX handle other RSS versions from before 2.0 / 2.0.1
@@ -112,56 +115,54 @@
 ::          they need to know in this file, which will be included in the desk
 ::
 +$  atom-feed-element
-  $%  [%id @t]
-      [%title @t]
+  $%  [%id uri]
+      [%title text]
       [%updated time]
-      ::
-      ::  XX are email and uri optional or not?
-      ::       get more clarity on that
-      ::       increasingly unit-pilled;
-      ::       it specifies what is and is not
-      ::       optional in the type
-      ::
       [%author name (unit email) (unit uri)]
-      [%category @t]
+      ::  term, scheme, label
+      [%category text (unit uri) (unit text)]
       [%contributor name]
-      ::  XX version is numb?
-      [%generator (unit uri) version=(unit @t)]
+      [%generator (unit uri) (unit vers)]
       [%icon url] 
       [%logo url]
-      [%rights @t]
-      [%subtitle @t]
+      [%rights text]
+      [%subtitle text]
       $:  %link
           ::  href
           uri
           ::  ref
           (unit ?(uri %'alternate' %'enclosure' %'related' %'self' %'via'))
           ::  type
-          (unit @t)
+          (unit mime)
           ::  hreflang
           (unit lang)
           ::  title
-          (unit @t)
+          (unit text)
           ::  length
-          ::  XX numb?
-          (unit @t)
+          (unit numb)
       ==
   ==
 ::
 +$  atom-entry-element
   ::  XX what format is urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a?
   ::       that should be a @t type face at the top of this file
-  $%  [%id @t]
-      [%title @t]
+  $%  [%id uri]
+      [%title text]
       [%updated time]
       [%author name]
-      [%summary @t]
+      [%summary text]
       [%contributor name]
       [%published time]
-      [%rights @t]
-      ::  XX why called "id" if a URL?
-      [%source id=url title=@t time]
-      [%category term=@t scheme=(unit uri) label=(unit @t)]
+      [%rights text]
+      ::  id, title, updated
+      ::  XX what's optional?
+      ::  XX is id a url or uri?
+      [%source url text time]
+      ::  term, scheme, label
+      [%category text (unit uri) (unit text)]
+      ::
+      ::  XX w3 missing info on this, find out what's optional
+      ::
       $:  %content
           ::  type
           @t
@@ -174,13 +175,13 @@
           ::  ref
           (unit ?(uri %'alternate' %'enclosure' %'related' %'self' %'via'))
           ::  type
-          (unit @t)
+          (unit mime)
           ::  hreflang
           (unit lang)
           ::  title
-          (unit @t)
+          (unit text)
           :: length
-          (unit @t)
+          (unit numb)
       ==
   ==
 --
