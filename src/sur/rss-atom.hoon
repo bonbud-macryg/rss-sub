@@ -5,10 +5,13 @@
 +|  %type-faces
 ::
 ::  XX should have a uuid type for ids, but double-check across RSS + Atom
-+$  uri        @t
-+$  url        @t
-+$  name       @t
-+$  email      @t
+::
++$  uri        @t  ::  URI, which could be a URL
++$  url        @t  ::  URL
++$  lang       @t  ::  XX language format
++$  name       @t  ::  John, John Doe, etc.
++$  numb       @t  ::  number
++$  email      @t  ::  email address
 ::
 ::  XX handle other RSS versions from before 2.0 / 2.0.1
 ::       one issue: do versions differ on what parts of
@@ -31,13 +34,19 @@
   $%  [%title @t]
       [%link url]
       [%description @t]
+      ::
       ::  XX check cases like 'neil.armstrong@example.com (Neil Armstrong)' from example
+      ::       i think it's fine to call this "email" and just parse the emails out of the items
+      ::       so: assume it's an email, but handle if it's not
+      ::
       [%author email]
+      ::  XX what is tail?
       [%category domain=(unit url) @t]
       [%comments url]
-      [%enclosure =url length=@t type=@t]
+      [%enclosure =url length=numb type=@t]
       [%guid url]
       [%pub-date time]
+      ::  XX what is tail?
       [%source url @t]
   ==
 ::
@@ -45,7 +54,7 @@
   $%  [%title @t]
       [%link url]
       [%description @t]
-      [%language @t]
+      [%language lang]
       [%pub-date time]
       [%last-build-date time]
       [%docs url]
@@ -53,28 +62,28 @@
       [%managing-editor email]
       [%web-master email]
       [%copyright @t]
-      [%category domain=(unit url) @t]
-      ::  XX @uds should be @ts (consistent w/ %skip-hours string literals)
-      [%ttl @ud]
+      ::  XX tail is $numb?
+      [%category (unit url) @t]
+      [%ttl numb]
       ::  XX find PICS rating example
       ::  [%rating !!]
-      [%text-input title=@t description=@t name=@t link=url]
+      [%text-input title=@t description=@t =name link=url]
       [%skip-hours (set ?(%'0' %'1' %'2' %'3' %'4' %'5' %'6' %'7' %'8' %'9' %'10' %'11' %'12' %'13' %'14' %'15' %'16' %'17' %'18' %'19' %'20' %'21' %'22' %'23'))]
       [%skip-days (set ?(%'Monday' %'Tuesday' %'Wednesday' %'Thursday' %'Friday' %'Saturday' %'Sunday'))]
       $:  %cloud
           domain=url
+          ::  XX numb?
           port=@t
           path=@t
           register-procedure=@t
           protocol=@t
       ==
       $:  %image
-          =url
+          url
           title=@t
           link=url
-          ::  XX @uds should be @ts (consistent w/ %skip-hours string literals)
-          width=(unit @ud)
-          height=(unit @ud)
+          width=(unit numb)
+          height=(unit numb)
           description=(unit @t)
       ==
   ==
@@ -116,6 +125,7 @@
       [%author name (unit email) (unit uri)]
       [%category @t]
       [%contributor name]
+      ::  XX version is numb?
       [%generator (unit uri) version=(unit @t)]
       [%icon url] 
       [%logo url]
@@ -129,10 +139,11 @@
           ::  type
           (unit @t)
           ::  hreflang
-          (unit @t)
+          (unit lang)
           ::  title
           (unit @t)
-          :: length
+          ::  length
+          ::  XX numb?
           (unit @t)
       ==
   ==
@@ -148,7 +159,8 @@
       [%contributor name]
       [%published time]
       [%rights @t]
-      [%source id=url title=@t updated=time]
+      ::  XX why called "id" if a URL?
+      [%source id=url title=@t time]
       [%category term=@t scheme=(unit uri) label=(unit @t)]
       $:  %content
           ::  type
@@ -164,7 +176,7 @@
           ::  type
           (unit @t)
           ::  hreflang
-          (unit @t)
+          (unit lang)
           ::  title
           (unit @t)
           :: length
