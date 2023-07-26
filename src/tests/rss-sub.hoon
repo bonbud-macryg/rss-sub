@@ -42,7 +42,8 @@
 ++  test-check-entry
   %+  expect-eq
     !>  %.y
-  !>  (check-entry ~[%title %link %summary] [%entry ~[[%author 'foo'] [%title 'bar'] [%summary 'baz']]])
+  ::!>  (check-entry ~[%title %link %summary] [%entry ~[[%author 'foo'] [%title 'bar'] [%summary 'baz']]])
+  !>  (check-entry ~[%title %link %summary] (head test-atom-entries))
   ::;:  weld
   ::  %+  expect-eq
   ::    !>  %.y
@@ -60,19 +61,27 @@
       test-atom-entries
       ^=  elems
       :~  [%title 'Example Feed']
-          [%link 'http://example.org/']
-          [%updated '2003-12-13T18:30:02Z']
-          [%author name='John Doe' email='' uri='']
+          [%link 'http://example.org/' ~ ~ ~ ~ ~]
+          ::
+          ::  XX convert to @da
+          ::       how to handle timezones?
+          ::
+          ::[%updated '2003-12-13T18:30:02Z']
+          [%author 'John Doe' ~ ~]
           [%id 'urn:uuid:60a76c80-d399-11d9-b93C-0003939e0af6']
       ==
 ::
 ++  test-atom-entries
   :~  :-  %entry
       :~  [%title 'Atom-Powered Robots Run Amok']
-          [%link 'http://example.org/2003/12/13/atom03']
           [%id 'urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a']
-          [%updated '2003-12-13T18:30:02Z']
+          ::
+          ::  XX convert to @da
+          ::       how to handle timezones?
+          ::
+          ::[%updated '2003-12-13T18:30:02Z']
           [%summary 'Some text.']
+          [%link 'http://example.org/2003/12/13/atom03' ~ ~ ~ ~ ~]
       ==
   ==
 ::

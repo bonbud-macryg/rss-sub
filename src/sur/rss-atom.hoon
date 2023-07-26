@@ -4,12 +4,17 @@
 ::  XX try to fill out the rest of the raw auras
 +|  %type-faces
 ::
+::  XX should have a uuid type for ids, but double-check across RSS + Atom
 +$  uri        @t
 +$  url        @t
 +$  name       @t
 +$  email      @t
 ::
 ::  XX handle other RSS versions from before 2.0 / 2.0.1
+::       one issue: do versions differ on what parts of
+::       an element are and are not optional?
+::       if so, might have to just specify each version
+::       individually
 ::
 ::  RSS 2.X
 +|  %rss-types
@@ -48,8 +53,6 @@
       [%managing-editor email]
       [%web-master email]
       [%copyright @t]
-      ::  XX remove all units
-      ::       should just be empty strings
       [%category domain=(unit url) @t]
       ::  XX @uds should be @ts (consistent w/ %skip-hours string literals)
       [%ttl @ud]
@@ -90,19 +93,48 @@
 +$  atom-entry
   [%entry (list atom-entry-element)]
 ::
+::  XX remove faces from attributes
+::       this is just a spec
+::       for the purposes of storing RSS/Atom elmeents in Hoon,
+::       these attributes should be stored in the order provided here.
+::       this should not be hard for two reasons:
+::       1) this library is a copy/paste job for the dev
+::       2) if they really must fuck around, they can find out everything
+::          they need to know in this file, which will be included in the desk
+::
 +$  atom-feed-element
   $%  [%id @t]
       [%title @t]
       [%updated time]
-      [%link rel=url href=url]
-      [%author =name =email =uri]
+      ::
+      ::  XX are email and uri optional or not?
+      ::       get more clarity on that
+      ::       increasingly unit-pilled;
+      ::       it specifies what is and is not
+      ::       optional in the type
+      ::
+      [%author name (unit email) (unit uri)]
       [%category @t]
-      [%contributor =name]
-      [%generator =uri version=@t]
-      [%icon =url] 
-      [%logo =url]
+      [%contributor name]
+      [%generator (unit uri) version=(unit @t)]
+      [%icon url] 
+      [%logo url]
       [%rights @t]
       [%subtitle @t]
+      $:  %link
+          ::  href
+          uri
+          ::  ref
+          (unit ?(uri %'alternate' %'enclosure' %'related' %'self' %'via'))
+          ::  type
+          (unit @t)
+          ::  hreflang
+          (unit @t)
+          ::  title
+          (unit @t)
+          :: length
+          (unit @t)
+      ==
   ==
 ::
 +$  atom-entry-element
@@ -119,16 +151,24 @@
       [%source id=url title=@t updated=time]
       [%category term=@t scheme=(unit uri) label=(unit @t)]
       $:  %content
-          type=@t
-          src=(unit uri)
+          ::  type
+          @t
+          ::  src
+          (unit uri)
       ==
       $:  %link
-          href=uri
-          rel=(unit ?(uri %'alternate' %'enclosure' %'related' %'self' %'via'))
-          type=@t
-          hreflang=@t
-          title=@t
-          length=@t
+          ::  href
+          uri
+          ::  ref
+          (unit ?(uri %'alternate' %'enclosure' %'related' %'self' %'via'))
+          ::  type
+          (unit @t)
+          ::  hreflang
+          (unit @t)
+          ::  title
+          (unit @t)
+          :: length
+          (unit @t)
       ==
   ==
 --
