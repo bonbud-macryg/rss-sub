@@ -28,30 +28,23 @@
   ::  !>  (check-item ~[%foo %bar %baz] (head test-rss-items))
   ::==
 ++  test-check-feed
-  %+  expect-eq
-    !>  %.y
-  !>  (check-feed ~[%title %link %updated] [~[[%id 'foo'] [%title 'bar']] ~[[%entry ~[[%author 'foo'] [%title 'bar'] [%summary 'baz']]]]])
-  ::;:  weld
-  ::  %+  expect-eq
-  ::    !>  %.y
-  ::  !>  (check-feed ~[%title %link %updated] test-atom-feed)
-  ::  %+  expect-eq
-  ::    !>  %.n
-  ::  !>  (check-feed ~[%foo %bar %baz] test-atom-feed)
-  ::==
+  ;:  weld
+    %+  expect-eq
+      !>  %.y
+    !>  (check-feed ~[%title %link %updated] test-atom-feed)
+    %+  expect-eq
+      !>  %.n
+    !>  (check-feed ~[%foo %bar %baz] test-atom-feed)
+  ==
 ++  test-check-entry
-  %+  expect-eq
-    !>  %.y
-  ::!>  (check-entry ~[%title %link %summary] [%entry ~[[%author 'foo'] [%title 'bar'] [%summary 'baz']]])
-  !>  (check-entry ~[%title %link %summary] (head test-atom-entries))
-  ::;:  weld
-  ::  %+  expect-eq
-  ::    !>  %.y
-  ::  !>  (check-entry ~[%title %link %summary] `(pair %entry (list atom-entry-element))`test-atom-entry)
-  ::  %+  expect-eq
-  ::    !>  %.n
-  ::  !>  (check-entry ~[%foo %bar %baz] (head test-atom-entries))
-  ::==
+  ;:  weld
+    %+  expect-eq
+      !>  %.y
+    !>  (check-entry ~[%title %link %summary] (head test-atom-entries))
+    %+  expect-eq
+      !>  %.n
+    !>  (check-entry ~[%foo %bar %baz] (head test-atom-entries))
+  ==
 --
 ::
 ::  helper core
