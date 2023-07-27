@@ -10,7 +10,6 @@
 ::
 |%
 ::
-::  XX try to fill out the rest of the raw auras
 +|  %type-faces
 ::
 ::  XX should maybe have a uuid type for ids, but double-check across RSS + Atom
@@ -86,8 +85,7 @@
       [%web-master mail]
       [%copyright text]
       ::
-      ::  XX "identifier" is contained in the <category> tag;
-      ::       should that content always be the first element in the Hoon tuple?
+      ::  XX should tag value always be the first element in the Hoon tuple?
       ::       the last? should be consistent either way
       ::
       ::  XX  should it be clear in comments what tuple element is the tag value?
@@ -95,8 +93,10 @@
       ::  domain, tag value
       [%category (unit link) text]
       [%ttl numb]
-      ::  XX find PICS rating example
-      ::  [%rating !!]
+      ::
+      :: PICS rating
+      :: these are deprecated in practice; ignore
+      [%rating text]
       $:  %text-input
           ::  title
           text
@@ -213,15 +213,18 @@
       ::  term, scheme, label
       [%category text (unit uri) (unit text)]
       ::
-      ::  XX  w3 missing info on this, find out what's optional
-      ::
+      ::  XX check what is required under what circumstances
+      ::       e.g. If a src attribute is present, the
+      ::       content of the <content> element must be empty.
       $:  %content
           ::  type
           ::  XX fine for a rough draft, but check against the actual RFC
           ::       it's a bit more complicated than this
-          ?(mime %'text' %'html' %'xhtml')
+          (unit ?(mime %'text' %'html' %'xhtml'))
           ::  src
           (unit uri)
+          ::  tag value
+          (unit text)
       ==
       $:  %link
           ::  href
