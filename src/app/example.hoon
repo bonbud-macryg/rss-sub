@@ -32,17 +32,17 @@
         %add-rss-feed
           :-  ~
           %=  this
-            rss-state  (add-rss-feed url.action rss-state)
+            rss-state  (add-rss-feed link.action rss-state)
           ==
         %del-rss-feed
           :-  ~
           %=  this
-            rss-state  (~(del by rss-state) url.action)
+            rss-state  (~(del by rss-state) link.action)
           ==
         %rss-refresh-now
           :-  ~
           %=  this
-            rss-state  (rss-refresh-now urls.action)
+            rss-state  (rss-refresh-now links.action)
           ==
         %set-rss-refresh
         ::  XX add logic here

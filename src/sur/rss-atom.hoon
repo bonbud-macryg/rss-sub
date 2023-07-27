@@ -1,20 +1,19 @@
 |%
 ::
-::  XX check none are unused here
 ::  XX try to fill out the rest of the raw auras
 +|  %type-faces
 ::
-::  XX should have a uuid type for ids, but double-check across RSS + Atom
+::  XX should maybe have a uuid type for ids, but double-check across RSS + Atom
 ::
-+$  uri        @t  ::  URI, which could be a URL
-+$  url        @t  ::  URL
-+$  lang       @t  ::  language tag
-+$  mime       @t  ::  MIME type
-+$  name       @t  ::  John, John Doe, etc.
-+$  numb       @t  ::  number
-+$  text       @t  ::  misc. human-readable text
-+$  vers       @t  ::  semantic version number
-+$  email      @t  ::  email address
++$  uri    @t  ::  URI, which could be a link
++$  lang   @t  ::  BCP 47 language tag
++$  link   @t  ::  URL
++$  mime   @t  ::  MIME type
++$  name   @t  ::  John, John Doe, etc.
++$  numb   @t  ::  number
++$  mail   @t  ::  email address
++$  text   @t  ::  misc. human-readable text
++$  vers   @t  ::  semantic version number
 ::
 ::  XX handle other RSS versions from before 2.0 / 2.0.1
 ::       one issue: do versions differ on what parts of
@@ -35,46 +34,46 @@
 ::
 +$  rss-item-element
   $%  [%title @t]
-      [%link url]
+      [%link link]
       [%description @t]
       ::
       ::  XX check cases like 'neil.armstrong@example.com (Neil Armstrong)' from example
       ::       i think it's fine to call this "email" and just parse the emails out of the items
       ::       so: assume it's an email, but handle if it's not
       ::
-      [%author email]
+      [%author mail]
       ::  XX what is tail?
-      [%category domain=(unit url) @t]
-      [%comments url]
-      [%enclosure =url length=numb type=@t]
-      [%guid url]
+      [%category domain=(unit link) @t]
+      [%comments link]
+      [%enclosure =link length=numb type=@t]
+      [%guid link]
       [%pub-date time]
       ::  XX what is tail?
-      [%source url @t]
+      [%source link @t]
   ==
 ::
 +$  rss-channel-element
   $%  [%title @t]
-      [%link url]
+      [%link link]
       [%description @t]
       [%language lang]
       [%pub-date time]
       [%last-build-date time]
-      [%docs url]
+      [%docs link]
       [%generator @t]
-      [%managing-editor email]
-      [%web-master email]
+      [%managing-editor mail]
+      [%web-master mail]
       [%copyright @t]
       ::  XX tail is $numb?
-      [%category (unit url) @t]
+      [%category (unit link) @t]
       [%ttl numb]
       ::  XX find PICS rating example
       ::  [%rating !!]
-      [%text-input title=@t description=@t =name link=url]
+      [%text-input title=@t description=@t =name link=link]
       [%skip-hours (set ?(%'0' %'1' %'2' %'3' %'4' %'5' %'6' %'7' %'8' %'9' %'10' %'11' %'12' %'13' %'14' %'15' %'16' %'17' %'18' %'19' %'20' %'21' %'22' %'23'))]
       [%skip-days (set ?(%'Monday' %'Tuesday' %'Wednesday' %'Thursday' %'Friday' %'Saturday' %'Sunday'))]
       $:  %cloud
-          domain=url
+          domain=link
           ::  XX numb?
           port=@t
           path=@t
@@ -82,9 +81,9 @@
           protocol=@t
       ==
       $:  %image
-          url
+          link
           title=@t
-          link=url
+          link=link
           width=(unit numb)
           height=(unit numb)
           description=(unit @t)
@@ -114,17 +113,19 @@
 ::       2) if they really must fuck around, they can find out everything
 ::          they need to know in this file, which will be included in the desk
 ::
+::  XX label attributes in comments (like %cateogry and %generator)
 +$  atom-feed-element
   $%  [%id uri]
       [%title text]
       [%updated time]
-      [%author name (unit email) (unit uri)]
+      [%author name (unit mail) (unit uri)]
       ::  term, scheme, label
       [%category text (unit uri) (unit text)]
       [%contributor name]
+      ::  uri, version
       [%generator (unit uri) (unit vers)]
-      [%icon url] 
-      [%logo url]
+      [%icon link] 
+      [%logo link]
       [%rights text]
       [%subtitle text]
       $:  %link
@@ -143,9 +144,11 @@
       ==
   ==
 ::
+::  XX label attributes in comments (like %category and %source)
 +$  atom-entry-element
   ::  XX what format is urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a?
   ::       that should be a @t type face at the top of this file
+  ::       it's a URN, a subset of URI; is %id always a URN or can it be any URI?
   $%  [%id uri]
       [%title text]
       [%updated time]
@@ -156,8 +159,8 @@
       [%rights text]
       ::  id, title, updated
       ::  XX what's optional?
-      ::  XX is id a url or uri?
-      [%source url text time]
+      ::  XX is id a link or uri?
+      [%source link text time]
       ::  term, scheme, label
       [%category text (unit uri) (unit text)]
       ::
