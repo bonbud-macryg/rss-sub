@@ -1,3 +1,13 @@
+::
+::  Specification for storing RSS/Atom data in Hoon.
+::
+::  XX explanatory notes
+::       XX  tag value rules / example
+::             if one item, it's the tag value
+::             otherwise, tag value is specified
+::             <example>
+::             attributes in comments are strictly faces corresponding to attribute
+::
 |%
 ::
 ::  XX try to fill out the rest of the raw auras
@@ -6,6 +16,7 @@
 ::  XX should maybe have a uuid type for ids, but double-check across RSS + Atom
 ::
 +$  uri    @t  ::  URI, which could be a link
+::  XX note diff. standards in RSS vs. Atom if necessary
 +$  lang   @t  ::  BCP 47 language tag
 +$  link   @t  ::  URL
 +$  mime   @t  ::  MIME type
@@ -33,61 +44,99 @@
   [%item (list rss-item-element)]
 ::
 +$  rss-item-element
-  $%  [%title @t]
+  $%  [%title text]
       [%link link]
-      [%description @t]
+      [%description text]
       ::
       ::  XX check cases like 'neil.armstrong@example.com (Neil Armstrong)' from example
       ::       i think it's fine to call this "email" and just parse the emails out of the items
       ::       so: assume it's an email, but handle if it's not
       ::
       [%author mail]
-      ::  XX what is tail?
-      [%category domain=(unit link) @t]
+      ::  domain, tag value
+      [%category (unit link) text]
       [%comments link]
-      [%enclosure =link length=numb type=@t]
+      ::  link, length, type
+      [%enclosure link numb mime]
       [%guid link]
       [%pub-date time]
-      ::  XX what is tail?
-      [%source link @t]
+      ::  url, tag value
+      [%source link text]
   ==
 ::
 +$  rss-channel-element
-  $%  [%title @t]
+  $%  [%title text]
       [%link link]
-      [%description @t]
+      [%description text]
+      ::  XX RFC1766 lang code; same as atom?
+      ::       also accepts ISO 639 language codes
       [%language lang]
       [%pub-date time]
+      ::  XX could use this to skip stale channels?
+      ::       this is the time the content last changed
+      ::       if lte $last-update, skip it
       [%last-build-date time]
       [%docs link]
-      [%generator @t]
+      [%generator text]
+      ::  XX is foo@bar.com (John Doe) the convention?
+      ::       if so, this should be text
       [%managing-editor mail]
+      ::  XX is foo@bar.com (John Doe) the convention?
+      ::       if so, this should be text
       [%web-master mail]
-      [%copyright @t]
-      ::  XX tail is $numb?
-      [%category (unit link) @t]
+      [%copyright text]
+      ::
+      ::  XX "identifier" is contained in the <category> tag;
+      ::       should that content always be the first element in the Hoon tuple?
+      ::       the last? should be consistent either way
+      ::
+      ::  XX  should it be clear in comments what tuple element is the tag value?
+      ::
+      ::  domain, tag value
+      [%category (unit link) text]
       [%ttl numb]
       ::  XX find PICS rating example
       ::  [%rating !!]
-      [%text-input title=@t description=@t =name link=link]
-      [%skip-hours (set ?(%'0' %'1' %'2' %'3' %'4' %'5' %'6' %'7' %'8' %'9' %'10' %'11' %'12' %'13' %'14' %'15' %'16' %'17' %'18' %'19' %'20' %'21' %'22' %'23'))]
-      [%skip-days (set ?(%'Monday' %'Tuesday' %'Wednesday' %'Thursday' %'Friday' %'Saturday' %'Sunday'))]
+      $:  %text-input
+          ::  title
+          text
+          ::  description
+          text
+          ::  name
+          text
+          ::  link
+          link
+      ==
       $:  %cloud
-          domain=link
-          ::  XX numb?
-          port=@t
-          path=@t
-          register-procedure=@t
-          protocol=@t
+          ::  domain
+          link
+          ::  port
+          numb
+          ::  path
+          link
+          ::  register-procedure
+          text
+          ::  protocol
+          text
       ==
       $:  %image
+          ::  url
           link
-          title=@t
-          link=link
-          width=(unit numb)
-          height=(unit numb)
-          description=(unit @t)
+          ::  title
+          text
+          ::  link
+          link
+          ::  width
+          ::  XX max. width 144; validate/enforce in thread
+          (unit numb)
+          ::  height
+          ::  XX max. height 400; validate/enforce in thread
+          (unit numb)
+          ::  description
+          (unit text)
       ==
+      [%skip-days (list ?(%'Monday' %'Tuesday' %'Wednesday' %'Thursday' %'Friday' %'Saturday' %'Sunday'))]
+      [%skip-hours (list ?(%'0' %'1' %'2' %'3' %'4' %'5' %'6' %'7' %'8' %'9' %'10' %'11' %'12' %'13' %'14' %'15' %'16' %'17' %'18' %'19' %'20' %'21' %'22' %'23'))]
   ==
 ::
 ::  Atom 1.0
@@ -164,11 +213,13 @@
       ::  term, scheme, label
       [%category text (unit uri) (unit text)]
       ::
-      ::  XX w3 missing info on this, find out what's optional
+      ::  XX  w3 missing info on this, find out what's optional
       ::
       $:  %content
           ::  type
-          @t
+          ::  XX fine for a rough draft, but check against the actual RFC
+          ::       it's a bit more complicated than this
+          ?(mime %'text' %'html' %'xhtml')
           ::  src
           (unit uri)
       ==
