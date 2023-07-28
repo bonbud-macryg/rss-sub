@@ -25,7 +25,7 @@
   ;:  weld
     %+  expect-eq
       !>  %.y
-    !>  (check-feed ~[%title %link %updated] test-atom-feed)
+    !>  (check-feed ~[%title %link %author] test-atom-feed)
     %+  expect-eq
       !>  %.n
     !>  (check-feed ~[%foo %bar %baz] test-atom-feed)
