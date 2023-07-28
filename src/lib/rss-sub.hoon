@@ -117,8 +117,40 @@
   =(-.elem term)
 ::
 ::
++|  %parser-helpers
 ::
-::+|  %parsing-helpers
+::  XX change the name of this?
+++  cha
+  ;~  pose
+      prn
+      %-  mask
+      :~  ' '
+          `@`0x9
+          `@`0xa
+          `@`0xd
+          `@`'\\'
+          `@`'"'
+      ==
+  ==
+  ::;~(pose prn (mask ~[' ' `@`0x9 `@`0xa `@`0xd `@`'\\' `@`'"']))
+::
+++  match-up-to
+  |=  string=cord
+  ::  XX kethep
+  %-  star
+  ;~(less (jest string) cha)
+::
+++  ifix-tag
+  |=  tag=tape
+  ::  XX kethep
+  :-  %-  jest
+      %-  crip
+      (weld ['<' tag] ">")
+  %-  jest
+  %-  crip
+  (weld ['<' '/' tag] ">")
+::
+::+|  %parsers
 ::
 ::  XX can write/test parsers for indiv. elements independent of thread
 ::
@@ -128,6 +160,15 @@
 ::  XX rss-channel barket
 ::    XX rss-item barket
 ::      XX rss-item element parsers
+::
+::++  parse-rss-channel
+::  |=  xml=cord
+::  |^  ^-  rss-channel
+::  (rash xml channel)
+::  ::
+::  ++  channel
+::    !!
+::  --
 ::
 ::  XX atom-feed barket
 ::    XX atom-entry barket
