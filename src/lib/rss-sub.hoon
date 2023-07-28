@@ -11,7 +11,7 @@
 +$  rss-sub-action
   $%  [%add-rss-feed =link]
       [%del-rss-feed =link]
-      [%set-rss-refresh refresh=@dr]
+      [%set-rss-refresh =rss-refresh]
       [%rss-refresh-now links=(list link)]
   ==
 ::
@@ -34,19 +34,6 @@
     !!
   ::  XX run thread on all urls
   !!
-::
-::+|  %validate
-::
-::  should specify the terms we're looking for?
-::    would make these more general
-::    if so, just need one arm cause only the terms change;
-::    they're all sets of head-tagged cells
-::
-::  XX validate set of elements
-::  |=  [elems=(list @tas) set=(set ?(rss-channel rss-item atom-feed atom-entry))]
-::  ^-  ?
-::  iterate over every elem in elems
-::  check if it's in set
 ::
 +|  %validators
 ::
