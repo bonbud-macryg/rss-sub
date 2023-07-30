@@ -36,12 +36,9 @@
 ::
 +$  rss-channel
   $:  %channel
-    ::  XX narrow down headers types
-    ::       is "headers" the right term?
-    $:  [%headers (list *)]
-        [%elems (list rss-channel-element)]
-        [%items (list rss-item)]
-    ==
+      [%headers (list *)]
+      [%elems (list rss-channel-element)]
+      [%items (list rss-item)]
   ==
 ::
 +$  rss-item
@@ -152,12 +149,9 @@
   ::       <?xml version="1.0" encoding="utf-8"?>
   ::       <feed xmlns="http://www.w3.org/2005/Atom">
   $:  %feed
-    ::  XX narrow down headers types
-    ::       is "headers" the right term?
-    $:  [%headers (list *)]
-        [%elems (list atom-feed-element)]
-        [%entries (list atom-entry)]
-    ==
+      [%headers (list *)]
+      [%elems (list atom-feed-element)]
+      [%entries (list atom-entry)]
   ==
 ::
 +$  atom-entry

@@ -44,19 +44,23 @@
 ::  helper core
 |%
 ++  test-atom-feed
-  :_  ^=  entries
-      test-atom-entries
-      ^=  elems
-      :~  [%title 'Example Feed']
-          [%link 'http://example.org/' ~ ~ ~ ~ ~]
-          ::
-          ::  XX convert to @da
-          ::       how to handle timezones?
-          ::
-          ::[%updated '2003-12-13T18:30:02Z']
-          [%author 'John Doe' ~ ~]
-          [%id 'urn:uuid:60a76c80-d399-11d9-b93C-0003939e0af6']
-      ==
+  :*  %feed
+      [%headers `(list *)`~]
+      [%elems test-atom-feed-elements]
+      [%entries test-atom-entries]
+  ==
+::
+++  test-atom-feed-elements
+  :~  [%title 'Example Feed']
+      [%link 'http://example.org/' ~ ~ ~ ~ ~]
+      ::
+      ::  XX convert to @da
+      ::       how to handle timezones?
+      ::
+      ::[%updated '2003-12-13T18:30:02Z']
+      [%author 'John Doe' ~ ~]
+      [%id 'urn:uuid:60a76c80-d399-11d9-b93C-0003939e0af6']
+  ==
 ::
 ++  test-atom-entries
   :~  :-  %entry
@@ -73,25 +77,28 @@
   ==
 ::
 ++  test-rss-channel
-  :_  ^=  items
-      test-rss-items
-      ^=  elems
-      :~  [%title 'NASA Space Station News']
-          [%link 'http://www.nasa.gov/']
-          [%description 'A RSS news feed containing the latest NASA press releases on the International Space Station.']
-          [%language 'en-us']
-          ::  XX convert to @da
-          ::[%pub-date 'Tue, 10 Jun 2003 04:00:00 GMT']
-          ::  XX convert to @da
-          ::[%last-build-date 'Fri, 21 Jul 2023 09:04 EDT']
-          [%docs 'https://www.rssboard.org/rss-specification']
-          [%generator 'Blosxom 2.1.2']
-          [%managing-editor 'neil.armstrong@example.com (Neil Armstrong)']
-          [%web-master 'sally.ride@example.com (Sally Ride)']
-          ::  XX include this from rssboard sample?
-          ::  <atom:link href="https://www.rssboard.org/files/sample-rss-2.xml" rel="self" type="application/rss+xml"/>
-      ==
+  :*  %channel
+      [%headers `(list *)`~]
+      [%elems test-rss-channel-elems]
+      [%items test-rss-items]
+  ==
 ::
+++  test-rss-channel-elems
+  :~  [%title 'NASA Space Station News']
+      [%link 'http://www.nasa.gov/']
+      [%description 'A RSS news feed containing the latest NASA press releases on the International Space Station.']
+      [%language 'en-us']
+      ::  XX convert to @da
+      ::[%pub-date 'Tue, 10 Jun 2003 04:00:00 GMT']
+      ::  XX convert to @da
+      ::[%last-build-date 'Fri, 21 Jul 2023 09:04 EDT']
+      [%docs 'https://www.rssboard.org/rss-specification']
+      [%generator 'Blosxom 2.1.2']
+      [%managing-editor 'neil.armstrong@example.com (Neil Armstrong)']
+      [%web-master 'sally.ride@example.com (Sally Ride)']
+      ::  XX include this from rssboard sample?
+      ::  <atom:link href="https://www.rssboard.org/files/sample-rss-2.xml" rel="self" type="application/rss+xml"/>
+  ==
 ++  test-rss-items
   :~  :-  %item
       :~  [%title 'Louisiana Students to Hear from NASA Astronauts Aboard Space Station']
