@@ -8,27 +8,80 @@
 ::             <example>
 ::             attributes in comments are strictly faces corresponding to attribute
 ::
+=>
 |%
 ::
-+|  %type-faces
++|  %cord-types
 ::
 ::  XX should maybe have a uuid type for ids, but double-check across RSS + Atom
-::  XX where might it make sense to use $|?
-::       e.g. you could check if $mail contains an '@' character
-::            and at least one '.' character
-::       might have to check RFCs to define what properties these types MUST have
+::  XX check RFCs to define what properties these types MUST have
 ::
-+$  uri    @t  ::  URI, which could be a link
+::  URI, which could be a link
++$  uri
+  $|  @t
+  |=  a=@t
+  ^-  ?
+  %.y
+::
+::  BCP 47 language tag
 ::  XX note diff. standards in RSS vs. Atom if necessary
-+$  lang   @t  ::  BCP 47 language tag
-+$  link   @t  ::  URL
-+$  mime   @t  ::  MIME type
-+$  name   @t  ::  John, John Doe, etc.
-+$  numb   @t  ::  number
-+$  mail   @t  ::  email address
-+$  text   @t  ::  misc. human-readable text
-+$  vers   @t  ::  semantic version number
++$  lang
+  $|  @t
+  |=  a=@t
+  ^-  ?
+  %.y
 ::
+::  URL
++$  link
+  $|  @t
+  |=  a=@t
+  ^-  ?
+  %.y
+::
+::  MIME type
++$  mime
+  $|  @t
+  |=  a=@t
+  ^-  ?
+  %.y
+::
+::  John, John Doe, etc.
++$  name
+  $|  @t
+  |=  a=@t
+  ^-  ?
+  %.y
+::
+::  number
++$  numb
+  $|  @t
+  |=  a=@t
+  ^-  ?
+  %.y
+::
+::  email address
++$  mail
+  $|  @t
+  |=  a=@t
+  ^-  ?
+  %.y
+::
+::  misc. human-readable text
++$  text
+  $|  @t
+  |=  a=@t
+  ^-  ?
+  %.y
+::
+::  semantic version number
++$  vers
+  $|  @t
+  |=  a=@t
+  ^-  ?
+  %.y
+--
+::
+|%
 ::  XX handle other RSS versions from before 2.0 / 2.0.1
 ::       one issue: do versions differ on what parts of
 ::       an element are and are not optional?
