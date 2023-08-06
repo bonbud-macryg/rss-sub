@@ -5,13 +5,19 @@
 ::
 +$  last-update  @da
 +$  rss-refresh  @dr
+::
+::  XX +each + %channel and %feed head-tags will be ugly
+::       strong preference to remove +each rather than the tags
+::       but not sure what causes the problem +each solves and
+::       how to navigate without +each
+::
 +$  rss-feed     (each rss-channel atom-feed)
 +$  rss-state    (map link (pair last-update rss-feed))
 ::
 +$  rss-sub-action
   $%  [%add-rss-feed =link]
       [%del-rss-feed =link]
-      [%set-rss-refresh refresh=@dr]
+      [%set-rss-refresh =rss-refresh]
       [%rss-refresh-now links=(list link)]
   ==
 ::
@@ -34,19 +40,6 @@
     !!
   ::  XX run thread on all urls
   !!
-::
-::+|  %validate
-::
-::  should specify the terms we're looking for?
-::    would make these more general
-::    if so, just need one arm cause only the terms change;
-::    they're all sets of head-tagged cells
-::
-::  XX validate set of elements
-::  |=  [elems=(list @tas) set=(set ?(rss-channel rss-item atom-feed atom-entry))]
-::  ^-  ?
-::  iterate over every elem in elems
-::  check if it's in set
 ::
 +|  %validators
 ::
@@ -75,96 +68,309 @@
   %.y
 ::
 ++  check-channel
+  ::  check elements in rss-channel
   |=  [terms=(list @tas) =rss-channel]
   ^-  ?
-  %.y
-  ::  check elements in rss-channel
-  ::|=  [terms=(list @tas) channel=rss-channel]
-  ::^-  ?
-  ::%+  levy
-  ::  terms
-  ::|=  =term
-  ::^-  ?
-  ::%+  lien
-  ::  `(list rss-channel-element)`elems.channel
-  ::|=  elem=[@tas *]
-  ::^-  ?
-  ::=(term -.elem)
+  %+  levy
+    terms
+  |=  =term
+  ^-  ?
+  %+  lien
+    elems.rss-channel
+  |=  elem=[@tas *]
+  ^-  ?
+  =(term -.elem)
 ::
 ++  check-item
+  ::  check elements in rss-item
   |=  [terms=(list @tas) =rss-item]
   ^-  ?
-  %.y
-  ::  check elements in rss-item
-  ::|=  [terms=(list @tas) item=rss-item]
-  ::^-  ?
-  ::%+  levy
-  ::  terms
-  ::|=  =term
-  ::^-  ?
-  ::%+  lien
-  ::  +.item
-  ::|=  elem=[@tas *]
-  ::^-  ?
-  ::=(term -.elem)
+  %+  levy
+    terms
+  |=  =term
+  ^-  ?
+  %+  lien
+    +.rss-item
+  |=  elem=[@tas *]
+  ^-  ?
+  =(term -.elem)
 ::
 ++  check-feed
   ::  check elements in atom-feed
   |=  [terms=(list @tas) =atom-feed]
   ^-  ?
-  %.y
-  ::  check elements in atom-feed
-  ::|=  [terms=(list @tas) feed=atom-feed]
-  ::^-  ?
-  ::%+  levy
-  ::  terms
-  ::|=  =term
-  ::^-  ?
-  ::%+  lien
-  ::  elems.feed
-  ::|=  elem=[@tas *]
-  ::^-  ?
-  ::=(term -.elem)
+  %+  levy
+    terms
+  |=  =term
+  ^-  ?
+  %+  lien
+    elems.atom-feed
+  |=  elem=[@tas *]
+  ^-  ?
+  =(term -.elem)
 ::
 ++  check-entry
   ::  check elements in atom-entry
   |=  [terms=(list @tas) =atom-entry]
   ^-  ?
-  %.y
-  ::
-  ::  these work in dojo
-  ::  inclined to say this arm works
-  ::  (levy `(list @tas)`~[%one %two %three] |=(term=@tas (lien `(list [@tas @ud])`~[[%one 1] [%two 2] [%three 3]] |=(a=[@tas @ud] =(-.a term)))))
-  ::  (levy `(list @tas)`~[%title %link %id] |=(term=@tas (lien `(list [@tas *])`(tail test-atom-entry) |=(elem=[@tas *] =(-.elem term)))))
-  ::  (levy `(list @tas)`~[%title %link %id] |=(=term (lien `(list [@tas *])`(tail test-atom-entry) |=(elem=[@tas *] =(-.elem term)))))
-  ::
-  ::  check elements in atom-entry
-  ::|=  [terms=(list @tas) entry=atom-entry]
-  ::^-  ?
-  ::%+  levy
-  ::  `(list @tas)`terms
-  ::|=  =term
-  ::%+  lien
-  ::  `(list [@tas *])`(tail entry)
-  ::|=  elem=[@tas *]
-  ::^-  ?
-  ::=(-.elem term)
+  %+  levy
+    terms
+  |=  =term
+  %+  lien
+    +.atom-entry
+  |=  elem=[@tas *]
+  ^-  ?
+  =(-.elem term)
 ::
 ::
+::+|  %parser-helpers
+::::
+::::  XX change the name of this?
+::++  cha
+::  ::|=  =cord 
+::  ::  XX  kethep, output of line below
+::  ::%+  rash
+::  ::  cord
+::  ;~  pose
+::      ::  XX why printable?
+::      prn
+::      %-  mask
+::      :~  ' '
+::          ::  XX why casting as atoms?
+::          `@`0x9
+::          `@`0xa
+::          `@`0xd
+::          `@`'\\'
+::          `@`'"'
+::      ==
+::  ==
+::::
+::++  match-until
+::  |=  =cord
+::  ::  XX kethep, output of line below
+::  %-  star
+::  ;~(less (jest cord) cha)
+::::
+::++  in-tag
+::  |=  tag=tape
+::  ::  XX kethep, output of line below
+::  :-  %-  jest
+::      %-  crip
+::      (weld ['<' tag] ">")
+::  %-  jest
+::  %-  crip
+::  (weld ['<' '/' tag] ">")
 ::
-::+|  %parsing-helpers
+::  XX convert rss time to @da
 ::
-::  XX can write/test parsers for indiv. elements independent of thread
+::  XX convert atom time to @da
 ::
-::  as a rule: parsers should be independent components that
-::  devs can use to do whatever they want
+::+|  %parsers
+::::
+::::  parse xml tapes to rss types
+::++  rss
+::  |%
+::  ++  headers
+::    ::  XX +parse-headers?
+::    ::       might need to add $headers to $rss-channel
+::    ::
+::    ::  |=  xml-file=cord
+::    ::  ^-  <rss header types>
+::    ::  ;~(sfix (match-until '<channel>') channel)
+::    ::  then parse into hoon spec of rss headers (todo)
+::    ::
+::    !!
+::  ::
+::  ++  channel
+::    |=  xml-file=cord
+::    ^-  rss-channel
+::    ::  XX inefficient; parsing items twice
+::    %+  rash
+::      xml-file
+::    ;~  plug
+::      ::  elems
+::      %+  ifix
+::        (in-tag "channel")
+::      ;~  sfix
+::        ::<title>NASA Space Station News</title>
+::        ::<link>http://www.nasa.gov/</link>
+::        ::<description>A RSS news feed containing the latest NASA press releases on the International Space Station.</description>
+::        ::<language>en-us</language>
+::        ::<pubDate>Tue, 10 Jun 2003 04:00:00 GMT</pubDate>
+::        ::<lastBuildDate>Fri, 21 Jul 2023 09:04 EDT</lastBuildDate>
+::        ::<docs>https://www.rssboard.org/rss-specification</docs>
+::        ::<generator>Blosxom 2.1.2</generator>
+::        ::<managingEditor>neil.armstrong@example.com (Neil Armstrong)</managingEditor>
+::        ::<webMaster>sally.ride@example.com (Sally Ride)</webMaster>
+::        ::<atom:link href="https://www.rssboard.org/files/sample-rss-2.xml" rel="self" type="application/rss+xml"/>
+::        ;~  sfix
+::          ::
+::          ::  XX definitely wrong
+::          ::       need to handle cases where an element isn't there
+::          ::
+::          ::  XX could be its own arm +channel-elements
+::          ::
+::          ;~  plug
+::            ;~(pfix (match-until '<title>') title)
+::            ;~(pfix (match-until '<link>') link)
+::            ;~(pfix (match-until '<description>') description)
+::            ;~(pfix (match-until '<language>') language)
+::            ;~(pfix (match-until '<pubDate>') pub-date)
+::            ;~(pfix (match-until '<lastBuildDate>') last-build-date)
+::            ;~(pfix (match-until '<docs>') docs)
+::            ;~(pfix (match-until '<generator>') generator)
+::            ;~(pfix (match-until '<managingEditor>') managing-editor)
+::            ;~(pfix (match-until '<webMaster>') web-master)
+::            ::<atom:link href="https://www.rssboard.org/files/sample-rss-2.xml" rel="self" type="application/rss+xml"/>
+::            ~
+::          ==
+::          (match-until '<item>')
+::        ==
+::        items
+::      ==
+::      ::  entries
+::      %+  ifix
+::        (in-tag "channel")
+::      ;~  pfix
+::        !!
+::        items
+::      ==
+::    ==
+::    :::-  ::  elems
+::    ::    %-  scan
+::    ::      xml-file
+::    ::    %+  ifix
+::    ::      (in-tag "channel")
+::    ::    ;~  sfix
+::    ::      !!
+::    ::    ==
+::    ::::  entries
+::    ::%-  scan
+::    ::  xml-file
+::    ::!!
+::  ::
+::  ++  items
+::    ::  input: cord beginning with first <item>, ending with last </item>
+::    ::  ^-  (list rss-item)
+::    !!
+::  ::
+::  ++  item
+::    !!
+::  ::
+::  ++  title
+::  |=  xml=tape
+::  ::^-  rss-item-element
+::  :-  %title
+::  %-  crip
+::  %+  scan
+::    xml
+::  %+  ifix
+::    (in-tag "title")
+::  (match-until '</title>')
+::  ::
+::  ++  link
+::  |=  xml=cord
+::  ::  XX should output unparsed remainder of cord?
+::  ^-  rss-item-element
+::  :-  %link
+::  %+  rash
+::    xml
+::  %+  ifix
+::    (in-tag "link")
+::  (match-until '</link>')
+::  ::
+::  ++  description
+::  |=  xml=cord
+::  ::  XX should output unparsed remainder of cord?
+::  ^-  rss-item-element
+::  :-  %description
+::  %+  rash
+::    xml
+::  %+  ifix
+::    (in-tag "description")
+::  (match-until '</description>')
+::  ::
+::  ++  language
+::  |=  xml=cord
+::  ::  XX should output unparsed remainder of cord?
+::  ^-  rss-item-element
+::  :-  %language
+::  %+  rash
+::    xml
+::  %+  ifix
+::    (in-tag "language")
+::  (match-until '</language>')
+::  ::
+::  ++  pub-date
+::  ::  XX convert to @da
+::  |=  xml=cord
+::  ::  XX should output unparsed remainder of cord?
+::  ^-  rss-item-element
+::  :-  %pub-date
+::  %+  rash
+::    xml
+::  %+  ifix
+::    (in-tag "pubDate")
+::  (match-until '</pubDate>')
+::  ::
+::  ++  last-build-date
+::  ::  XX convert to @da
+::  |=  xml=cord
+::  ::  XX should output unparsed remainder of cord?
+::  ^-  rss-item-element
+::  :-  %last-build-date
+::  %+  rash
+::    xml
+::  %+  ifix
+::    (in-tag "lastPubDate")
+::  (match-until '</lastPubDate>')
+::  ::
+::  ++  docs
+::  |=  xml=cord
+::  ::  XX should output unparsed remainder of cord?
+::  ^-  rss-item-element
+::  :-  %docs
+::  %+  rash
+::    xml
+::  %+  ifix
+::    (in-tag "docs")
+::  (match-until '</docs>')
+::  ::
+::  ++  generator
+::  |=  xml=cord
+::  ::  XX should output unparsed remainder of cord?
+::  ^-  rss-item-element
+::  :-  %generator
+::  %+  rash
+::    xml
+::  %+  ifix
+::    (in-tag "generator")
+::  (match-until '</generator>')
+::  ::
+::  ++  managing-editor
+::  |=  xml=cord
+::  ::  XX should output unparsed remainder of cord?
+::  ^-  rss-item-element
+::  :-  %managing-editor
+::  %+  rash
+::    xml
+::  %+  ifix
+::    (in-tag "managingEditor")
+::  (match-until '</managingEditor>')
+::  ::
+::  ++  web-master
+::  |=  xml=cord
+::  ::  XX should output unparsed remainder of cord?
+::  ^-  rss-item-element
+::  :-  %web-master
+::  %+  rash
+::    xml
+::  %+  ifix
+::    (in-tag "webMaster")
+::  (match-until '</webMaster>')
+::  ::
+::  --
 ::
-::  XX rss-channel barket
-::    XX rss-item barket
-::      XX rss-item element parsers
-::
-::  XX atom-feed barket
-::    XX atom-entry barket
-::      XX atom-entry element parsers
+::  XX +atom parser barcen
 ::
 --
