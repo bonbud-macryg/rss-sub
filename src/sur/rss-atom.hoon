@@ -93,13 +93,10 @@
 ::
 +$  rss-channel
   $:  %channel
-    ::  XX could we format like [%elems elems=(list rss-channel-element)]
-    ::     and still call it like elems.rss-channel?
-    ::
-    ::  XX maybe just remove head tags other than %channel and %feed
-      [%headers (list *)]
-      [%elems (list rss-channel-element)]
-      [%items (list rss-item)]
+      ::  XX narrow down type
+      headers=(list *)
+      elems=(list rss-channel-element)
+      items=(list rss-item)
   ==
 ::
 +$  rss-item
@@ -210,9 +207,10 @@
   ::       <?xml version="1.0" encoding="utf-8"?>
   ::       <feed xmlns="http://www.w3.org/2005/Atom">
   $:  %feed
-      [%headers (list *)]
-      [%elems (list atom-feed-element)]
-      [%entries (list atom-entry)]
+      ::  XX narrow down type
+      headers=(list *)
+      elems=(list atom-feed-element)
+      entries=(list atom-entry)
   ==
 ::
 +$  atom-entry
@@ -260,9 +258,7 @@
 ::
 ::  XX label attributes in comments (like %category and %source)
 +$  atom-entry-element
-  ::  XX what format is urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a?
-  ::       that should be a @t type face at the top of this file
-  ::       it's a URN, a subset of URI; is %id always a URN or can it be any URI?
+  ::  XX is %id always a URN or can it be any URI?
   $%  [%id uri]
       [%title text]
       [%updated time]
@@ -279,8 +275,8 @@
       [%category text (unit uri) (unit text)]
       ::
       ::  XX check what is required under what circumstances
-      ::       e.g. If a src attribute is present, the
-      ::       content of the <content> element must be empty.
+      ::       e.g. i know if a src attribute is present, the
+      ::       tag value of the <content> element must be empty.
       $:  %content
           ::  type
           ::  XX fine for a rough draft, but check against the actual RFC
