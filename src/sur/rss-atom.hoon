@@ -13,6 +13,10 @@
 +|  %type-faces
 ::
 ::  XX should maybe have a uuid type for ids, but double-check across RSS + Atom
+::  XX where might it make sense to use $|?
+::       e.g. you could check if $mail contains an '@' character
+::            and at least one '.' character
+::       might have to check RFCs to define what properties these types MUST have
 ::
 +$  uri    @t  ::  URI, which could be a link
 ::  XX note diff. standards in RSS vs. Atom if necessary
@@ -36,6 +40,10 @@
 ::
 +$  rss-channel
   $:  %channel
+    ::  XX could we format like [%elems elems=(list rss-channel-element)]
+    ::     and still call it like elems.rss-channel?
+    ::
+    ::  XX maybe just remove head tags other than %channel and %feed
       [%headers (list *)]
       [%elems (list rss-channel-element)]
       [%items (list rss-item)]
