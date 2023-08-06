@@ -46,18 +46,10 @@
   %.y
 ::
 ::  John, John Doe, etc.
-+$  name
-  $|  @t
-  |=  a=@t
-  ^-  ?
-  %.y
++$  name  @t
 ::
 ::  number
-+$  numb
-  $|  @t
-  |=  a=@t
-  ^-  ?
-  %.y
++$  numb  @ud
 ::
 ::  email address
 +$  mail
@@ -67,11 +59,7 @@
   %.y
 ::
 ::  misc. human-readable text
-+$  text
-  $|  @t
-  |=  a=@t
-  ^-  ?
-  %.y
++$  text  @t
 ::
 ::  semantic version number
 +$  vers
