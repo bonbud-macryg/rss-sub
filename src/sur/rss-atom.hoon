@@ -11,7 +11,7 @@
 =>
 |%
 ::
-+|  %cord-types
++|  %data-types
 ::
 ::  XX should maybe have a uuid type for ids, but double-check across RSS + Atom
 ::  XX check RFCs to define what properties these types MUST have
@@ -79,6 +79,27 @@
   |=  a=@t
   ^-  ?
   %.y
+::
+::  one of 24 hours (0 to 23)
++$  hour
+  $|  @ud
+  |=  a=@ud
+  ^-  ?
+  (lte a 23)
+::
+::  day of the week
++$  day
+  $|  @t
+  |=  a=@t
+  ^-  ?
+  ?|  =(a 'Monday')
+      =(a 'Tuesday')
+      =(a 'Wednesday')
+      =(a 'Thursday')
+      =(a 'Friday')
+      =(a 'Saturday')
+      =(a 'Sunday')
+  ==
 --
 ::
 |%
@@ -195,8 +216,8 @@
           ::  description
           (unit text)
       ==
-      [%skip-days (list ?(%'Monday' %'Tuesday' %'Wednesday' %'Thursday' %'Friday' %'Saturday' %'Sunday'))]
-      [%skip-hours (list ?(%'0' %'1' %'2' %'3' %'4' %'5' %'6' %'7' %'8' %'9' %'10' %'11' %'12' %'13' %'14' %'15' %'16' %'17' %'18' %'19' %'20' %'21' %'22' %'23'))]
+      [%skip-days (list day)]
+      [%skip-hours (list hour)]
   ==
 ::
 ::  Atom 1.0
