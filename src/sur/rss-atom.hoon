@@ -32,6 +32,8 @@
   %.y
 ::
 ::  URL
+::  XX try url parsing with `de-purl:html`
+::       maybe a way to validate this without actually parsing
 +$  link
   $|  @t
   |=  a=@t
@@ -101,6 +103,7 @@
 +|  %rss-types
 ::
 +$  rss-channel
+  ::  XX bucbar
   $:  %channel
       ::  XX narrow down type
       headers=(list *)
@@ -109,6 +112,7 @@
   ==
 ::
 +$  rss-item
+  ::  XX bucbar
   [%item (list rss-item-element)]
 ::
 +$  rss-item-element
@@ -119,6 +123,7 @@
       ::  XX check cases like 'neil.armstrong@example.com (Neil Armstrong)' from example
       ::       i think it's fine to call this "email" and just parse the emails out of the items
       ::       so: assume it's an email, but handle if it's not
+      ::       or: this could be [%author ?(mail text)]
       ::
       [%author mail]
       ::  domain, tag value
@@ -197,9 +202,11 @@
           link
           ::  width
           ::  XX max. width 144; validate/enforce in thread
+          ::       (or, use a bucbar)
           (unit numb)
           ::  height
           ::  XX max. height 400; validate/enforce in thread
+          ::       (or, use a bucbar)
           (unit numb)
           ::  description
           (unit text)
@@ -212,6 +219,7 @@
 +|  %atom-types
 ::
 +$  atom-feed
+  ::  XX bucbar
   ::  XX what about these?
   ::       <?xml version="1.0" encoding="utf-8"?>
   ::       <feed xmlns="http://www.w3.org/2005/Atom">
@@ -223,6 +231,7 @@
   ==
 ::
 +$  atom-entry
+  ::  XX bucbar
   [%entry (list atom-entry-element)]
 ::
 ::  XX remove faces from attributes
@@ -253,6 +262,7 @@
           ::  href
           uri
           ::  ref
+          ::  XX should this be validated with bucbar?
           (unit ?(uri %'alternate' %'enclosure' %'related' %'self' %'via'))
           ::  type
           (unit mime)
@@ -290,6 +300,7 @@
           ::  type
           ::  XX fine for a rough draft, but check against the actual RFC
           ::       it's a bit more complicated than this
+          ::  XX should this be validated with bucbar?
           (unit ?(mime %'text' %'html' %'xhtml'))
           ::  src
           (unit uri)
@@ -300,6 +311,7 @@
           ::  href
           uri
           ::  ref
+          ::  XX should this be validated with bucbar?
           (unit ?(uri %'alternate' %'enclosure' %'related' %'self' %'via'))
           ::  type
           (unit mime)

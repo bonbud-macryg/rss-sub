@@ -67,60 +67,60 @@
   ^-  ?
   %.y
 ::
-::++  check-channel
-::  ::  check elements in rss-channel
-::  |=  [terms=(list @tas) =rss-channel]
-::  ^-  ?
-::  %+  levy
-::    terms
-::  |=  =term
-::  ^-  ?
-::  %+  lien
-::    elems.rss-channel
-::  |=  elem=[@tas *]
-::  ^-  ?
-::  =(term -.elem)
-::::
-::++  check-item
-::  ::  check elements in rss-item
-::  |=  [terms=(list @tas) =rss-item]
-::  ^-  ?
-::  %+  levy
-::    terms
-::  |=  =term
-::  ^-  ?
-::  %+  lien
-::    +.rss-item
-::  |=  elem=[@tas *]
-::  ^-  ?
-::  =(term -.elem)
-::::
-::++  check-feed
-::  ::  check elements in atom-feed
-::  |=  [terms=(list @tas) =atom-feed]
-::  ^-  ?
-::  %+  levy
-::    terms
-::  |=  =term
-::  ^-  ?
-::  %+  lien
-::    elems.atom-feed
-::  |=  elem=[@tas *]
-::  ^-  ?
-::  =(term -.elem)
-::::
-::++  check-entry
-::  ::  check elements in atom-entry
-::  |=  [terms=(list @tas) =atom-entry]
-::  ^-  ?
-::  %+  levy
-::    terms
-::  |=  =term
-::  %+  lien
-::    +.atom-entry
-::  |=  elem=[@tas *]
-::  ^-  ?
-::  =(-.elem term)
+++  check-channel
+  ::  check elements in rss-channel
+  |=  [terms=(list @tas) =rss-channel]
+  ^-  ?
+  %+  levy
+    terms
+  |=  =term
+  ^-  ?
+  %+  lien
+    elems.rss-channel
+  |=  elem=[@tas *]
+  ^-  ?
+  =(term -.elem)
+::
+++  check-item
+  ::  check elements in rss-item
+  |=  [terms=(list @tas) =rss-item]
+  ^-  ?
+  %+  levy
+    terms
+  |=  =term
+  ^-  ?
+  %+  lien
+    +.rss-item
+  |=  elem=[@tas *]
+  ^-  ?
+  =(term -.elem)
+::
+++  check-feed
+  ::  check elements in atom-feed
+  |=  [terms=(list @tas) =atom-feed]
+  ^-  ?
+  %+  levy
+    terms
+  |=  =term
+  ^-  ?
+  %+  lien
+    elems.atom-feed
+  |=  elem=[@tas *]
+  ^-  ?
+  =(term -.elem)
+::
+++  check-entry
+  ::  check elements in atom-entry
+  |=  [terms=(list @tas) =atom-entry]
+  ^-  ?
+  %+  levy
+    terms
+  |=  =term
+  %+  lien
+    +.atom-entry
+  |=  elem=[@tas *]
+  ^-  ?
+  =(-.elem term)
 ::
 ::
 ::+|  %parser-helpers
