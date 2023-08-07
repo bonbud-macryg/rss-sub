@@ -32,12 +32,13 @@
   %.y
 ::
 ::  URL
-::  XX try url parsing with `de-purl:html`
-::       maybe a way to validate this without actually parsing
+::  XX is de-purl:html thorough enough?
 +$  link
   $|  @t
   |=  a=@t
   ^-  ?
+  ?~  (de-purl:html a)
+    %.n
   %.y
 ::
 ::  MIME type
