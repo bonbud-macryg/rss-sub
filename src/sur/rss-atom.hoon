@@ -83,13 +83,15 @@
   $|  @t
   |=  a=@t
   ^-  ?
-  ?|  =(a 'Monday')
-      =(a 'Tuesday')
-      =(a 'Wednesday')
-      =(a 'Thursday')
-      =(a 'Friday')
-      =(a 'Saturday')
-      =(a 'Sunday')
+  =/  b
+    (cuss (trip a))
+  ?|  =(b "monday")
+      =(b "tuesday")
+      =(b "wednesday")
+      =(b "thursday")
+      =(b "friday")
+      =(b "saturday")
+      =(b "sunday")
   ==
 --
 ::
