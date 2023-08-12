@@ -45,9 +45,9 @@
 |%
 ++  test-atom-feed
   :*  %feed
-      [%headers `(list *)`~]
-      [%elems test-atom-feed-elements]
-      [%entries test-atom-entries]
+      headers=`(list *)`~
+      items=test-atom-feed-elements
+      entries=test-atom-entries
   ==
 ::
 ++  test-atom-feed-elements
@@ -78,9 +78,9 @@
 ::
 ++  test-rss-channel
   :*  %channel
-      [%headers `(list *)`~]
-      [%elems test-rss-channel-elems]
-      [%items test-rss-items]
+      headers=`(list *)`~
+      elems=test-rss-channel-elems
+      items=test-rss-items
   ==
 ::
 ++  test-rss-channel-elems
@@ -99,6 +99,7 @@
       ::  XX include this from rssboard sample?
       ::  <atom:link href="https://www.rssboard.org/files/sample-rss-2.xml" rel="self" type="application/rss+xml"/>
   ==
+::
 ++  test-rss-items
   :~  :-  %item
       :~  [%title 'Louisiana Students to Hear from NASA Astronauts Aboard Space Station']
@@ -119,7 +120,7 @@
       :~  [%title 'NASA Expands Options for Spacewalking, Moonwalking Suits']
           [%link 'http://www.nasa.gov/press-release/nasa-expands-options-for-spacewalking-moonwalking-suits-services']
           [%description 'NASA has awarded Axiom Space and Collins Aerospace task orders under existing contracts to advance spacewalking capabilities in low Earth orbit, as well as moonwalking services for Artemis missions.']
-          [%enclosure 'http://www.nasa.gov/sites/default/files/styles/1x1_cardfeed/public/thumbnails/image/iss068e027836orig.jpg?itok=ucNUaaGx' '1032272' 'image/jpeg']
+          [%enclosure 'http://www.nasa.gov/sites/default/files/styles/1x1_cardfeed/public/thumbnails/image/iss068e027836orig.jpg?itok=ucNUaaGx' 1.032.272 'image/jpeg']
           ::  XX convert to @da
           ::[%pub-date 'Mon, 10 Jul 2023 14:14 ED']
           [%guid 'http://www.nasa.gov/press-release/nasa-expands-options-for-spacewalking-moonwalking-suits-services']
@@ -136,7 +137,7 @@
       :~  [%title 'NASA Plans Coverage of Roscosmos Spacewalk Outside Space Station']
           [%link 'http://liftoff.msfc.nasa.gov/news/2003/news-laundry.asp']
           [%description 'Compared to earlier spacecraft, the International Space Station has many luxuries, but laundry facilities are not one of them. Instead, astronauts have other options.']
-          [%enclosure 'http://www.nasa.gov/sites/default/files/styles/1x1_cardfeed/public/thumbnails/image/spacex_dragon_june_29.jpg?itok=nIYlBLme' '269866' 'image/jpeg']
+          [%enclosure 'http://www.nasa.gov/sites/default/files/styles/1x1_cardfeed/public/thumbnails/image/spacex_dragon_june_29.jpg?itok=nIYlBLme' 269.866 'image/jpeg']
           ::  XX convert to @da
           ::[%pub-date 'Mon, 26 Jun 2023 12:45 EDT']
           [%guid 'http://liftoff.msfc.nasa.gov/2003/05/20.html#item570']

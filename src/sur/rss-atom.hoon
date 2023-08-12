@@ -8,48 +8,116 @@
 ::             <example>
 ::             attributes in comments are strictly faces corresponding to attribute
 ::
+=>
 |%
 ::
-+|  %type-faces
++|  %data-types
 ::
 ::  XX should maybe have a uuid type for ids, but double-check across RSS + Atom
-::  XX where might it make sense to use $|?
-::       e.g. you could check if $mail contains an '@' character
-::            and at least one '.' character
-::       might have to check RFCs to define what properties these types MUST have
+::  XX check RFCs to define what properties these types MUST have
 ::
-+$  uri    @t  ::  URI, which could be a link
+::  URI, which could be a link
++$  uri
+  $|  @t
+  |=  a=@t
+  ^-  ?
+  %.y
+::
+::  BCP 47 language tag
 ::  XX note diff. standards in RSS vs. Atom if necessary
-+$  lang   @t  ::  BCP 47 language tag
-+$  link   @t  ::  URL
-+$  mime   @t  ::  MIME type
-+$  name   @t  ::  John, John Doe, etc.
-+$  numb   @t  ::  number
-+$  mail   @t  ::  email address
-+$  text   @t  ::  misc. human-readable text
-+$  vers   @t  ::  semantic version number
++$  lang
+  $|  @t
+  |=  a=@t
+  ^-  ?
+  %.y
 ::
+::  URL
+::  XX is de-purl:html thorough enough?
+::  XX https://www.rssboard.org/rss-specification#comments
++$  link
+  $|  @t
+  |=  a=@t
+  ^-  ?
+  ?~  (de-purl:html a)
+    %.n
+  %.y
+::
+::  MIME type
++$  mime
+  $|  @t
+  |=  a=@t
+  ^-  ?
+  %.y
+::
+::  John, John Doe, etc.
++$  name  @t
+::
+::  number
++$  numb  @ud
+::
+::  email address
++$  mail
+  $|  @t
+  |=  a=@t
+  ^-  ?
+  %.y
+::
+::  misc. human-readable text
++$  text  @t
+::
+::  semantic version number
++$  vers
+  $|  @t
+  |=  a=@t
+  ^-  ?
+  %.y
+::
+::  one of 24 hours (0 to 23)
++$  hour
+  $|  @ud
+  |=  a=@ud
+  ^-  ?
+  (lte a 23)
+::
+::  day of the week
++$  day
+  $|  @t
+  |=  a=@t
+  ^-  ?
+  =/  b
+    (cuss (trip a))
+  ?|  =(b "monday")
+      =(b "tuesday")
+      =(b "wednesday")
+      =(b "thursday")
+      =(b "friday")
+      =(b "saturday")
+      =(b "sunday")
+  ==
+--
+::
+|%
 ::  XX handle other RSS versions from before 2.0 / 2.0.1
 ::       one issue: do versions differ on what parts of
 ::       an element are and are not optional?
 ::       if so, might have to just specify each version
 ::       individually
 ::
-::  RSS 2.X
+::  RSS 2.0.1
+::  XX on versions: https://www.rssboard.org/rss-specification#extendingRss
 +|  %rss-types
 ::
 +$  rss-channel
+  ::  XX bucbar
   $:  %channel
-    ::  XX could we format like [%elems elems=(list rss-channel-element)]
-    ::     and still call it like elems.rss-channel?
-    ::
-    ::  XX maybe just remove head tags other than %channel and %feed
-      [%headers (list *)]
-      [%elems (list rss-channel-element)]
-      [%items (list rss-item)]
+      ::  XX narrow down type
+      headers=(list *)
+      elems=(list rss-channel-element)
+      items=(list rss-item)
   ==
 ::
 +$  rss-item
+  ::  XX bucbar
   [%item (list rss-item-element)]
 ::
 +$  rss-item-element
@@ -60,14 +128,19 @@
       ::  XX check cases like 'neil.armstrong@example.com (Neil Armstrong)' from example
       ::       i think it's fine to call this "email" and just parse the emails out of the items
       ::       so: assume it's an email, but handle if it's not
+      ::       or: this could be [%author ?(mail text)]
+      ::       or: could be $author type; valid if contains email
       ::
       [%author mail]
       ::  domain, tag value
       [%category (unit link) text]
       [%comments link]
-      ::  link, length, type
+      ::  url, length, type
       [%enclosure link numb mime]
-      [%guid link]
+      ::  XX isPermaLink must be true if tag value is a URL
+      ::       worth enforcing with bucbar?
+      ::  isPermaLink, tag value
+      [%guid (unit text) link]
       [%pub-date time]
       ::  url, tag value
       [%source link text]
@@ -102,6 +175,7 @@
       ::
       ::  domain, tag value
       [%category (unit link) text]
+      ::  XX should rss-sub take note of channels' TTLs?
       [%ttl numb]
       ::
       :: PICS rating
@@ -138,31 +212,36 @@
           link
           ::  width
           ::  XX max. width 144; validate/enforce in thread
+          ::       (or, use a bucbar)
           (unit numb)
           ::  height
           ::  XX max. height 400; validate/enforce in thread
+          ::       (or, use a bucbar)
           (unit numb)
           ::  description
           (unit text)
       ==
-      [%skip-days (list ?(%'Monday' %'Tuesday' %'Wednesday' %'Thursday' %'Friday' %'Saturday' %'Sunday'))]
-      [%skip-hours (list ?(%'0' %'1' %'2' %'3' %'4' %'5' %'6' %'7' %'8' %'9' %'10' %'11' %'12' %'13' %'14' %'15' %'16' %'17' %'18' %'19' %'20' %'21' %'22' %'23'))]
+      [%skip-days (list day)]
+      [%skip-hours (list hour)]
   ==
 ::
 ::  Atom 1.0
 +|  %atom-types
 ::
 +$  atom-feed
+  ::  XX bucbar
   ::  XX what about these?
   ::       <?xml version="1.0" encoding="utf-8"?>
   ::       <feed xmlns="http://www.w3.org/2005/Atom">
   $:  %feed
-      [%headers (list *)]
-      [%elems (list atom-feed-element)]
-      [%entries (list atom-entry)]
+      ::  XX narrow down type
+      headers=(list *)
+      elems=(list atom-feed-element)
+      entries=(list atom-entry)
   ==
 ::
 +$  atom-entry
+  ::  XX bucbar
   [%entry (list atom-entry-element)]
 ::
 ::  XX remove faces from attributes
@@ -193,6 +272,7 @@
           ::  href
           uri
           ::  ref
+          ::  XX should this be validated with bucbar?
           (unit ?(uri %'alternate' %'enclosure' %'related' %'self' %'via'))
           ::  type
           (unit mime)
@@ -207,9 +287,7 @@
 ::
 ::  XX label attributes in comments (like %category and %source)
 +$  atom-entry-element
-  ::  XX what format is urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a?
-  ::       that should be a @t type face at the top of this file
-  ::       it's a URN, a subset of URI; is %id always a URN or can it be any URI?
+  ::  XX is %id always a URN or can it be any URI?
   $%  [%id uri]
       [%title text]
       [%updated time]
@@ -226,12 +304,13 @@
       [%category text (unit uri) (unit text)]
       ::
       ::  XX check what is required under what circumstances
-      ::       e.g. If a src attribute is present, the
-      ::       content of the <content> element must be empty.
+      ::       e.g. i know if a src attribute is present, the
+      ::       tag value of the <content> element must be empty.
       $:  %content
           ::  type
           ::  XX fine for a rough draft, but check against the actual RFC
           ::       it's a bit more complicated than this
+          ::  XX should this be validated with bucbar?
           (unit ?(mime %'text' %'html' %'xhtml'))
           ::  src
           (unit uri)
@@ -242,6 +321,7 @@
           ::  href
           uri
           ::  ref
+          ::  XX should this be validated with bucbar?
           (unit ?(uri %'alternate' %'enclosure' %'related' %'self' %'via'))
           ::  type
           (unit mime)
