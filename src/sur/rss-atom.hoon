@@ -33,6 +33,7 @@
 ::
 ::  URL
 ::  XX is de-purl:html thorough enough?
+::  XX https://www.rssboard.org/rss-specification#comments
 +$  link
   $|  @t
   |=  a=@t
@@ -102,7 +103,8 @@
 ::       if so, might have to just specify each version
 ::       individually
 ::
-::  RSS 2.X
+::  RSS 2.0.1
+::  XX on versions: https://www.rssboard.org/rss-specification#extendingRss
 +|  %rss-types
 ::
 +$  rss-channel
@@ -127,14 +129,18 @@
       ::       i think it's fine to call this "email" and just parse the emails out of the items
       ::       so: assume it's an email, but handle if it's not
       ::       or: this could be [%author ?(mail text)]
+      ::       or: could be $author type; valid if contains email
       ::
       [%author mail]
       ::  domain, tag value
       [%category (unit link) text]
       [%comments link]
-      ::  link, length, type
+      ::  url, length, type
       [%enclosure link numb mime]
-      [%guid link]
+      ::  XX isPermaLink must be true if tag value is a URL
+      ::       worth enforcing with bucbar?
+      ::  isPermaLink, tag value
+      [%guid (unit text) link]
       [%pub-date time]
       ::  url, tag value
       [%source link text]
@@ -169,6 +175,7 @@
       ::
       ::  domain, tag value
       [%category (unit link) text]
+      ::  XX should rss-sub take note of channels' TTLs?
       [%ttl numb]
       ::
       :: PICS rating
