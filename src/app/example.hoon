@@ -57,15 +57,9 @@
   |=  =path
   ^-  (quip card _this)
   `this
-  ::  XX what does the frontend need?
-  ::       assuming its subscribing to these watch paths to get backend info
   ::
-  ::  XX "subscribe to updates for this url" path?
-  ::       would need to have refresh send %facts with each new rss-item or atom-entry
-  ::       we know the url from the path so would need no further info
-  ::       would make refresh logic slightly more complex
-  ::       but could be worth it have dedicated "fetch" infra sending new items to subscribers?
-  ::       would be easy to add "subscribe to updates for all urls" path
+  ::  XX "subscribe to updates for this url" path
+  ::  XX "subscribe to updates for all urls" path
 ::
 ++  on-peek  on-peek:def
   ::|=  =path
@@ -79,6 +73,8 @@
 ++  on-arvo  on-arvo:def
   ::  XX accept refresh timers from behn
 ++  on-agent  on-agent:def
+  ::  XX handle responses from rss/atom threads
+  ::  XX handle facts from rss/atom threads
 ++  on-leave  on-leave:def
 ++  on-fail   on-fail:def
 --
