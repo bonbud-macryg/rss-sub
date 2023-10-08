@@ -15,6 +15,7 @@
 +$  rss-state    (map link (pair last-update rss-feed))
 ::
 +$  rss-sub-action
+  ::  XX remove 'rss'
   $%  [%add-rss-feed =link]
       [%del-rss-feed =link]
       [%set-rss-refresh =rss-refresh]
@@ -130,50 +131,58 @@
   ^-  ?
   =(-.elem term)
 ::
+::  XX BREAK UP PARSERS INTO PER THREAD
 ::
-::+|  %parser-helpers
+::
++|  %parser-helpers
+::
+::  XX change the name of this?
+++  cha
+  ::|=  =cord 
+  ::  XX  kethep, output of line below
+  ::%+  rash
+  ::  cord
+  ;~  pose
+      ::  XX why printable?
+      prn
+      %-  mask
+      :~  ' '
+          ::  XX why casting as atoms?
+          `@`0x9
+          `@`0xa
+          `@`0xd
+          `@`'\\'
+          `@`'"'
+      ==
+  ==
 ::::
-::::  XX change the name of this?
-::++  cha
-::  ::|=  =cord 
-::  ::  XX  kethep, output of line below
-::  ::%+  rash
-::  ::  cord
-::  ;~  pose
-::      ::  XX why printable?
-::      prn
-::      %-  mask
-::      :~  ' '
-::          ::  XX why casting as atoms?
-::          `@`0x9
-::          `@`0xa
-::          `@`0xd
-::          `@`'\\'
-::          `@`'"'
-::      ==
-::  ==
-::::
-::++  match-until
-::  |=  =cord
-::  ::  XX kethep, output of line below
-::  %-  star
-::  ;~(less (jest cord) cha)
-::::
-::++  in-tag
-::  |=  tag=tape
-::  ::  XX kethep, output of line below
-::  :-  %-  jest
-::      %-  crip
-::      (weld ['<' tag] ">")
-::  %-  jest
-::  %-  crip
-::  (weld ['<' '/' tag] ">")
+++  match-until
+  |=  =cord
+  ::  XX kethep, output of line below
+  %-  star
+  ;~(less (jest cord) cha)
+::
+++  in-tag
+  |=  tag=tape
+  ::  XX kethep, output of line below
+  :-  %-  jest
+      %-  crip
+      (weld ['<' tag] ">")
+  %-  jest
+  %-  crip
+  (weld ['<' '/' tag] ">")
 ::
 ::  XX convert rss time to @da
 ::
 ::  XX convert atom time to @da
 ::
-::+|  %parsers
+::  |%
+::  ++  headers
+::    !!
+::  --
+::+|  %parse-item
+::+|  %parse-feed
+::+|  %parse-entry
 ::::
 ::::  parse xml tapes to rss types
 ::++  rss

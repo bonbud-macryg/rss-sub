@@ -50,6 +50,11 @@
         ::       need to add new timer
         ::       needs to only cancel the timer for this app, not others
           :-  ~  this
+        ::
+        ::  XX %add-item
+        ::       take poke from item thread
+        ::  XX %add-entry
+        ::       take poke from entry thread
       ==  ::  end of -.action branches
   ==  ::  end of mark branches
 ::
@@ -71,10 +76,17 @@
   ::  XX "scry rss-feed at url" path
   ::  XX "scry items/entries at url" path
 ++  on-arvo  on-arvo:def
+  ::  |=  [=(pole knot) =sign-arvo]
+  ::  ^-  (quip card _this)
+  ::
   ::  XX accept refresh timers from behn
 ++  on-agent  on-agent:def
-  ::  XX handle responses from rss/atom threads
+  ::  |=  [=wire =sign:agent:gall]
+  ::  ^-  (quip card _this)
+  ::
   ::  XX handle facts from rss/atom threads
+  ::       cards: update +on-watch wires
+  ::       this:  update rss-state
 ++  on-leave  on-leave:def
 ++  on-fail   on-fail:def
 --
