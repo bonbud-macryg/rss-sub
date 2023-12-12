@@ -52,7 +52,7 @@
 ::  John, John Doe, etc.
 +$  name  @t
 ::
-::  number
+::  any natural number
 +$  numb  @ud
 ::
 ::  email address
@@ -113,6 +113,10 @@
       ::  XX narrow down type
       headers=(list *)
       elems=(list rss-channel-element)
+      ::  XX think about sorting this
+      ::       in practice this list should always be ordered by pub-date
+      ::       but (list rss-item) is the purer expression of what this is than
+      ::       (map @da rss-item) or w/e
       items=(list rss-item)
   ==
 ::
@@ -237,6 +241,10 @@
       ::  XX narrow down type
       headers=(list *)
       elems=(list atom-feed-element)
+      ::  XX think about sorting this
+      ::       in practice this list should always be ordered by updated
+      ::       but (list atom-entry) is the purer expression of what this is than
+      ::       (map @da atom-entry) or w/e
       entries=(list atom-entry)
   ==
 ::
@@ -264,7 +272,7 @@
       [%contributor name]
       ::  uri, version
       [%generator (unit uri) (unit vers)]
-      [%icon link] 
+      [%icon link]
       [%logo link]
       [%rights text]
       [%subtitle text]

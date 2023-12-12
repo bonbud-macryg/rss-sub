@@ -51,8 +51,12 @@
         ::       needs to only cancel the timer for this app, not others
           :-  ~  this
         ::
+        ::  XX should item and entry be two pokes or should
+        ::     we just abstract it throughout?
+        ::
         ::  XX %add-item
         ::       take poke from item thread
+        ::
         ::  XX %add-entry
         ::       take poke from entry thread
       ==  ::  end of -.action branches

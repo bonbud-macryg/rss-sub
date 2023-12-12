@@ -14,12 +14,17 @@
 +$  rss-feed     (each rss-channel atom-feed)
 +$  rss-state    (map link (pair last-update rss-feed))
 ::
+::  XX add constants for:
+::       how many items in an rss-feed before we start trimming it
+::         should be a unit: no value = no limit
+::
 +$  rss-sub-action
   ::  XX remove 'rss'
   $%  [%add-rss-feed =link]
       [%del-rss-feed =link]
       [%set-rss-refresh =rss-refresh]
       [%rss-refresh-now links=(list link)]
+      ::  XX add poke(s) to add items
   ==
 ::
 +|  %actions
@@ -86,6 +91,8 @@
   ^-  ?
   %+  lien
     elems.rss-channel
+  ::  XX were these supposed to be narrowed down?
+  ::       not sure what this arm was suppposed to do tbh
   |=  elem=[@tas *]
   ^-  ?
   =(term -.elem)
@@ -100,6 +107,8 @@
   ^-  ?
   %+  lien
     +.rss-item
+  ::  XX were these supposed to be narrowed down?
+  ::       not sure what this arm was suppposed to do tbh
   |=  elem=[@tas *]
   ^-  ?
   =(term -.elem)
@@ -114,6 +123,8 @@
   ^-  ?
   %+  lien
     elems.atom-feed
+  ::  XX were these supposed to be narrowed down?
+  ::       not sure what this arm was suppposed to do tbh
   |=  elem=[@tas *]
   ^-  ?
   =(term -.elem)
@@ -127,6 +138,8 @@
   |=  =term
   %+  lien
     +.atom-entry
+  ::  XX were these supposed to be narrowed down?
+  ::       not sure what this arm was suppposed to do tbh
   |=  elem=[@tas *]
   ^-  ?
   =(-.elem term)

@@ -22,6 +22,6 @@
 ::  in theory looks kind of like this? with title, link, desc., other elems
 ::  (scan "abcdef" (star ;~(pose (just 'a') (just 'c') (just 'b') (jest 'def'))))
 ::  might have to use +knee to parse arbitraty length strings
-::  refamiliarise with the tafjest stuff from hoon-rss
+::  XX refamiliarise with the tafjest stuff from hoon-rss
 ::
 !!
