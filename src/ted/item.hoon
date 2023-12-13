@@ -9,6 +9,8 @@
 =/  m  (strand ,vase)
 ^-  form:m
 ::
+::  NOTE not using text parser anymore, some logic still applies
+::
 ::  send card to example.hoon
 ::  paths is a one-item list containing the example.hoon wire
 ::
