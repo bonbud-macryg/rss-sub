@@ -9,6 +9,9 @@
 =/  m  (strand ,vase)
 ^-  form:m
 ::
+::  NOTE not using text parser anymore, some logic still applies
+::
+::
 ::  need last update time for a channel passed in as input
 ::  send-request to url
 ::  take-maybe-response from url

@@ -3,42 +3,6 @@
 ::
 ::  tests
 |%
-++  test-check-channel
-  ;:  weld
-    %+  expect-eq
-      !>  %.y
-    !>  (check-channel ~[%title %link %description] test-rss-channel)
-    %+  expect-eq
-      !>  %.n
-    !>  (check-channel ~[%foo %bar %baz] test-rss-channel)
-  ==
-++  test-check-item
-  ;:  weld
-    %+  expect-eq
-      !>  %.y
-    !>  (check-item ~[%title %link %description] (head test-rss-items))
-    %+  expect-eq
-      !>  %.n
-    !>  (check-item ~[%foo %bar %baz] (head test-rss-items))
-  ==
-++  test-check-feed
-  ;:  weld
-    %+  expect-eq
-      !>  %.y
-    !>  (check-feed ~[%title %link %author] test-atom-feed)
-    %+  expect-eq
-      !>  %.n
-    !>  (check-feed ~[%foo %bar %baz] test-atom-feed)
-  ==
-++  test-check-entry
-  ;:  weld
-    %+  expect-eq
-      !>  %.y
-    !>  (check-entry ~[%title %link %summary] (head test-atom-entries))
-    %+  expect-eq
-      !>  %.n
-    !>  (check-entry ~[%foo %bar %baz] (head test-atom-entries))
-  ==
 --
 ::
 ::  helper core

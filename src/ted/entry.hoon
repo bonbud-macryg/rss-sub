@@ -9,6 +9,9 @@
 =/  m  (strand ,vase)
 ^-  form:m
 ::
+::  NOTE not using text parser anymore, some logic still applies
+::
+::
 ::  parse the item
 ::  typecheck and crash on failure
 ::    here and in all these threads we could maybe use , or ^: to typecheck
