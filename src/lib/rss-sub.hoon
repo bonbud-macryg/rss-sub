@@ -2,58 +2,83 @@
 /+  manx-utils
 |%
 ::
-+|  %state
++|  %types
 ::
-+$  last-update  @da
-+$  rss-refresh  @dr
++$  updated  @da         ::  last update
++$  refresh  @dr         ::  refresh timer
++$  maximum  (unit @ud)  ::  max. items per feed
 ::
 ::  XX +each + %channel and %feed head-tags will be ugly
 ::       strong preference to remove +each rather than the tags
 ::       but not sure what causes the problem +each solves and
 ::       how to navigate without +each
 ::
-+$  rss-feed   (each rss-channel atom-feed)
-+$  rss-state  (map link (pair last-update rss-feed))
-::
-::  XX add constants for:
-::       how many items in an rss-feed before we start trimming it
-::         should be a unit: no value = no limit
++$  feed        (each rss-channel atom-feed)    ::  RSS/Atom
++$  feed-state  (map link (pair updated feed))  ::  URLs and feeds
 ::
 +$  rss-sub-action
-  ::  XX remove 'rss'
-  $%  [%add-rss-feed =link]
-      [%del-rss-feed =link]
-      [%set-rss-refresh =rss-refresh]
-      [%rss-refresh-now links=(list link)]
-      ::  XX add poke(s) to add items
+  $%  [%add-feed =link]
+      [%del-feed =link]
+      [%add-item =rss-item]
+      [%add-entry =atom-entry]
+      ::
+      [%set-refresh =refresh]
+      [%refresh-now links=(list link)]
   ==
 ::
 +|  %actions
 ::
-++  add-rss-feed
-  |=  [=link =rss-state]
-  ^+  rss-state
+++  add-feed
+  |=  [=link =feed-state]
+  ^+  feed-state
   ::  XX accomodate atom
   ::       request to feed at url
   ::       check if rss or atom
   ::       branch on result
   !!
+++  add-item     !!
+++  add-entry    !!
+++  set-refresh  !!
 ::
-++  rss-refresh-now
-  |=  links=(list link)
-  ^-  rss-state
-  ?.  =(~ links)
-    ::  XX run thread on these urls
-    !!
-  ::  XX run thread on all urls
+::  ++  make-refresh-cards
+::    |=  [=feed-state links=(list link)]
+::    ^-  (list card)
+::    ?.  =(~ links)
+::      %+  turn
+::        (skim links ~(has by feed-state))
+::      |=  =link
+::      (make-refresh-card link feed-state)
+::    %-  %~  val  by
+::    %-  %~  rut  by
+::      feed-state
+::    |=  =link
+::    (make-refresh-card link feed-state)
+::
+++  make-refresh-card
+  |=  [=link =feed-state =desk =case]
+  ^-  card
   !!
+  ::  XX  likely miscounted children here
+  ::  %-  %~  val  by
+  ::  %-  %~  run  by
+  ::    feed-state
+  ::  |=  [k=link v=[=updated =feed]]
+  ::  ^-  card
+  ::  :*  %pass
+  ::      /feed-update
+  ::      %arvo
+  ::      %k
+  ::      %fard
+  ::      [desk case]
+  ::      ?:  =(%.y -.feed.v)
+  ::        %channel
+  ::      %feed
+  ::      %noun
+  ::      !>([updated.v k])
+  ::  ==
 ::
 ::  XX convert rss time to @da
 ::
 ::  XX convert atom time to @da
 ::
-::  +|  %parse-channel
-::  +|  %parse-item
-::  +|  %parse-feed
-::  +|  %parse-entry
 --

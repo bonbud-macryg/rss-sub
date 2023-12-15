@@ -4,8 +4,9 @@
 /+  default-agent, dbug, *rss-sub
 |%
 +$  state
-  $:  =rss-state
-      =rss-refresh
+  $:  =maximum
+      =refresh
+      =feed-state
   ==
 --
 %-  agent:dbug
@@ -27,38 +28,36 @@
     %rss-sub
       =/  action  !<(rss-sub-action vase)
       ?-  -.action
-        ::  XX could remove "rss" from these action types,
-        ::     since we're routing on the wire
-        %add-rss-feed
+        %add-feed
+          :-  ~
+          this
+          ::  %=  this
+          ::    feed-state  (add-feed link.action feed-state)
+          ::  ==
+        %del-feed
           :-  ~
           %=  this
-            rss-state  (add-rss-feed link.action rss-state)
+            feed-state  (~(del by feed-state) link.action)
           ==
-        %del-rss-feed
+        %refresh-now
           :-  ~
-          %=  this
-            rss-state  (~(del by rss-state) link.action)
-          ==
-        %rss-refresh-now
-          :-  ~
-          %=  this
-            rss-state  (rss-refresh-now links.action)
-          ==
-        %set-rss-refresh
+          this
+          ::  %=  this
+          ::    feed-state  (rss-refresh-now links.action)
+          ::  ==
+        %set-refresh
         ::  XX add logic here
         ::       need to cancel current timer
         ::       need to add new timer
         ::       needs to only cancel the timer for this app, not others
           :-  ~  this
         ::
-        ::  XX should item and entry be two pokes or should
-        ::     we just abstract it throughout?
+        %add-item
+          :-  ~  this
         ::
-        ::  XX %add-item
-        ::       take poke from item thread
+        %add-entry
+          :-  ~  this
         ::
-        ::  XX %add-entry
-        ::       take poke from entry thread
       ==  ::  end of -.action branches
   ==  ::  end of mark branches
 ::
@@ -79,18 +78,18 @@
   ::  XX "scry last update at url" path
   ::  XX "scry rss-feed at url" path
   ::  XX "scry items/entries at url" path
+::
 ++  on-arvo  on-arvo:def
   ::  |=  [=(pole knot) =sign-arvo]
   ::  ^-  (quip card _this)
   ::
   ::  XX accept refresh timers from behn
-++  on-agent  on-agent:def
-  ::  |=  [=wire =sign:agent:gall]
-  ::  ^-  (quip card _this)
   ::
   ::  XX handle facts from rss/atom threads
   ::       cards: update +on-watch wires
-  ::       this:  update rss-state
+  ::       this:  update feed-state
+::
+++  on-agent  on-agent:def
 ++  on-leave  on-leave:def
 ++  on-fail   on-fail:def
 --
