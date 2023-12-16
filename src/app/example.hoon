@@ -30,10 +30,9 @@
       ?-  -.action
         %add-feed
           :-  ~
-          this
-          ::  %=  this
-          ::    feed-state  (add-feed link.action feed-state)
-          ::  ==
+          %=  this
+            feed-state  (add-feed link.action feed-state)
+          ==
         %del-feed
           :-  ~
           %=  this
@@ -51,13 +50,7 @@
         ::       need to cancel current timer
         ::       need to add new timer
         ::       needs to only cancel the timer for this app, not others
-          :-  ~  this
-        ::
-        %add-item
-          :-  ~  this
-        ::
-        %add-entry
-          :-  ~  this
+          `this
         ::
       ==  ::  end of -.action branches
   ==  ::  end of mark branches

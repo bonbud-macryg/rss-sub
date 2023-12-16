@@ -19,9 +19,6 @@
 +$  rss-sub-action
   $%  [%add-feed =link]
       [%del-feed =link]
-      [%add-item =rss-item]
-      [%add-entry =atom-entry]
-      ::
       [%set-refresh =refresh]
       [%refresh-now links=(list link)]
   ==
