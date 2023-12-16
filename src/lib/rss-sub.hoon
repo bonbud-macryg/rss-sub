@@ -41,58 +41,44 @@
 ++  set-refresh  !!
 ::
 ++  make-refresh-cards
-  ::  XX annoying, come back to this
-  !!
-  ::  |=  [links=(list link) =desk =feed-state]
-  ::  ^-  (list card)
-  ::  %+  turn
-  ::    links
-  ::  |=  =link
-  ::  (make-refresh-card [link (~(got by feed-state) link)] desk)
-  ::  |=  [links=(list link) deskcase=(pair desk case) =feed-state]
-  ::  ^-  (list card)
-  ::  [*card]~
-  ::  ?.  =(~ links)
-  ::    ::  XX should use urn:by
-  ::    ::  given feeds
-  ::    %+  turn
-  ::      (skim links ~(has by feed-state))
-  ::    |=  =link
-  ::    %:  make-refresh-card
-  ::        [link (~(got by feed-state) link)]
-  ::        case
-  ::        desk
-  ::    ==
-  ::  ::  XX should use urn:by
-  ::  ::  all feeds
-  ::  %+  turn
-  ::    ~(tap in ~(key by feed-state))
-  ::  |=  =link
-  ::  %:  make-refresh-card
-  ::      [link (~(got by feed-state) link)]
-  ::      case
-  ::      desk
-  ::  ==
+  |=  [links=(list link) =desk =feed-state]
+  ^-  (list card:agent:gall)
+  ?~  links
+    ::  refresh all links
+    %+  turn
+      ~(tap in ~(key by feed-state))
+    |=  =link
+    %:  make-refresh-card
+        [link (~(got by feed-state) link)]
+        desk
+    ==
+  ::  refresh given links
+  %+  turn
+    %+  skim
+      `(list link)`links
+    |=  =link
+    (~(has by feed-state) link)
+  |=  =link
+  %:  make-refresh-card
+      [link (~(got by feed-state) link)]
+      desk
+  ==
 ::
 ++  make-refresh-card
   |=  [[=link [=updated =feed]] =desk]
   ^-  card:agent:gall
-  [%pass /result %arvo %k %fard desk %my-thread %noun !>(%.y)]
-  ::  |=  [[=link [=updated =feed]] =case =desk]
-  ::  *card
-  ::  ^-  card
-  ::  :*  %pass
-  ::      ~
-  ::      %arvo
-  ::      %k
-  ::      %fard
-  ::      [desk case]
-  ::      ?:  =(%.y -.feed)
-  ::        %channel
-  ::      %feed
-  ::      %noun
-  ::      !>([updated link])
-  ::  ==
+  :*  %pass
+      ~
+      %arvo
+      %k
+      %fard
+      desk
+      ?:  -.feed
+        %channel
+      %feed
+      %noun
+      !>([link updated])
+  ==
 ::
 ::  XX convert rss time to @da
 ::

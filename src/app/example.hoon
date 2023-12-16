@@ -41,18 +41,11 @@
           ==
         %refresh-now
           :_  this
-          %+  turn
-            (skim links.action ~(has by feed-state))
-          |=  =link
-          (make-refresh-card [link (~(got by feed-state) link)] q.byk.bowl)
-          ::  ~!  q.byk.bowl
-          ::  ~&  >>  "{<q.byk.bowl>}"
-          ::  :_  this
-          ::  %:  make-refresh-cards
-          ::      links.action
-          ::      q.byk.bowl
-          ::      feed-state
-          ::  ==
+          %^    make-refresh-cards
+              links.action
+            q.byk.bowl
+          feed-state
+        ::
         %set-refresh
         ::  XX add logic here
         ::       need to cancel current timer
