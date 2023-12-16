@@ -40,10 +40,18 @@
             feed-state  (~(del by feed-state) link.action)
           ==
         %refresh-now
-          :-  ~
-          this
-          ::  %=  this
-          ::    feed-state  (rss-refresh-now links.action)
+          :_  this
+          %+  turn
+            (skim links.action ~(has by feed-state))
+          |=  =link
+          (make-refresh-card [link (~(got by feed-state) link)] q.byk.bowl)
+          ::  ~!  q.byk.bowl
+          ::  ~&  >>  "{<q.byk.bowl>}"
+          ::  :_  this
+          ::  %:  make-refresh-cards
+          ::      links.action
+          ::      q.byk.bowl
+          ::      feed-state
           ::  ==
         %set-refresh
         ::  XX add logic here
