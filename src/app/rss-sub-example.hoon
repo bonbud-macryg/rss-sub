@@ -31,7 +31,7 @@
         %add-feed
           :-  ~
           %=  this
-            feed-state  (add-feed link.action feed-state)
+            feed-state  (~(put by feed-state) link.action [now.bowl ~])
           ==
         %del-feed
           :-  ~
@@ -40,6 +40,9 @@
           ==
         %refresh-now
           :_  this
+          ?~  feed-state
+            ~|  "{<q.byk.bowl>}: no saved feeds to update"
+            !!
           %^    make-refresh-cards
               links.action
             q.byk.bowl
@@ -79,7 +82,7 @@
   ::
   ::  XX accept refresh timers from behn
   ::
-  ::  XX handle facts from rss/atom threads
+  ::  XX handle facts from item and entry threads
   ::       cards: update +on-watch wires
   ::       this:  update feed-state
 ::

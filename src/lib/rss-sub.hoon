@@ -14,7 +14,8 @@
 ::       how to navigate without +each
 ::
 +$  feed        (each rss-channel atom-feed)    ::  RSS/Atom
-+$  feed-state  (map link (pair updated feed))  ::  URLs and feeds
+::  XX could be feed-items; devs might add other 'feed state' on top of this
++$  feed-state  (map link (pair updated (unit feed)))  ::  URLs and feeds
 ::
 +$  rss-sub-action
   $%  [%add-feed =link]
@@ -25,16 +26,6 @@
 ::
 +|  %actions
 ::
-++  add-feed
-  |=  [=link =feed-state]
-  ^+  feed-state
-  ::  XX accomodate atom
-  ::       request to feed at url
-  ::       check if rss or atom
-  ::       branch on result
-  !!
-++  add-item     !!
-++  add-entry    !!
 ++  set-refresh  !!
 ::
 ++  make-refresh-cards
@@ -46,7 +37,8 @@
       ~(tap in ~(key by feed-state))
     |=  =link
     %:  make-refresh-card
-        [link (~(got by feed-state) link)]
+        link
+        -:(~(got by feed-state) link)
         desk
     ==
   ::  refresh given links
@@ -57,12 +49,13 @@
     (~(has by feed-state) link)
   |=  =link
   %:  make-refresh-card
-      [link (~(got by feed-state) link)]
+      link
+      -:(~(got by feed-state) link)
       desk
   ==
 ::
 ++  make-refresh-card
-  |=  [[=link [=updated =feed]] =desk]
+  |=  [=link =updated =desk]
   ^-  card:agent:gall
   :*  %pass
       ~
@@ -70,8 +63,6 @@
       %k
       %fard
       desk
-      ?:  -.feed
-        %channel
       %feed
       %noun
       !>([link updated])
