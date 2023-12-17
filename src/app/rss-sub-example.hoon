@@ -29,6 +29,9 @@
       =/  action  !<(rss-sub-action vase)
       ?-  -.action
         %add-feed
+          ?~  (de-purl:html link.action)
+            ~|  "{<q.byk.bowl>}: invalid URL {<link.action>}"
+            !!
           :-  ~
           %=  this
             feed-state  (~(put by feed-state) link.action [now.bowl ~])
