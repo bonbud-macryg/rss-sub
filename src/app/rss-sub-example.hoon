@@ -94,15 +94,22 @@
   ::  XX "scry rss-feed at url" path
   ::  XX "scry items/entries at url" path
 ::
-++  on-arvo  on-arvo:def
-  ::  |=  [=(pole knot) =sign-arvo]
-  ::  ^-  (quip card _this)
+++  on-arvo
   ::
   ::  XX accept refresh timers from behn
   ::
   ::  XX handle facts from item and entry threads
   ::       cards: update +on-watch wires
   ::       this:  update feed-state
+  ::
+  |=  [=(pole knot) =sign-arvo]
+  ^-  (quip card _this)
+  ?+  pole  (on-arvo:def `wire`pole sign-arvo)
+    [%rss-sub %update ~]
+      ?>  ?=([%khan %arow *] sign-arvo)
+      %-  (slog [[%leaf "received updated from khan; terminating"] ~])
+      `this
+  ==  ::  end of pole branches
 ::
 ++  on-agent  on-agent:def
 ++  on-leave  on-leave:def

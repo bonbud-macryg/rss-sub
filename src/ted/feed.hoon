@@ -9,40 +9,42 @@
 =/  m  (strand ,vase)
 ^-  form:m
 =+  !<([=link =updated] arg)
-;<    =bowl:rand
-    bind:m
-  get-bowl
-::  XX should just get now out of bowl,
-::     but idk how to pull data out of bowl rn
-;<    =time
-    bind:m
-  get-time
-?:  (lte updated time)
-  ::  %-  (slog [[%leaf "{q.byk.bowl>}: bad updated time {<updated>} for RSS channel {<link>}"] ~])
-  !!
-=/  =request:http     [%'GET' link ~ ~]
-=/  =task:iris        [%request request *outbound-config:iris]
-=/  =card:agent:gall  [%pass /http-req %arvo %i task]
-;<    ~
-    bind:m
-  (send-raw-card card)
-;<    response=(pair wire sign-arvo)
-    bind:m
-  take-sign-arvo
-?.  ?=([%iris %http-response %finished *] q.response)
-  ::  %-  (slog [[%leaf "{<q.byk.bowl>}: failed HTTP request to {<link>}"] ~])
-  !!
-?~  full-file.client-response.q.response
-  ::  %-  (slog [[%leaf "{<q.byk.bowl>}: empty response from {<link>}"] ~])
-  !!
-=/  xml
-  %-  need
-  (de-xml:html `@t`q.data.u.full-file.client-response.q.response)
-?~  xml
-  ::  %-  (slog [[%leaf "{<q.byk.bowl>}: invalid XML from {<link>}"] ~])
-  !!
-%-  (slog [[%leaf "thread terminated"]])
-!!
+(pure:m !>([link updated]))
+::  ;<    =bowl:rand
+::      bind:m
+::    get-bowl
+::  ::  XX should just get now out of bowl,
+::  ::     but idk how to pull data out of bowl rn
+::  ;<    =time
+::      bind:m
+::    get-time
+::  ?:  (lte updated time)
+::    ::  %-  (slog [[%leaf "{q.byk.bowl>}: bad updated time {<updated>} for RSS channel {<link>}"] ~])
+::    !!
+::  =/  =request:http     [%'GET' link ~ ~]
+::  =/  =task:iris        [%request request *outbound-config:iris]
+::  =/  =card:agent:gall  [%pass /http-req %arvo %i task]
+::  ;<    ~
+::      bind:m
+::    (send-raw-card card)
+::  ;<    response=(pair wire sign-arvo)
+::      bind:m
+::    take-sign-arvo
+::  ?.  ?=([%iris %http-response %finished *] q.response)
+::    ::  %-  (slog [[%leaf "{<q.byk.bowl>}: failed HTTP request to {<link>}"] ~])
+::    (strand-fail %bad-sign ~)
+::  ?~  full-file.client-response.q.response
+::    ::  %-  (slog [[%leaf "{<q.byk.bowl>}: empty response from {<link>}"] ~])
+::    (strand-fail %bad-sign ~)
+::  =/  xml
+::    %-  need
+::    (de-xml:html `@t`q.data.u.full-file.client-response.q.response)
+::  ?~  xml
+::    ::  %-  (slog [[%leaf "{<q.byk.bowl>}: invalid XML from {<link>}"] ~])
+::    (strand-fail %bad-sign ~)
+::  ::  %-  (slog [[%leaf "thread terminated"]])
+::  ::  (pure:m !>('thread terminated'))
+::  (strand-fail %bad-sign ~)
 ::
 :: :: ::
 ::

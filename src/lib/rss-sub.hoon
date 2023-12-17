@@ -29,6 +29,7 @@
 ++  set-refresh  !!
 ::
 ++  make-refresh-cards
+  ::  XX foobarbat should all be link
   |=  [links=(list link) =desk =feed-state]
   ^-  (list card:agent:gall)
   ?~  links
@@ -45,27 +46,28 @@
   %+  turn
     %+  skim
       `(list link)`links
-    |=  =link
-    (~(has by feed-state) link)
-  |=  =link
+    |=  foo=@t
+    (~(has by feed-state) foo)
+  |=  bar=@t
   %:  make-refresh-card
-      link
-      -:(~(got by feed-state) link)
+      bar
+      -:(~(got by feed-state) bar)
       desk
   ==
 ::
 ++  make-refresh-card
-  |=  [=link =updated =desk]
+  ::  XX foobarbat should all be link
+  |=  [bat=@t =updated =desk]
   ^-  card:agent:gall
   :*  %pass
-      ~
+      /rss-sub/update
       %arvo
       %k
       %fard
       desk
       %feed
       %noun
-      !>([link updated])
+      !>([bat updated])
   ==
 ::
 ::  XX convert rss time to @da
