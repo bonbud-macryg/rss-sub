@@ -3,24 +3,36 @@
 ::
 /+  default-agent, dbug, *rss-sub
 |%
-+$  state
++$  app-state
   $:  =maximum
       =refresh
       =feed-state
   ==
 --
 %-  agent:dbug
-=|  state
+=|  app-state
+=*  state  -
 ^-  agent:gall
 |_  =bowl:gall
 +*  this  .
     card  card:agent:gall
     def   ~(. (default-agent this %.n) bowl)
 ::
-++  on-init  on-init:def
+++  on-init
+  ^-  (quip card _this)
   ::  XX start refresh timer on init
-++  on-save  on-save:def
-++  on-load  on-load:def
+  :-  ~
+  %=  this
+    refresh  ~m15
+    maximum  `1.000
+  ==
+++  on-save
+  !>(state)
+++  on-load
+  |=  =vase
+  ^-  (quip card _this)
+  =/  saved-state  !<(app-state vase)
+  `this(state saved-state)
 ++  on-poke
   |=  [=mark =vase]
   ^-  (quip card _this)
@@ -30,6 +42,9 @@
       ?-  -.action
         %add-feed
           ?~  (de-purl:html link.action)
+            ::  XX should probably acccept 'example.com'
+            ::     as valid input and prepend http or https
+            ::     to make it a valid URL
             ~|  "{<q.byk.bowl>}: invalid URL {<link.action>}"
             !!
           :-  ~
