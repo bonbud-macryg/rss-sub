@@ -1,15 +1,17 @@
 ::
-::  parse an rss channel and create threads to parse new items
+::  parse an rss channel / atom feed and
+::  create threads to parse new items / entries
 ::
-/-  spider, *rss-atom
+/-  spider
 /+  *strandio, *rss-sub
 =,  strand=strand:spider
 ^-  thread:spider
 |=  arg=vase
 =/  m  (strand ,vase)
 ^-  form:m
-=+  !<([=link =updated] arg)
-(pure:m !>([link updated]))
+=/  feed  !<([@t @da] arg)
+~&  >>  feed
+(pure:m !>(feed))
 ::  ;<    =bowl:rand
 ::      bind:m
 ::    get-bowl

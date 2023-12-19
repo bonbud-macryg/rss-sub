@@ -60,7 +60,7 @@
   |=  [bat=@t =updated =desk]
   ^-  card:agent:gall
   :*  %pass
-      /rss-sub/update
+      /rss-sub/update/(scot %t bat)
       %arvo
       %k
       %fard

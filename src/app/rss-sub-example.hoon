@@ -105,8 +105,12 @@
   |=  [=(pole knot) =sign-arvo]
   ^-  (quip card _this)
   ?+  pole  (on-arvo:def `wire`pole sign-arvo)
-    [%rss-sub %update ~]
+    [%rss-sub %update =link ~]
       ?>  ?=([%khan %arow *] sign-arvo)
+      ::  XX ugly
+      =*  link=link  (slav %t link.pole)
+      ::
+      %-  (slog [[%leaf "sign-arvo: {<sign-arvo>}"] ~])
       %-  (slog [[%leaf "received updated from khan; terminating"] ~])
       `this
   ==  ::  end of pole branches
