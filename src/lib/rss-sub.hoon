@@ -5,6 +5,7 @@
 +|  %types
 ::
 +$  updated  @da         ::  last update
+::  XX refresh should be a unit; maybe we're only doing manual refreshes
 +$  refresh  @dr         ::  refresh timer
 +$  maximum  (unit @ud)  ::  max. items per feed
 ::
@@ -29,7 +30,6 @@
 ++  set-refresh  !!
 ::
 ++  make-refresh-cards
-  ::  XX foobarbat should all be link
   |=  [links=(list link) =desk =feed-state]
   ^-  (list card:agent:gall)
   ?~  links
@@ -43,6 +43,7 @@
         desk
     ==
   ::  refresh given links
+  ::  XX foobarbat are all links; fix names and types
   %+  turn
     %+  skim
       `(list link)`links
@@ -60,7 +61,9 @@
   |=  [bat=@t =updated =desk]
   ^-  card:agent:gall
   :*  %pass
-      /rss-sub/update/(scot %t bat)
+      ::  XX should devs be able to optionally specify
+      ::     a return path?
+      /rss-sub/update/feed/(scot %t bat)
       %arvo
       %k
       %fard

@@ -47,20 +47,44 @@
             ::     to make it a valid URL
             ~|  "{<q.byk.bowl>}: invalid URL {<link.action>}"
             !!
-          :-  ~
-          %=  this
-            feed-state  (~(put by feed-state) link.action [now.bowl ~])
+          ::  XX shouldn't add feed to state unless it's
+          ::     accepted as a valid url and xml by the
+          ::     rss-atom thread
+          :_  this
+          :~  :*  %pass
+                  ::  XX pass -rss-atom output to +on-agent,
+                  ::     then in +on-agent pass output on
+                  ::     to either -item or -entry
+                  /rss-sub/update/rss-atom/(scot %t link.action)
+                  %arvo
+                  %k
+                  %fard
+                  q.byk.bowl
+                  %rss-atom
+                  %noun
+                  !>  ^-  (pair time link)
+                  [now.bowl link.action]
+              ==
           ==
+          ::  :-  ~
+          ::  %=  this
+          ::    feed-state  (~(put by feed-state) link.action [now.bowl ~])
+          ::  ==
         %del-feed
           :-  ~
           %=  this
             feed-state  (~(del by feed-state) link.action)
           ==
+        ::
+        ::  XX should this only take one (unit link)?
+        ::     would simplify /lib; just split up feeds
+        ::     on the client side and refresh each one
         %refresh-now
           :_  this
           ?~  feed-state
             ~|  "{<q.byk.bowl>}: no saved feeds to update"
             !!
+          ::  XX check if feeds are all in feed-state; error if not
           %^    make-refresh-cards
               links.action
             q.byk.bowl
@@ -104,14 +128,41 @@
   ::
   |=  [=(pole knot) =sign-arvo]
   ^-  (quip card _this)
+  ?>  ?=([%khan %arow *] sign-arvo)
   ?+  pole  (on-arvo:def `wire`pole sign-arvo)
-    [%rss-sub %update =link ~]
-      ?>  ?=([%khan %arow *] sign-arvo)
-      ::  XX ugly
-      =*  link=link  (slav %t link.pole)
-      ::
+    ::
+    ::  update rss-atom with new metadata and pass output
+    ::  onto either -item or -entry
+    [%rss-sub %update %rss-atom =link ~]
+      ::  XX remove testing printfs
       %-  (slog [[%leaf "sign-arvo: {<sign-arvo>}"] ~])
-      %-  (slog [[%leaf "received updated from khan; terminating"] ~])
+      %-  (slog [[%leaf "rss channel metadata updated; terminating"] ~])
+      ::  XX route on sign-arvo
+      ::  XX check if tail of gift begins with %.y or %.n
+      ::     if %.y, de-vase thread result
+      ::     if %.n, handle page returned by khan
+      `this
+    ::
+    ::  update rss channel with new item
+    [%rss-sub %update %rss-item =link ~]
+      ::  XX remove testing printfs
+      %-  (slog [[%leaf "sign-arvo: {<sign-arvo>}"] ~])
+      %-  (slog [[%leaf "channel items updated; terminating"] ~])
+      ::  XX route on sign-arvo
+      ::  XX check if tail of gift begins with %.y or %.n
+      ::     if %.y, de-vase thread result
+      ::     if %.n, handle page returned by khan
+      `this
+    ::
+    ::  update atom feed with new entry
+    [%rss-sub %update %atom-entry =link ~]
+      ::  XX remove testing printfs
+      %-  (slog [[%leaf "sign-arvo: {<sign-arvo>}"] ~])
+      %-  (slog [[%leaf "feed items updated; terminating"] ~])
+      ::  XX route on sign-arvo
+      ::  XX check if tail of gift begins with %.y or %.n
+      ::     if %.y, de-vase thread result
+      ::     if %.n, handle page returned by khan
       `this
   ==  ::  end of pole branches
 ::
