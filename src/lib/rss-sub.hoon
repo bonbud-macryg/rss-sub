@@ -63,14 +63,14 @@
   :*  %pass
       ::  XX should devs be able to optionally specify
       ::     a return path?
-      /rss-sub/update/feed/(scot %t bat)
+      /rss-sub/update/rss-atom/(scot %t bat)
       %arvo
       %k
       %fard
       desk
-      %feed
+      %rss-atom
       %noun
-      !>([bat updated])
+      !>([updated bat])
   ==
 ::
 ::  XX convert rss time to @da

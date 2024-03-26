@@ -42,14 +42,8 @@
       ?-  -.action
         %add-feed
           ?~  (de-purl:html link.action)
-            ::  XX should probably acccept 'example.com'
-            ::     as valid input and prepend http or https
-            ::     to make it a valid URL
             ~|  "{<q.byk.bowl>}: invalid URL {<link.action>}"
             !!
-          ::  XX shouldn't add feed to state unless it's
-          ::     accepted as a valid url and xml by the
-          ::     rss-atom thread
           :_  this
           :~  :*  %pass
                   ::  XX pass -rss-atom output to +on-agent,
@@ -128,41 +122,50 @@
   ::
   |=  [=(pole knot) =sign-arvo]
   ^-  (quip card _this)
-  ?>  ?=([%khan %arow *] sign-arvo)
   ?+  pole  (on-arvo:def `wire`pole sign-arvo)
     ::
     ::  update rss-atom with new metadata and pass output
     ::  onto either -item or -entry
     [%rss-sub %update %rss-atom =link ~]
-      ::  XX remove testing printfs
-      %-  (slog [[%leaf "sign-arvo: {<sign-arvo>}"] ~])
-      %-  (slog [[%leaf "rss channel metadata updated; terminating"] ~])
-      ::  XX route on sign-arvo
-      ::  XX check if tail of gift begins with %.y or %.n
-      ::     if %.y, de-vase thread result
-      ::     if %.n, handle page returned by khan
+      ?>  ?=([%khan %arow *] sign-arvo)
+      ::  XX remove these two testing printfs
+      ~&  >>  "sign-arvo: {<sign-arvo>}"
+      ~&  >   "rss/atom metadata updating"
+      ?:  -.p.sign-arvo
+        ::
+        ::  XX branch on rss or atom
+        ::     maybe the thread should just tell the
+        ::     agent if this is an rss or atom feed
+        ::     with a head tag of %rss or %atom
+        ~&  >  "{<dap.bowl>}: postive result from thread"
+        !!
+      ~&  >>>  "{<dap.bowl>}: invalid xml at url {<link.pole>}"
       `this
     ::
     ::  update rss channel with new item
     [%rss-sub %update %rss-item =link ~]
-      ::  XX remove testing printfs
-      %-  (slog [[%leaf "sign-arvo: {<sign-arvo>}"] ~])
-      %-  (slog [[%leaf "channel items updated; terminating"] ~])
-      ::  XX route on sign-arvo
-      ::  XX check if tail of gift begins with %.y or %.n
-      ::     if %.y, de-vase thread result
-      ::     if %.n, handle page returned by khan
+      ?>  ?=([%khan %arow *] sign-arvo)
+      ::  XX remove these two testing printfs
+      ~&  >>  "sign-arvo: {<sign-arvo>}"
+      ~&  >   "rss channel items updating"
+      ?:  -.p.sign-arvo
+        ::  XX add result to the relevant state
+        ~&  >  "{<dap.bowl>}: postive result from thread"
+        !!
+      ~&  >>>  "{<dap.bowl>}: invalid rss item from url {<link.pole>}"
       `this
     ::
     ::  update atom feed with new entry
     [%rss-sub %update %atom-entry =link ~]
+      ?>  ?=([%khan %arow *] sign-arvo)
       ::  XX remove testing printfs
-      %-  (slog [[%leaf "sign-arvo: {<sign-arvo>}"] ~])
-      %-  (slog [[%leaf "feed items updated; terminating"] ~])
-      ::  XX route on sign-arvo
-      ::  XX check if tail of gift begins with %.y or %.n
-      ::     if %.y, de-vase thread result
-      ::     if %.n, handle page returned by khan
+      ~&  >>  "sign-arvo: {<sign-arvo>}"
+      ~&  >   "atom feed items updating"
+      ?:  -.p.sign-arvo
+        ::  XX add result to the relevant state
+        ~&  >  "{<dap.bowl>}: postive result from thread"
+        !!
+      ~&  >>>  "{<dap.bowl>}: invalid atom entry from url {<link.pole>}"
       `this
   ==  ::  end of pole branches
 ::

@@ -56,8 +56,42 @@
 ::  and send back to the agent and 2) send each item or
 ::  entry in the rss/atom feed to the relevant thread:
 ::  either -item or -entry
+=/  document
+  c:(need xml)
 ?:  =(%channel n.g:(head c:(need xml)))
   ::  rss
-  (pure:m !>(%rss))
+  %-  pure:m
+  !>
+  %.y
+      ::  XX add ^-
+      ::     return (pair (set rss-channel-element) <un-parsed xml>)
+  ::  :-  %+  skim
+  ::        document
+  ::      |=  =manx
+  ::      ::  XX add ^-
+  ::      ::  XX FISH-LOOP ERROR ON THIS LINE
+  ::      ::  ?=(rss-channel-element g.manx)
+  ::      !!
+  ::  %+  skip
+  ::    document
+  ::  |=  =manx
+  ::  ::  XX add ^-
+  ::  ::  ?=(rss-channel-element g.manx)
+  ::  !!
 ::  atom
-(pure:m !>(%atom))
+%-  pure:m
+!>  ::  XX add ^-
+    ::     return (pair (set atom-feed-element) <un-parsed xml>)
+%.y
+::  :-  %+  skim
+::          document
+::        |=  =manx
+::        ::  XX add ^-
+::        ::  ?=(atom-feed-element g.manx)
+::        !!
+::    %+  skip
+::      document
+::    |=  =manx
+::    ::  XX add ^-
+::    ::  ?=(atom-feed-element g.manx)
+::    !!
