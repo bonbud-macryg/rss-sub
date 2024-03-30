@@ -131,15 +131,15 @@
       ::  XX remove these two testing printfs
       ~&  >>  "sign-arvo: {<sign-arvo>}"
       ~&  >   "rss/atom metadata updating"
-      ?:  -.p.sign-arvo
-        ::
-        ::  XX branch on rss or atom
-        ::     maybe the thread should just tell the
-        ::     agent if this is an rss or atom feed
-        ::     with a head tag of %rss or %atom
-        ~&  >  "{<dap.bowl>}: postive result from thread"
-        !!
-      ~&  >>>  "{<dap.bowl>}: invalid xml at url {<link.pole>}"
+      ?.  -.p.sign-arvo
+        ~&  >>>  "{<dap.bowl>}: invalid xml at url {<link.pole>}"
+        `this
+      ::
+      ::  XX branch on rss or atom
+      ::     maybe the thread should just tell the
+      ::     agent if this is an rss or atom feed
+      ::     with a head tag of %rss or %atom
+      ~&  >  "{<dap.bowl>}: postive result from thread"
       `this
     ::
     ::  update rss channel with new item
@@ -148,11 +148,11 @@
       ::  XX remove these two testing printfs
       ~&  >>  "sign-arvo: {<sign-arvo>}"
       ~&  >   "rss channel items updating"
-      ?:  -.p.sign-arvo
-        ::  XX add result to the relevant state
-        ~&  >  "{<dap.bowl>}: postive result from thread"
-        !!
-      ~&  >>>  "{<dap.bowl>}: invalid rss item from url {<link.pole>}"
+      ?.  -.p.sign-arvo
+        ~&  >>>  "{<dap.bowl>}: invalid rss item from url {<link.pole>}"
+        `this
+      ::  XX add result to the relevant state
+      ~&  >  "{<dap.bowl>}: postive result from thread"
       `this
     ::
     ::  update atom feed with new entry
@@ -161,11 +161,11 @@
       ::  XX remove testing printfs
       ~&  >>  "sign-arvo: {<sign-arvo>}"
       ~&  >   "atom feed items updating"
-      ?:  -.p.sign-arvo
-        ::  XX add result to the relevant state
-        ~&  >  "{<dap.bowl>}: postive result from thread"
-        !!
-      ~&  >>>  "{<dap.bowl>}: invalid atom entry from url {<link.pole>}"
+      ?.  -.p.sign-arvo
+         ~&  >>>  "{<dap.bowl>}: invalid atom entry from url {<link.pole>}"
+         `this
+      ::  XX add result to the relevant state
+      ~&  >  "{<dap.bowl>}: postive result from thread"
       `this
   ==  ::  end of pole branches
 ::
