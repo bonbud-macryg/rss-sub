@@ -108,6 +108,7 @@
 +|  %rss-types
 ::
 +$  rss-channel
+  $+  rss-channel
   ::  XX bucbar
   $:  %channel
       ::  XX narrow down type
@@ -121,10 +122,12 @@
   ==
 ::
 +$  rss-item
+  $+  rss-item
   ::  XX bucbar
   [%item (list rss-item-element)]
 ::
 +$  rss-item-element
+  $+  rss-item-element
   $%  [%title text]
       [%link link]
       [%description text]
@@ -151,6 +154,7 @@
   ==
 ::
 +$  rss-channel-element
+  $+  rss-channel-element
   $%  [%title text]
       [%link link]
       [%description text]
@@ -233,6 +237,7 @@
 +|  %atom-types
 ::
 +$  atom-feed
+  $+  atom-feed
   ::  XX bucbar
   ::  XX what about these?
   ::       <?xml version="1.0" encoding="utf-8"?>
@@ -249,6 +254,7 @@
   ==
 ::
 +$  atom-entry
+  $+  atom-entry
   ::  XX bucbar
   [%entry (list atom-entry-element)]
 ::
@@ -263,6 +269,7 @@
 ::
 ::  XX label attributes in comments (like %cateogry and %generator)
 +$  atom-feed-element
+  $+  atom-feed-element
   $%  [%id uri]
       [%title text]
       [%updated time]
@@ -295,6 +302,7 @@
 ::
 ::  XX label attributes in comments (like %category and %source)
 +$  atom-entry-element
+  $+  atom-entry-element
   ::  XX is %id always a URN or can it be any URI?
   $%  [%id uri]
       [%title text]

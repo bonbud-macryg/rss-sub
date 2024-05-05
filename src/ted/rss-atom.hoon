@@ -9,21 +9,20 @@
 |=  arg=vase
 =/  m  (strand ,vase)
 ^-  form:m
-::  XX ugly types, should be $time and $link
-=/  date-and-link  !<([@da @t] arg)
-;<    =time
+=/  time-and-link  !<([=time link=@t] arg)
+;<    now=time
     bind:m
   get-time
 ::
 ::  check if updated time is valid
-?.  (lte -.date-and-link time)
+?.  (lte time.time-and-link now)
   ::  XX all error messaging should be better
   ::       should include source desk, other dynamic info
   (strand-fail %bad-updated-time ~)
 ::
 ::  make iris card for http request
 ::  XX ugly lark notation on feed
-=/  =request:http     [%'GET' +.date-and-link ~ ~]
+=/  =request:http     [%'GET' link.time-and-link ~ ~]
 =/  =task:iris        [%request request *outbound-config:iris]
 =/  =card:agent:gall  [%pass /http-req %arvo %i task]
 ::
@@ -36,15 +35,31 @@
   take-sign-arvo
 ?.  ?=([%iris %http-response %finished *] q.response)
   (strand-fail %failed-http-request ~)
+=,  response-header.client-response.q.response
 ?~  full-file.client-response.q.response
-  (strand-fail %empty-response ~)
+  ?.  ?|  =(301 status-code)
+          =(307 status-code)
+      ==
+    (strand-fail %empty-response ~)
+  %=  $
+    arg  !>  ^-  (pair time @t)
+         :-  time.time-and-link
+         %-  %~  got  by
+           (malt headers)
+         'location'
+  ==
+?:  (gte status-code 500)
+  (strand-fail %internal-server-error ~)
+?:  (gte status-code 400)
+  (strand-fail %bad-request ~)
+::
 =/  xml
   (de-xml:html `@t`q.data.u.full-file.client-response.q.response)
 ?~  xml
   ::
   ::  XX failures to parse here could be fixed by ~migrev-dolseg's patch
   ::       test those problem feeds in %feeds and check for %parse-failed error
-  (strand-fail %invalid-xml ~)
+  (strand-fail %failed-to-parse-xml ~)
 ::
 ::  XX is this test robust enough?
 ::     skimming for any %channel tags might be better
@@ -59,39 +74,46 @@
 =/  document
   c:(need xml)
 ?:  =(%channel n.g:(head c:(need xml)))
-  ::  rss
+  ::  rss channel
   %-  pure:m
-  !>
-  %.y
-      ::  XX add ^-
-      ::     return (pair (set rss-channel-element) <un-parsed xml>)
-  ::  :-  %+  skim
-  ::        document
-  ::      |=  =manx
-  ::      ::  XX add ^-
-  ::      ::  XX FISH-LOOP ERROR ON THIS LINE
-  ::      ::  ?=(rss-channel-element g.manx)
-  ::      !!
-  ::  %+  skip
-  ::    document
-  ::  |=  =manx
-  ::  ::  XX add ^-
-  ::  ::  ?=(rss-channel-element g.manx)
-  ::  !!
-::  atom
+  ::  XX why is the tail a noun and not item elems?
+  !>  ^-  (pair (list *) (list *))
+  =/  all-tags
+    c.i.-.document
+  =/  channel-tags
+    %+  skim
+      all-tags
+    |=  =manx
+    ^-  ?
+    ::  XX is head tag one of rss-channel-element tags...
+    ::  XX ...and is value a valid rss-channel-element value?
+    %.n
+  =/  item-tags
+    %+  skim
+      all-tags
+    |=  =manx
+    ^-  ?
+    =(n.g.manx %item)
+  :-  channel-tags
+  item-tags
+::  atom feed
 %-  pure:m
-!>  ::  XX add ^-
-    ::     return (pair (set atom-feed-element) <un-parsed xml>)
-%.y
-::  :-  %+  skim
-::          document
-::        |=  =manx
-::        ::  XX add ^-
-::        ::  ?=(atom-feed-element g.manx)
-::        !!
-::    %+  skip
-::      document
-::    |=  =manx
-::    ::  XX add ^-
-::    ::  ?=(atom-feed-element g.manx)
-::    !!
+!>  ^-  (pair (list *) (list *))
+=/  all-tags
+  c.i.-.document
+=/  feed-tags
+  %+  skim
+    all-tags
+  |=  =manx
+  ^-  ?
+  ::  XX is head tag one of atom-feed-element...
+  ::  XX ...and is value a valid atom-feed-element value?
+  %.n
+=/  entry-tags
+  %+  skim
+    all-tags
+  |=  =manx
+  ^-  ?
+  =(n.g.manx %entry)
+:-  feed-tags
+entry-tags
