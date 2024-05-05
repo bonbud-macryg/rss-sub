@@ -76,8 +76,7 @@
 ?:  =(%channel n.g:(head c:(need xml)))
   ::  rss channel
   %-  pure:m
-  ::  XX why is the tail a noun and not item elems?
-  !>  ^-  (pair (list *) (list *))
+  !>  ^-  [%rss (list manx) (list manx)]
   =/  all-tags
     c.i.-.document
   =/  channel-tags
@@ -85,20 +84,30 @@
       all-tags
     |=  =manx
     ^-  ?
-    ::  XX is head tag one of rss-channel-element tags...
-    ::  XX ...and is value a valid rss-channel-element value?
-    %.n
+    ~&  >>  "channel-tags manx arg: {<manx>}"
+    ?&  =(n.g.manx ?(%title %link %description %language %pub-date %last-build-date %docs %generator %managing-editor %web-master %copyright %category %ttl %rating %text-input %cloud %image %skip-days %skip-hours))
+      ::  XX v.a.g.c.manx? is of type matching channel tag?
+      ::  XX should normalize here to produce (list rss-channel-element)
+      ::     as in, !> should be [%rss (list rss-channel-element) (list))]
+        %.y
+    ==
+  ::
+  ::  items will be typechecked in /ted/item.hoon
   =/  item-tags
     %+  skim
       all-tags
     |=  =manx
     ^-  ?
     =(n.g.manx %item)
-  :-  channel-tags
-  item-tags
+  ::
+  :*  %rss
+      channel-tags
+      item-tags
+  ==
 ::  atom feed
 %-  pure:m
-!>  ^-  (pair (list *) (list *))
+::  XX narrow down type
+!>  ^-  [%atom (list manx) (list manx)]
 =/  all-tags
   c.i.-.document
 =/  feed-tags
@@ -108,12 +117,17 @@
   ^-  ?
   ::  XX is head tag one of atom-feed-element...
   ::  XX ...and is value a valid atom-feed-element value?
-  %.n
+  %.y
+::
+::  entries will be typechecked in /ted/entry.hoon
 =/  entry-tags
   %+  skim
     all-tags
   |=  =manx
   ^-  ?
   =(n.g.manx %entry)
-:-  feed-tags
-entry-tags
+::
+:*  %atom
+    feed-tags
+    entry-tags
+==

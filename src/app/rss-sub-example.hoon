@@ -128,26 +128,27 @@
     ::  onto either -item or -entry
     [%rss-sub %update %rss-atom =link ~]
       ?>  ?=([%khan %arow *] sign-arvo)
-      ::  XX remove these two testing printfs
-      ~&  >>  "sign-arvo: {<sign-arvo>}"
-      ~&  >   "rss/atom metadata updating"
       ?.  -.p.sign-arvo
         ~&  >>>  "{<dap.bowl>}: invalid xml at url {<link.pole>}"
         `this
-      ::
-      ::  XX branch on rss or atom
-      ::     maybe the thread should just tell the
-      ::     agent if this is an rss or atom feed
-      ::     with a head tag of %rss or %atom
       ~&  >  "{<dap.bowl>}: postive result from thread"
       `this
+      ::  ~&  >>  "+.p.p.sign-arvo: {<+.p.p.sign-arvo>}"
+      ::  =/  response
+      ::    !<([?(%rss %atom) (list ?(rss-channel-element atom-feed-element)) (list manx)] +.p.p.sign-arvo)
+      ::  ?-  -.response
+      ::      %rss
+      ::    ~&  >  "{<dap.bowl>}: received rss"
+      ::    `this
+      ::  ::
+      ::      %atom
+      ::    ~&  >  "{<dap.bowl>}: received atom"
+      ::    `this
+      ::  ==
     ::
     ::  update rss channel with new item
     [%rss-sub %update %rss-item =link ~]
       ?>  ?=([%khan %arow *] sign-arvo)
-      ::  XX remove these two testing printfs
-      ~&  >>  "sign-arvo: {<sign-arvo>}"
-      ~&  >   "rss channel items updating"
       ?.  -.p.sign-arvo
         ~&  >>>  "{<dap.bowl>}: invalid rss item from url {<link.pole>}"
         `this
@@ -158,9 +159,6 @@
     ::  update atom feed with new entry
     [%rss-sub %update %atom-entry =link ~]
       ?>  ?=([%khan %arow *] sign-arvo)
-      ::  XX remove testing printfs
-      ~&  >>  "sign-arvo: {<sign-arvo>}"
-      ~&  >   "atom feed items updating"
       ?.  -.p.sign-arvo
          ~&  >>>  "{<dap.bowl>}: invalid atom entry from url {<link.pole>}"
          `this
