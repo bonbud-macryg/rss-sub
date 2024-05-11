@@ -2,7 +2,7 @@
 ::  parse an rss channel / atom feed and
 ::  create threads to parse new items / entries
 ::
-/-  spider
+/-  spider, rss-atom
 /+  *strandio, *rss-sub
 =,  strand=strand:spider
 ^-  thread:spider
@@ -76,21 +76,86 @@
 ?:  =(%channel n.g:(head c:(need xml)))
   ::  rss channel
   %-  pure:m
-  !>  ^-  [%rss (list manx) (list manx)]
+  !>  ^-  [%rss marl marl]
   =/  all-tags
     c.i.-.document
   =/  channel-tags
-    %+  skim
-      all-tags
-    |=  =manx
-    ^-  ?
-    ~&  >>  "channel-tags manx arg: {<manx>}"
-    ?&  =(n.g.manx ?(%title %link %description %language %pub-date %last-build-date %docs %generator %managing-editor %web-master %copyright %category %ttl %rating %text-input %cloud %image %skip-days %skip-hours))
-      ::  XX v.a.g.c.manx? is of type matching channel tag?
-      ::  XX should normalize here to produce (list rss-channel-element)
-      ::     as in, !> should be [%rss (list rss-channel-element) (list))]
-        %.y
-    ==
+    ::  %+  turn
+      %+  skip
+        all-tags
+      |=  =manx
+      ^-  ?
+      =(n.g.manx %item)
+    ::  |=  =manx
+    ::  ^-  rss-channel-element
+    ::  =*  tag  n.g.manx
+    ::  =*  val  v.a.g.c.manx
+    ::  ?-  tag
+    ::  ::
+    ::      %title
+    ::    [tag (text:rss-atom val)]
+    ::  ::
+    ::      %link
+    ::    [tag (link:rss-atom val)]
+    ::  ::
+    ::      %description
+    ::    [tag (text:rss-atom val)]
+    ::  ::
+    ::      %language
+    ::    [tag (lang:rss-atom val)]
+    ::  ::
+    ::      %pub-date
+    ::    ::  XX convert from RSS time standard to @da
+    ::    [tag val]
+    ::  ::
+    ::      %last-build-date
+    ::    ::  XX convert
+    ::    [tag val]
+    ::  ::
+    ::      %docs
+    ::    [tag (link:rss-atom val)]
+    ::  ::
+    ::      %generator
+    ::    [tag (text:rss-atom val)]
+    ::  ::
+    ::      %managing-editor
+    ::    ::  XX might need to be text
+    ::    [tag (mail:rss-atom val)]
+    ::  ::
+    ::      %web-master
+    ::    ::  XX might need to be text
+    ::    [tag (mail:rss-atom val)]
+    ::  ::
+    ::      %copyright
+    ::    [tag (text:rss-atom val)]
+    ::  ::
+    ::      %category
+    ::    !!
+    ::  ::
+    ::      %ttl
+    ::    [tag (numb:rss-atom val)]
+    ::  ::
+    ::      %rating
+    ::    [tag (text:rss-atom val)]
+    ::  ::
+    ::      %text-input
+    ::    !!
+    ::  ::
+    ::      %cloud
+    ::    !!
+    ::  ::
+    ::      %image
+    ::    !!
+    ::  ::
+    ::      %skip-days
+    ::    ::  XX parse into (list @t) then typecheck
+    ::    !!
+    ::  ::
+    ::      %skip-hours
+    ::    ::  XX parse into (list @t) then typecheck
+    ::    !!
+    ::
+    ::  ==
   ::
   ::  items will be typechecked in /ted/item.hoon
   =/  item-tags
@@ -98,8 +163,10 @@
       all-tags
     |=  =manx
     ^-  ?
-    =(n.g.manx %item)
+    ::  =(n.g.manx %item)
+    =(n.g.manx %foo)
   ::
+  ~&  >>  "channel tags: {<channel-tags>}"
   :*  %rss
       channel-tags
       item-tags
@@ -107,7 +174,7 @@
 ::  atom feed
 %-  pure:m
 ::  XX narrow down type
-!>  ^-  [%atom (list manx) (list manx)]
+!>  ^-  [%atom marl marl]
 =/  all-tags
   c.i.-.document
 =/  feed-tags

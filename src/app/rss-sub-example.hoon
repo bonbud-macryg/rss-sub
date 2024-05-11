@@ -128,23 +128,22 @@
     ::  onto either -item or -entry
     [%rss-sub %update %rss-atom =link ~]
       ?>  ?=([%khan %arow *] sign-arvo)
-      ?.  -.p.sign-arvo
-        ~&  >>>  "{<dap.bowl>}: invalid xml at url {<link.pole>}"
+      ?.  ?=(%.y -.p.sign-arvo)
+        ~&  >>>  "{<dap.bowl>}: failed to parse feed at {<link.pole>}"
+        ~&  >>>  p.p.sign-arvo
         `this
-      ~&  >  "{<dap.bowl>}: postive result from thread"
-      `this
-      ::  ~&  >>  "+.p.p.sign-arvo: {<+.p.p.sign-arvo>}"
-      ::  =/  response
-      ::    !<([?(%rss %atom) (list ?(rss-channel-element atom-feed-element)) (list manx)] +.p.p.sign-arvo)
-      ::  ?-  -.response
-      ::      %rss
-      ::    ~&  >  "{<dap.bowl>}: received rss"
-      ::    `this
-      ::  ::
-      ::      %atom
-      ::    ~&  >  "{<dap.bowl>}: received atom"
-      ::    `this
-      ::  ==
+      ::  XX should be [rss/atom rss-channel-element/atom-feed-element marl]
+      =/  response  !<([?(%rss %atom) marl marl] q.p.p.sign-arvo)
+      ?-  -.response
+      ::
+          %rss
+        ~&  >  "{<dap.bowl>}: parsed rss channel {<link.pole>}"
+        `this
+      ::
+          %atom
+        ~&  >  "{<dap.bowl>}: parsed atom feed {<link.pole>}"
+        `this
+      ==
     ::
     ::  update rss channel with new item
     [%rss-sub %update %rss-item =link ~]
