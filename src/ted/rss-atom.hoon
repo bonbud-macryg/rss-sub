@@ -85,7 +85,9 @@
         all-tags
       |=  =manx
       ^-  ?
-      =(n.g.manx %item)
+      ?|  =(n.g.manx %item)
+          =(n.g.manx %items)
+      ==
     ::  |=  =manx
     ::  ^-  rss-channel-element
     ::  =*  tag  n.g.manx
