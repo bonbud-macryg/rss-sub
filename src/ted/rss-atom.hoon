@@ -75,21 +75,24 @@
   c:(need xml)
 ?:  =(%channel n.g:(head c:(need xml)))
   ::  rss channel
-  %-  pure:m
-  !>  ^-  [%rss marl marl]
-  =/  all-tags
-    c.i.-.document
   =/  channel-tags
-    ::  %+  turn
+    %+  turn
       %+  skip
-        all-tags
+        c.i.-.document
       |=  =manx
       ^-  ?
       ?|  =(n.g.manx %item)
           =(n.g.manx %items)
       ==
-    ::  |=  =manx
+    |=  =manx
     ::  ^-  rss-channel-element
+    ^-  [@tas *]
+    =*  tag  n.g.manx
+    =*  val  (crip v:(head a.g:(head c.manx)))
+    ~&  >>  tag
+    ~&  >>  val
+    [%foo 'bar']
+    ::  [tag val]
     ::  =*  tag  n.g.manx
     ::  =*  val  v.a.g.c.manx
     ::  ?-  tag
@@ -162,26 +165,23 @@
   ::  items will be typechecked in /ted/item.hoon
   =/  item-tags
     %+  skim
-      all-tags
+      c.i.-.document
     |=  =manx
     ^-  ?
     ::  =(n.g.manx %item)
     =(n.g.manx %foo)
   ::
+  %-  pure:m
+  !>  ^-  [%rss * marl]
   ~&  >>  "channel tags: {<channel-tags>}"
   :*  %rss
       channel-tags
       item-tags
   ==
 ::  atom feed
-%-  pure:m
-::  XX narrow down type
-!>  ^-  [%atom marl marl]
-=/  all-tags
-  c.i.-.document
 =/  feed-tags
   %+  skim
-    all-tags
+    c.i.-.document
   |=  =manx
   ^-  ?
   ::  XX is head tag one of atom-feed-element...
@@ -191,11 +191,14 @@
 ::  entries will be typechecked in /ted/entry.hoon
 =/  entry-tags
   %+  skim
-    all-tags
+    c.i.-.document
   |=  =manx
   ^-  ?
   =(n.g.manx %entry)
 ::
+%-  pure:m
+::  XX narrow down type
+!>  ^-  [%atom marl marl]
 :*  %atom
     feed-tags
     entry-tags

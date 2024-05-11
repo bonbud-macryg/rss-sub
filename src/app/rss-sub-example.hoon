@@ -133,7 +133,7 @@
         ~&  >>>  p.p.sign-arvo
         `this
       ::  XX should be [rss/atom rss-channel-element/atom-feed-element marl]
-      =/  response  !<([?(%rss %atom) marl marl] q.p.p.sign-arvo)
+      =/  response  !<([?(%rss %atom) * marl] q.p.p.sign-arvo)
       ?-  -.response
       ::
           %rss
