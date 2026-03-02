@@ -1,12 +1,13 @@
 ::
 ::  rss-sub example app
 ::
-/+  default-agent, dbug, *rss-sub
+/-  ra=rss-atom
+/+  default-agent, dbug, rs=rss-sub
 |%
 +$  app-state
-  $:  =maximum
-      =refresh
-      =feed-state
+  $:  =maximum:rs
+      =refresh:rs
+      =feed-state:rs
   ==
 --
 %-  agent:dbug
@@ -38,7 +39,7 @@
   ^-  (quip card _this)
   ?+  mark  (on-poke:def mark vase)
     %rss-sub
-      =/  action  !<(rss-sub-action vase)
+      =/  action  !<(rss-sub-action:rs vase)
       ?-  -.action
         %add-feed
           ?~  (de-purl:html link.action)
@@ -56,7 +57,7 @@
                   q.byk.bowl
                   %rss-atom
                   %noun
-                  !>  ^-  (pair time link)
+                  !>  ^-  (pair time link:ra)
                   [now.bowl link.action]
               ==
           ==
@@ -79,7 +80,7 @@
             ~|  "{<q.byk.bowl>}: no saved feeds to update"
             !!
           ::  XX check if feeds are all in feed-state; error if not
-          %^    make-refresh-cards
+          %^    make-refresh-cards:rs
               links.action
             q.byk.bowl
           feed-state
@@ -126,7 +127,7 @@
     ::
     ::  update rss-atom with new metadata and pass output
     ::  onto either -item or -entry
-    [%rss-sub %update %rss-atom =link ~]
+    [%rss-sub %update %rss-atom =link:ra ~]
       ?>  ?=([%khan %arow *] sign-arvo)
       ?.  ?=(%.y -.p.sign-arvo)
         ~&  >>>  "{<dap.bowl>}: failed to parse feed at {<link.pole>}"
@@ -146,7 +147,7 @@
       ==
     ::
     ::  update rss channel with new item
-    [%rss-sub %update %rss-item =link ~]
+    [%rss-sub %update %rss-item =link:ra ~]
       ?>  ?=([%khan %arow *] sign-arvo)
       ?.  -.p.sign-arvo
         ~&  >>>  "{<dap.bowl>}: invalid rss item from url {<link.pole>}"
@@ -156,7 +157,7 @@
       `this
     ::
     ::  update atom feed with new entry
-    [%rss-sub %update %atom-entry =link ~]
+    [%rss-sub %update %atom-entry =link:ra ~]
       ?>  ?=([%khan %arow *] sign-arvo)
       ?.  -.p.sign-arvo
          ~&  >>>  "{<dap.bowl>}: invalid atom entry from url {<link.pole>}"

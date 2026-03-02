@@ -2,17 +2,18 @@
 ::  parse an rss channel / atom feed and
 ::  create threads to parse new items / entries
 ::
-/-  spider, rss-atom
-/+  *strandio, *rss-sub
+/-  spider, ra=rss-atom
+/+  io=strandio, rs=rss-sub
 =,  strand=strand:spider
+=,  strand-fail:strand-fail:strand
 ^-  thread:spider
 |=  arg=vase
 =/  m  (strand ,vase)
 ^-  form:m
-=/  time-and-link  !<([=time link=@t] arg)
-;<    now=time
+=/  time-and-link  !<([=time =link:ra] arg)
+;<    now=@da
     bind:m
-  get-time
+  get-time:io
 ::
 ::  check if updated time is valid
 ?.  (lte time.time-and-link now)
@@ -29,10 +30,10 @@
 ::  send card and validate response
 ;<    ~
     bind:m
-  (send-raw-card card)
+  (send-raw-card:io card)
 ;<    response=(pair wire sign-arvo)
     bind:m
-  take-sign-arvo
+  take-sign-arvo:io
 ?.  ?=([%iris %http-response %finished *] q.response)
   (strand-fail %failed-http-request ~)
 =,  response-header.client-response.q.response

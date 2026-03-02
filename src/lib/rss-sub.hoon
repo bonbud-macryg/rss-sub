@@ -1,4 +1,4 @@
-/-  *rss-atom
+/-  ra=rss-atom
 /+  manx-utils
 |%
 ::
@@ -14,15 +14,15 @@
 ::       but not sure what causes the problem +each solves and
 ::       how to navigate without +each
 ::
-+$  feed        (each rss-channel atom-feed)    ::  RSS/Atom
++$  feed        (each channel:rss:ra feed:atom:ra)    ::  RSS/Atom
 ::  XX could be feed-items; devs might add other 'feed state' on top of this
-+$  feed-state  (map link (pair updated (unit feed)))  ::  URLs and feeds
++$  feed-state  (map link:ra (pair updated (unit feed)))  ::  URLs and feeds
 ::
 +$  rss-sub-action
-  $%  [%add-feed =link]
-      [%del-feed =link]
+  $%  [%add-feed =link:ra]
+      [%del-feed =link:ra]
       [%set-refresh =refresh]
-      [%refresh-now links=(list link)]
+      [%refresh-now links=(list link:ra)]
   ==
 ::
 +|  %actions
@@ -30,13 +30,13 @@
 ++  set-refresh  !!
 ::
 ++  make-refresh-cards
-  |=  [links=(list link) =desk =feed-state]
+  |=  [links=(list link:ra) =desk =feed-state]
   ^-  (list card:agent:gall)
   ?~  links
     ::  refresh all links
     %+  turn
       ~(tap in ~(key by feed-state))
-    |=  =link
+    |=  =link:ra
     %:  make-refresh-card
         link
         -:(~(got by feed-state) link)
@@ -46,7 +46,7 @@
   ::  XX foobarbat are all links; fix names and types
   %+  turn
     %+  skim
-      `(list link)`links
+      `(list link:ra)`links
     |=  foo=@t
     (~(has by feed-state) foo)
   |=  bar=@t
