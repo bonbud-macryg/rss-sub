@@ -75,6 +75,7 @@
 =/  document
   c:(need xml)
 ?:  =(%channel n.g:(head c:(need xml)))
+  ::
   ::  rss channel
   =/  channel-tags
     %+  turn
@@ -86,100 +87,84 @@
           =(n.g.manx %items)
       ==
     |=  =manx
-    ::  ^-  rss-channel-element
-    ^-  [@tas *]
+    ^-  channel-element:rss:ra
     =*  tag  n.g.manx
     =*  val  (crip v:(head a.g:(head c.manx)))
+    ~&  >>  %ted-rss-atom
+    ~&  >>  %rss-channel
     ~&  >>  tag
     ~&  >>  val
-    [%foo 'bar']
-    ::  [tag val]
-    ::  =*  tag  n.g.manx
-    ::  =*  val  v.a.g.c.manx
-    ::  ?-  tag
-    ::  ::
-    ::      %title
-    ::    [tag (text:rss-atom val)]
-    ::  ::
-    ::      %link
-    ::    [tag (link:rss-atom val)]
-    ::  ::
-    ::      %description
-    ::    [tag (text:rss-atom val)]
-    ::  ::
-    ::      %language
-    ::    [tag (lang:rss-atom val)]
-    ::  ::
-    ::      %pub-date
-    ::    ::  XX convert from RSS time standard to @da
-    ::    [tag val]
-    ::  ::
-    ::      %last-build-date
-    ::    ::  XX convert
-    ::    [tag val]
-    ::  ::
-    ::      %docs
-    ::    [tag (link:rss-atom val)]
-    ::  ::
-    ::      %generator
-    ::    [tag (text:rss-atom val)]
-    ::  ::
-    ::      %managing-editor
-    ::    ::  XX might need to be text
-    ::    [tag (mail:rss-atom val)]
-    ::  ::
-    ::      %web-master
-    ::    ::  XX might need to be text
-    ::    [tag (mail:rss-atom val)]
-    ::  ::
-    ::      %copyright
-    ::    [tag (text:rss-atom val)]
-    ::  ::
-    ::      %category
-    ::    !!
-    ::  ::
-    ::      %ttl
-    ::    [tag (numb:rss-atom val)]
-    ::  ::
-    ::      %rating
-    ::    [tag (text:rss-atom val)]
-    ::  ::
-    ::      %text-input
-    ::    !!
-    ::  ::
-    ::      %cloud
-    ::    !!
-    ::  ::
-    ::      %image
-    ::    !!
-    ::  ::
-    ::      %skip-days
-    ::    ::  XX parse into (list @t) then typecheck
-    ::    !!
-    ::  ::
-    ::      %skip-hours
-    ::    ::  XX parse into (list @t) then typecheck
-    ::    !!
+    ?+  tag
+      ::  XX error
+      [%title 'foobarthisisthedefaultcase']
     ::
-    ::  ==
+      %docs         [tag val]
+      %link         [tag val]
+      %title        [tag val]
+      %rating       [tag val]
+      %language     [tag val]
+      %copyright    [tag val]
+      %generator    [tag val]
+      %description  [tag val]
+    ::
+        %'pubDate'
+      ::  XX parse date from RSS time to @da
+      [%pub-date ~2000.1.1]
+    ::
+        %'lastBuildDate'
+      ::  XX as above
+      [%last-build-date ~2000.1.1]
+    ::
+        %'managingEditor'
+      !!
+    ::
+        %'webMaster'
+      !!
+    ::
+        %category
+      !!
+    ::
+        %ttl
+      !!
+    ::
+        %'textInput'
+      !!
+    ::
+        %cloud
+      !!
+    ::
+        %image
+      !!
+    ::
+        %'skipDays'
+      !!
+    ::
+        %'skipHours'
+      !!
+    ==
   ::
-  ::  items will be typechecked in /ted/item.hoon
+  ::  items will be processed by /ted/item.hoon
   =/  item-tags
+    ^-  marl
     %+  skim
       c.i.-.document
     |=  =manx
     ^-  ?
-    ::  =(n.g.manx %item)
-    =(n.g.manx %foo)
+    =(n.g.manx %item)
   ::
   %-  pure:m
   !>  ^-  [%rss * marl]
+  ~&  >>  %ted-rss-atom
+  ~&  >>  %rss-channel
   ~&  >>  "channel tags: {<channel-tags>}"
+  ::  ~&  >>  "item tags: {<item-tags>}"
   :*  %rss
       channel-tags
       item-tags
   ==
+::
 ::  atom feed
+~&  >  %atom-feed
 =/  feed-tags
   %+  skim
     c.i.-.document
