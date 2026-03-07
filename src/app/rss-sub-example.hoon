@@ -2,7 +2,7 @@
 ::  rss-sub example app
 ::
 /-  ra=rss-atom
-/+  default-agent, dbug, rs=rss-sub
+/+  default-agent, dbug, verb, rs=rss-sub
 |%
 +$  app-state
   $:  =maximum:rs
@@ -13,6 +13,7 @@
 %-  agent:dbug
 =|  app-state
 =*  state  -
+%+  verb  &
 ^-  agent:gall
 |_  =bowl:gall
 +*  this  .
@@ -121,12 +122,12 @@
       ?>  ?=([%khan %arow *] sign-arvo)
       ?.  ?=(%& -.p.sign-arvo)
         ~&  >>>  %on-arvo
-        ~&  >>>  "{<dap.bowl>}: failed to parse feed at {<link.pole>}"
+        ~&  >>>  "{<dap.bowl>}: failed to parse rss channel or atom feed at {<link.pole>}"
         `this
       ?>  ?=([%khan %arow %.y %noun *] sign-arvo)
       =/  [%khan %arow %.y %noun =vase]  sign-arvo
       ::  XX should be [rss/atom rss-channel-element/atom-feed-element marl]
-      =/  res  !<([?(%rss %atom) feed=* items=marl] vase)
+      =/  res  !<([?(%rss %atom) feed=* items=(list manx)] vase)
       ?-  -.res
       ::
           %rss
@@ -156,8 +157,26 @@
           %atom
         ~&  >  %on-arvo
         ~&  >  "{<dap.bowl>}: parsed atom feed {<link.pole>}"
-        ~&  >  %stub
-        `this
+        :-  %+  turn
+              items.res
+            |=  =manx
+            ^-  card
+            :*  %pass  /rss-sub/update/atom-entry/[link.pole]
+                %arvo  %k
+                %fard  q.byk.bowl
+                %atom-entry  [%noun !>(manx)]
+            ==
+        %=  this
+           feed-state  %-  ~(put by feed-state)
+                       :-  (slav %t link.pole)
+                       :-  now.bowl
+                       %-  some
+                       ^-  feed:rs
+                       :-  %.n
+                       ^-  feed:atom:ra
+                       ::  XX what goes in headers?
+                       [%feed ~ ((list feed-element:atom:ra) feed.res) ~]
+        ==
       ==
     ::
     ::  update rss channel with new item
@@ -195,14 +214,34 @@
     ::  update atom feed with new entry
     [%rss-sub %update %atom-entry =link:ra ~]
       ?>  ?=([%khan %arow *] sign-arvo)
-      ?.  -.p.sign-arvo
-         ~&  >>>  %on-arvo
-         ~&  >>>  "{<dap.bowl>}: invalid atom entry from url {<link.pole>}"
-         `this
-      ::  XX add result to the relevant state
-      ~&  >  %on-arvo
-      ~&  >  "{<dap.bowl>}: postive result from thread"
-      `this
+      ?.  ?=(%& -.p.sign-arvo)
+        ~&  >>>  %on-arvo
+        ~&  >>>  "{<dap.bowl>}: invalid atom entry from url {<link.pole>}"
+        `this
+      ?>  ?=([%khan %arow %.y %noun *] sign-arvo)
+      =/  [%khan %arow %.y %noun =vase]  sign-arvo
+      =/  =entry:atom:ra  !<(entry:atom:ra vase)
+      =/  feed  (~(get by feed-state) (slav %t link.pole))
+      ?~  feed
+        `this
+      ?<  ?=(~ q.u.feed)
+      ?:  -.u.q.u.feed
+        `this
+      ?>  ?=([%feed *] +.u.q.u.feed)
+      =/  =feed:atom:ra  +.u.q.u.feed
+      :-  ~
+      %=  this
+        feed-state  %-  ~(put by feed-state)
+                    :-  (slav %t link.pole)
+                    :-  now.bowl
+                    %-  some
+                    ^-  feed:rs
+                    :-  %.n
+                    ^-  feed:atom:ra
+                    %=  feed
+                      entries  :-(entry entries.feed)
+                    ==
+      ==
   ==  ::  end of pole branches
 ::
 ++  on-agent  on-agent:def

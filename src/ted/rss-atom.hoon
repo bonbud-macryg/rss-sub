@@ -54,12 +54,108 @@
 ?:  (gte status-code 400)
   (strand-fail %bad-request ~)
 ::
+=/  sanitize
+  |=  xml=@t
+  ^-  @t
+  =/  in=tape  (trip xml)
+  =/  clean=tape
+    %+  murn  in
+    |=  c=@
+    ^-  (unit @)
+    ?:  (gth c 127)  ~
+    ?:  =(`@`13 c)   ~
+    ?:  =(`@`9 c)    `' '
+    `c
+  =/  no-pis=tape
+    =/  strip-pis
+      |=  t=tape
+      ^-  tape
+      |-
+      ?~  t  ~
+      ?.  =('<' i.t)  [i.t $(t t.t)]
+      ?~  t.t  [i.t ~]
+      ?.  =('?' i.t.t)  [i.t $(t t.t)]
+      =/  skip-end
+        |=  s=tape
+        ^-  tape
+        |-
+        ?~  s  ~
+        ?.  =('?' i.s)  $(s t.s)
+        ?~  t.s  ~
+        ?.  =('>' i.t.s)  $(s t.s)
+        t.t.s
+      $(t (skip-end t.t.t))
+    (strip-pis clean)
+  =/  fix-hyphens
+    |=  t=tape
+    ^-  tape
+    =/  s=@ud  0
+    |-
+    ?~  t  ~
+    ?:  =(0 s)
+      ?.  =('<' i.t)  [i.t $(t t.t)]
+      ?:  ?&  ?=(^ t.t)  =('!' i.t.t)
+              ?=(^ t.t.t)  =('[' i.t.t.t)
+          ==
+        [i.t $(t t.t, s 1)]
+      ?:  ?&  ?=(^ t.t)  =('!' i.t.t)
+              ?=(^ t.t.t)  =('-' i.t.t.t)
+          ==
+        [i.t $(t t.t, s 6)]
+      ?:  ?&  ?=(^ t.t)  =('!' i.t.t)  ==
+        [i.t $(t t.t)]
+      [i.t $(t t.t, s 2)]
+    ?:  =(1 s)
+      ?:  ?&  =(']' i.t)
+              ?=(^ t.t)  =(']' i.t.t)
+              ?=(^ t.t.t)  =('>' i.t.t.t)
+          ==
+        [']' [']' ['>' $(t t.t.t.t, s 0)]]]
+      [i.t $(t t.t)]
+    ?:  =(2 s)
+      ?:  =('>' i.t)  [i.t $(t t.t, s 0)]
+      ?:  =(' ' i.t)  [i.t $(t t.t, s 3)]
+      ?:  =('-' i.t)  ['_' $(t t.t)]
+      [i.t $(t t.t)]
+    ?:  =(3 s)
+      ?:  =('>' i.t)   [i.t $(t t.t, s 0)]
+      ?:  =('"' i.t)   [i.t $(t t.t, s 4)]
+      ?:  =('\'' i.t)  [i.t $(t t.t, s 5)]
+      ?:  =('-' i.t)   ['_' $(t t.t)]
+      ?:  =(' ' i.t)
+        =/  rest=tape  t.t
+        |-  ^-  tape
+        ?~  rest  [' ' ~]
+        ?:  =(' ' i.rest)  $(rest t.rest)
+        ?:  =('>' i.rest)  ['>' ^$(t t.rest, s 0)]
+        [' ' ^$(t rest, s 3)]
+      [i.t $(t t.t)]
+    ?:  =(4 s)
+      ?:  =('"' i.t)   [i.t $(t t.t, s 3)]
+      [i.t $(t t.t)]
+    ?:  =(5 s)
+      ?:  =('\'' i.t)  [i.t $(t t.t, s 3)]
+      [i.t $(t t.t)]
+    ?:  =(6 s)
+      ?:  ?&  =('-' i.t)
+              ?=(^ t.t)  =('-' i.t.t)
+              ?=(^ t.t.t)  =('>' i.t.t.t)
+          ==
+        ['-' ['-' ['>' $(t t.t.t.t, s 0)]]]
+      [i.t $(t t.t)]
+    [i.t $(t t.t)]
+  (crip (fix-hyphens no-pis))
+::
 =/  xml
-  (de-xml:html `@t`q.data.u.full-file.client-response.q.response)
+  (de-xml:html (sanitize `@t`q.data.u.full-file.client-response.q.response))
 ?~  xml
   ::
   ::  XX failures to parse here could be fixed by ~migrev-dolseg's patch
   ::       test those problem feeds in %feeds and check for %parse-failed error
+  ::  XX de-xml:html has known limitations with namespaced attributes
+  ::       e.g. xml:lang="en-US" or xmlns:thr=... on the root element
+  ::       causes parse failure; would require pre-processing to strip
+  ::       namespace declarations or a patch to de-xml:html
   (strand-fail %failed-to-parse-xml ~)
 ::
 ::  XX is this test robust enough?
@@ -165,26 +261,78 @@
 ::
 ::  atom feed
 ~&  >  %atom-feed
-=/  feed-tags
-  %+  skim
-    c.i.-.document
-  |=  =manx
-  ^-  ?
-  ::  XX is head tag one of atom-feed-element...
-  ::  XX ...and is value a valid atom-feed-element value?
-  %.y
+=/  get-text
+  |=  node=manx
+  ^-  @t
+  (crip v:(head a.g:(head c.node)))
 ::
-::  entries will be typechecked in /ted/entry.hoon
-=/  entry-tags
+=/  get-attr
+  |=  [node=manx name=@tas]
+  ^-  (unit tape)
+  %-  ~(get by (malt (turn a.g.node |=(a=[n=mane v=tape] [n.a v.a]))))
+  name
+::
+=/  feed-tags=(list feed-element:atom:ra)
+  %+  murn
+    document
+  |=  child=manx
+  ^-  (unit feed-element:atom:ra)
+  =*  tag  n.g.child
+  ?:  =(%$ tag)  ~
+  ?+  tag  ~
+    %id        `[%id (get-text child)]
+    %title     `[%title (get-text child)]
+    %subtitle  `[%subtitle (get-text child)]
+    %rights    `[%rights (get-text child)]
+    %icon      `[%icon (get-text child)]
+    %logo      `[%logo (get-text child)]
+    ::
+    %updated
+      ::  XX parse atom date to @da
+      `[%updated ~2000.1.1]
+    ::
+    %author
+      ::  name is in <name> child; mail and uri are optional siblings
+      =/  name-node=(unit manx)
+        =/  matches  (skim c.child |=(m=manx =(n.g.m %name)))
+        ?~  matches  ~
+        `i.matches
+      ?~  name-node  ~
+      `[%author (get-text u.name-node) ~ ~]
+    ::
+    %contributor
+      =/  name-node=(unit manx)
+        =/  matches  (skim c.child |=(m=manx =(n.g.m %name)))
+        ?~  matches  ~
+        `i.matches
+      ?~  name-node  ~
+      `[%contributor (get-text u.name-node)]
+    ::
+    %generator
+      `[%generator ~ ~]
+    ::
+    %link
+      =/  href=(unit tape)  (get-attr child 'href')
+      ?~  href  ~
+      `[%link (crip u.href) ~ ~ ~ ~ ~]
+    ::
+    %category
+      =/  term=(unit tape)  (get-attr child 'term')
+      ?~  term  ~
+      `[%category (crip u.term) ~ ~]
+    ::
+  ==
+::
+::  entries will be parsed in /ted/atom-entry.hoon
+=/  entry-tags=marl
   %+  skim
-    c.i.-.document
-  |=  =manx
+    document
+  |=  child=manx
   ^-  ?
-  =(n.g.manx %entry)
+  =(n.g.child %entry)
 ::
 %-  pure:m
-::  XX narrow down type
-!>  ^-  [%atom marl marl]
+!>  ^-  [%atom (list feed-element:atom:ra) marl]
 :*  %atom
     feed-tags
     entry-tags
