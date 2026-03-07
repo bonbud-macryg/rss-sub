@@ -7,6 +7,99 @@
 =,  strand=strand:spider
 =,  strand-fail:strand-fail:strand
 ^-  thread:spider
+=>  |%
+    ++  sanitize
+      |=  xml=@t
+      ^-  @t
+      =/  in=tape  (trip xml)
+      =/  clean=tape
+        %+  murn  in
+        |=  c=@
+        ^-  (unit @)
+        ?:  (gth c 127)  ~
+        ?:  =(`@`13 c)   ~
+        ?:  =(`@`9 c)    `' '
+        `c
+      =/  no-pis=tape
+        =/  strip-pis
+          |=  t=tape
+          ^-  tape
+          |-
+          ?~  t  ~
+          ?.  =('<' i.t)  [i.t $(t t.t)]
+          ?~  t.t  [i.t ~]
+          ?.  =('?' i.t.t)  [i.t $(t t.t)]
+          =/  skip-end
+            |=  s=tape
+            ^-  tape
+            |-
+            ?~  s  ~
+            ?.  =('?' i.s)  $(s t.s)
+            ?~  t.s  ~
+            ?.  =('>' i.t.s)  $(s t.s)
+            t.t.s
+          $(t (skip-end t.t.t))
+        (strip-pis clean)
+      =/  fix-hyphens
+        |=  t=tape
+        ^-  tape
+        =/  s=@ud  0
+        |-
+        ?~  t  ~
+        ?:  =(0 s)
+          ?.  =('<' i.t)  [i.t $(t t.t)]
+          ?:  ?&  ?=(^ t.t)  =('!' i.t.t)
+                  ?=(^ t.t.t)  =('[' i.t.t.t)
+              ==
+            [i.t $(t t.t, s 1)]
+          ?:  ?&  ?=(^ t.t)  =('!' i.t.t)
+                  ?=(^ t.t.t)  =('-' i.t.t.t)
+              ==
+            [i.t $(t t.t, s 6)]
+          ?:  ?&  ?=(^ t.t)  =('!' i.t.t)  ==
+            [i.t $(t t.t)]
+          [i.t $(t t.t, s 2)]
+        ?:  =(1 s)
+          ?:  ?&  =(']' i.t)
+                  ?=(^ t.t)  =(']' i.t.t)
+                  ?=(^ t.t.t)  =('>' i.t.t.t)
+              ==
+            [']' [']' ['>' $(t t.t.t.t, s 0)]]]
+          [i.t $(t t.t)]
+        ?:  =(2 s)
+          ?:  =('>' i.t)  [i.t $(t t.t, s 0)]
+          ?:  =(' ' i.t)  [i.t $(t t.t, s 3)]
+          ?:  =('-' i.t)  ['_' $(t t.t)]
+          [i.t $(t t.t)]
+        ?:  =(3 s)
+          ?:  =('>' i.t)   [i.t $(t t.t, s 0)]
+          ?:  =('"' i.t)   [i.t $(t t.t, s 4)]
+          ?:  =('\'' i.t)  [i.t $(t t.t, s 5)]
+          ?:  =('-' i.t)   ['_' $(t t.t)]
+          ?:  =(' ' i.t)
+            =/  rest=tape  t.t
+            |-  ^-  tape
+            ?~  rest  [' ' ~]
+            ?:  =(' ' i.rest)  $(rest t.rest)
+            ?:  =('>' i.rest)  ['>' ^$(t t.rest, s 0)]
+            [' ' ^$(t rest, s 3)]
+          [i.t $(t t.t)]
+        ?:  =(4 s)
+          ?:  =('"' i.t)   [i.t $(t t.t, s 3)]
+          [i.t $(t t.t)]
+        ?:  =(5 s)
+          ?:  =('\'' i.t)  [i.t $(t t.t, s 3)]
+          [i.t $(t t.t)]
+        ?:  =(6 s)
+          ?:  ?&  =('-' i.t)
+                  ?=(^ t.t)  =('-' i.t.t)
+                  ?=(^ t.t.t)  =('>' i.t.t.t)
+              ==
+            ['-' ['-' ['>' $(t t.t.t.t, s 0)]]]
+          [i.t $(t t.t)]
+        [i.t $(t t.t)]
+      (crip (fix-hyphens no-pis))
+    --
 |=  arg=vase
 =/  m  (strand ,vase)
 ^-  form:m
@@ -53,98 +146,6 @@
   (strand-fail %internal-server-error ~)
 ?:  (gte status-code 400)
   (strand-fail %bad-request ~)
-::
-=/  sanitize
-  |=  xml=@t
-  ^-  @t
-  =/  in=tape  (trip xml)
-  =/  clean=tape
-    %+  murn  in
-    |=  c=@
-    ^-  (unit @)
-    ?:  (gth c 127)  ~
-    ?:  =(`@`13 c)   ~
-    ?:  =(`@`9 c)    `' '
-    `c
-  =/  no-pis=tape
-    =/  strip-pis
-      |=  t=tape
-      ^-  tape
-      |-
-      ?~  t  ~
-      ?.  =('<' i.t)  [i.t $(t t.t)]
-      ?~  t.t  [i.t ~]
-      ?.  =('?' i.t.t)  [i.t $(t t.t)]
-      =/  skip-end
-        |=  s=tape
-        ^-  tape
-        |-
-        ?~  s  ~
-        ?.  =('?' i.s)  $(s t.s)
-        ?~  t.s  ~
-        ?.  =('>' i.t.s)  $(s t.s)
-        t.t.s
-      $(t (skip-end t.t.t))
-    (strip-pis clean)
-  =/  fix-hyphens
-    |=  t=tape
-    ^-  tape
-    =/  s=@ud  0
-    |-
-    ?~  t  ~
-    ?:  =(0 s)
-      ?.  =('<' i.t)  [i.t $(t t.t)]
-      ?:  ?&  ?=(^ t.t)  =('!' i.t.t)
-              ?=(^ t.t.t)  =('[' i.t.t.t)
-          ==
-        [i.t $(t t.t, s 1)]
-      ?:  ?&  ?=(^ t.t)  =('!' i.t.t)
-              ?=(^ t.t.t)  =('-' i.t.t.t)
-          ==
-        [i.t $(t t.t, s 6)]
-      ?:  ?&  ?=(^ t.t)  =('!' i.t.t)  ==
-        [i.t $(t t.t)]
-      [i.t $(t t.t, s 2)]
-    ?:  =(1 s)
-      ?:  ?&  =(']' i.t)
-              ?=(^ t.t)  =(']' i.t.t)
-              ?=(^ t.t.t)  =('>' i.t.t.t)
-          ==
-        [']' [']' ['>' $(t t.t.t.t, s 0)]]]
-      [i.t $(t t.t)]
-    ?:  =(2 s)
-      ?:  =('>' i.t)  [i.t $(t t.t, s 0)]
-      ?:  =(' ' i.t)  [i.t $(t t.t, s 3)]
-      ?:  =('-' i.t)  ['_' $(t t.t)]
-      [i.t $(t t.t)]
-    ?:  =(3 s)
-      ?:  =('>' i.t)   [i.t $(t t.t, s 0)]
-      ?:  =('"' i.t)   [i.t $(t t.t, s 4)]
-      ?:  =('\'' i.t)  [i.t $(t t.t, s 5)]
-      ?:  =('-' i.t)   ['_' $(t t.t)]
-      ?:  =(' ' i.t)
-        =/  rest=tape  t.t
-        |-  ^-  tape
-        ?~  rest  [' ' ~]
-        ?:  =(' ' i.rest)  $(rest t.rest)
-        ?:  =('>' i.rest)  ['>' ^$(t t.rest, s 0)]
-        [' ' ^$(t rest, s 3)]
-      [i.t $(t t.t)]
-    ?:  =(4 s)
-      ?:  =('"' i.t)   [i.t $(t t.t, s 3)]
-      [i.t $(t t.t)]
-    ?:  =(5 s)
-      ?:  =('\'' i.t)  [i.t $(t t.t, s 3)]
-      [i.t $(t t.t)]
-    ?:  =(6 s)
-      ?:  ?&  =('-' i.t)
-              ?=(^ t.t)  =('-' i.t.t)
-              ?=(^ t.t.t)  =('>' i.t.t.t)
-          ==
-        ['-' ['-' ['>' $(t t.t.t.t, s 0)]]]
-      [i.t $(t t.t)]
-    [i.t $(t t.t)]
-  (crip (fix-hyphens no-pis))
 ::
 =/  xml
   (de-xml:html (sanitize `@t`q.data.u.full-file.client-response.q.response))
