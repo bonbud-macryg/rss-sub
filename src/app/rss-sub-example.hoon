@@ -5,8 +5,7 @@
 /+  default-agent, dbug, verb, rs=rss-sub
 |%
 +$  app-state
-  $:  =maximum:rs
-      =refresh:rs
+  $:  =refresh:rs
       =feed-state:rs
   ==
 --
@@ -22,10 +21,7 @@
 ::
 ++  on-init
   ^-  (quip card _this)
-  :_  %=  this
-        refresh  ~m15
-        maximum  `1.000
-      ==
+  :_  this(refresh ~m15)
   :~  [%pass /rss-sub/timer %arvo %b %wait (add ~m15 now.bowl)]
   ==
 ++  on-save
@@ -102,12 +98,6 @@
     ::  list all subscribed feed URLs
     [%x %urls ~]
       ``feed-urls+!>(~(tap in ~(key by feed-state)))
-    ::
-    ::  .^((unit @ud) %gx /=rss-sub-example=/maximum/noun)
-    ::  .^(json %gx /=rss-sub-example=/maximum/json)
-    ::  maximum items per feed
-    [%x %maximum ~]
-      ``feed-maximum+!>(maximum)
     ::
     ::  .^(@da %gx /=rss-sub-example=/feed/last-update/<url>/noun)
     ::  .^(json %gx /=rss-sub-example=/feed/last-update/<url>/json)
@@ -237,7 +227,8 @@
       ?>  -.u.q.u.feed
       ?>  ?=([%channel *] +.u.q.u.feed)
       =/  =channel:rss:ra  +.u.q.u.feed
-      :-  ~
+      :-  :~  [%give %fact ~[/feed/(scot %t (slav %t link.pole)) /feeds] %rss-item !>(item)]
+          ==
       %=  this
         feed-state  %-  ~(put by feed-state)
                     :-  (slav %t link.pole)
@@ -269,7 +260,8 @@
         `this
       ?>  ?=([%feed *] +.u.q.u.feed)
       =/  =feed:atom:ra  +.u.q.u.feed
-      :-  ~
+      :-  :~  [%give %fact ~[/feed/(scot %t (slav %t link.pole)) /feeds] %atom-entry !>(entry)]
+          ==
       %=  this
         feed-state  %-  ~(put by feed-state)
                     :-  (slav %t link.pole)

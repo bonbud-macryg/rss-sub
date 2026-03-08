@@ -7,7 +7,6 @@
 +$  updated  @da         ::  last update
 ::  XX refresh should be a unit; maybe we're only doing manual refreshes
 +$  refresh  @dr         ::  refresh timer
-+$  maximum  (unit @ud)  ::  max. items per feed
 ::
 ::  XX +each + %channel and %feed head-tags will be ugly
 ::       strong preference to remove +each rather than the tags
