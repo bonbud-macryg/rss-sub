@@ -32,7 +32,7 @@
         ::  XX narrow down type
         headers=(list *)
         elems=(list feed-element)
-        entries=(list entry)
+        entries=(set entry)
     ==
   ::
   +$  entry
@@ -97,7 +97,7 @@
         ::  XX narrow down type
         headers=(list *)
         elems=(list channel-element)
-        items=(list item)
+        items=(set item)
     ==
   ::
   +$   item

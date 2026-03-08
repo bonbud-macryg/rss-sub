@@ -127,7 +127,7 @@
       =/  =feed:atom:ra  +.u.cached
       ``atom-feed+!>(feed)
     ::
-    ::  .^((list item:rss:ra) %gx /=rss-sub-example=/feed/<url>/items/noun)
+    ::  .^((set item:rss:ra) %gx /=rss-sub-example=/feed/<url>/items/noun)
     ::  .^(json %gx /=rss-sub-example=/feed/<url>/items/json)
     ::  items/entries from the RSS channel or Atom feed at the given URL
     [%x %feed %items =link:ra ~]
@@ -241,7 +241,7 @@
                     :-  %.y
                     ^-  channel:rss:ra
                     %=  channel
-                      items  :-(item items.channel)
+                      items  (~(put in items.channel) item)
                     ==
       ==
     ::
@@ -273,7 +273,7 @@
                     :-  %.n
                     ^-  feed:atom:ra
                     %=  feed
-                      entries  :-(entry entries.feed)
+                      entries  (~(put in entries.feed) entry)
                     ==
       ==
     ::
