@@ -22,7 +22,7 @@
   $%  [%add-feed =link:ra]
       [%del-feed =link:ra]
       [%set-refresh =refresh]
-      [%refresh-now links=(list link:ra)]
+      [%refresh-now link=(unit link:ra)]
   ==
 ::
 +|  %actions
@@ -30,9 +30,9 @@
 ++  set-refresh  !!
 ::
 ++  make-refresh-cards
-  |=  [links=(list link:ra) =desk =feed-state]
+  |=  [link=(unit link:ra) =desk =feed-state]
   ^-  (list card:agent:gall)
-  ?~  links
+  ?~  link
     ::  refresh all links
     %+  turn
       ~(tap in ~(key by feed-state))
@@ -42,18 +42,14 @@
         -:(~(got by feed-state) link)
         desk
     ==
-  ::  refresh given links
-  ::  XX foobarbat are all links; fix names and types
-  %+  turn
-    %+  skim
-      `(list link:ra)`links
-    |=  foo=@t
-    (~(has by feed-state) foo)
-  |=  bar=@t
-  %:  make-refresh-card
-      bar
-      -:(~(got by feed-state) bar)
-      desk
+  ::  refresh given link
+  ?.  (~(has by feed-state) u.link)
+    ~
+  :~  %:  make-refresh-card
+          u.link
+          -:(~(got by feed-state) u.link)
+          desk
+      ==
   ==
 ::
 ++  make-refresh-card
@@ -63,7 +59,7 @@
   :*  %pass
       ::  XX should devs be able to optionally specify
       ::     a return path?
-      /rss-sub/update/rss-atom/(scot %t bat)
+      /rss-sub/update/feed/(scot %t bat)
       %arvo
       %k
       %fard

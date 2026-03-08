@@ -59,17 +59,13 @@
             feed-state  (~(del by feed-state) link.action)
           ==
         ::
-        ::  XX should this only take one (unit link)?
-        ::     would simplify /lib; just split up feeds
-        ::     on the client side and refresh each one
         %refresh-now
           :_  this
           ?~  feed-state
             ~|  "{<q.byk.bowl>}: no saved feeds to update"
             !!
-          ::  XX check if feeds are all in feed-state; error if not
           %^    make-refresh-cards:rs
-              links.action
+              link.action
             q.byk.bowl
           feed-state
         ::
