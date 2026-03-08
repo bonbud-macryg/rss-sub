@@ -47,9 +47,6 @@
             ~|  "{<q.byk.bowl>}: invalid URL {<link.action>}"
             !!
           :_  this
-          ::  XX pass -rss-atom output to +on-agent,
-          ::     then in +on-agent pass output on
-          ::     to either -item or -entry
           :~  :*  %pass  /rss-sub/update/feed/(scot %t link.action)
                   %arvo  %k
                   %fard  q.byk.bowl
@@ -94,15 +91,63 @@
   ::  XX "subscribe to updates for this url" path
   ::  XX "subscribe to updates for all urls" path
 ::
-++  on-peek  on-peek:def
-  ::|=  =path
-  ::^-  (unit (unit cage))
-  ::
-  ::  XX "scry urls" path
-  ::  XX "scry refresh time" path
-  ::  XX "scry last update at url" path
-  ::  XX "scry rss-feed at url" path
-  ::  XX "scry items/entries at url" path
+++  on-peek
+  |=  =(pole knot)
+  ^-  (unit (unit cage))
+  ?+  pole  (on-peek:def `path`pole)
+    ::
+    ::  .^((list @t) %gx /=rss-sub-example=/urls/noun)
+    ::  .^(json %gx /=rss-sub-example=/urls/json)
+    ::  list all subscribed feed URLs
+    [%x %urls ~]
+      ``feed-urls+!>(~(tap in ~(key by feed-state)))
+    ::
+    ::  .^((unit @ud) %gx /=rss-sub-example=/maximum/noun)
+    ::  .^(json %gx /=rss-sub-example=/maximum/json)
+    ::  maximum items per feed
+    [%x %maximum ~]
+      ``feed-maximum+!>(maximum)
+    ::
+    ::  .^(@da %gx /=rss-sub-example=/feed/last-update/<url>/noun)
+    ::  .^(json %gx /=rss-sub-example=/feed/last-update/<url>/json)
+    ::  last-updated time for the feed at the given URL
+    [%x %feed %last-update =link:ra ~]
+      =/  entry  (~(get by feed-state) (slav %t link.pole))
+      ?~  entry  [~ ~]
+      ``feed-last-update+!>(-:u.entry)
+    ::
+    ::  .^(channel:rss:ra %gx /=rss-sub-example=/feed/<url>/noun)
+    ::  .^(json %gx /=rss-sub-example=/feed/<url>/json)
+    ::  the parsed RSS channel or Atom feed at the given URL
+    [%x %feed =link:ra ~]
+      =/  entry  (~(get by feed-state) (slav %t link.pole))
+      ?~  entry  [~ ~]
+      =/  [last=updated:rs cached=(unit feed:rs)]  u.entry
+      ?~  cached  [~ ~]
+      ?:  ?=(%& -.u.cached)
+        ?>  ?=([%channel *] +.u.cached)
+        =/  =channel:rss:ra  +.u.cached
+        ``rss-channel+!>(channel)
+      ?>  ?=([%feed *] +.u.cached)
+      =/  =feed:atom:ra  +.u.cached
+      ``atom-feed+!>(feed)
+    ::
+    ::  .^((list item:rss:ra) %gx /=rss-sub-example=/feed/<url>/items/noun)
+    ::  .^(json %gx /=rss-sub-example=/feed/<url>/items/json)
+    ::  items/entries from the RSS channel or Atom feed at the given URL
+    [%x %feed %items =link:ra ~]
+      =/  entry  (~(get by feed-state) (slav %t link.pole))
+      ?~  entry  [~ ~]
+      =/  [last=updated:rs cached=(unit feed:rs)]  u.entry
+      ?~  cached  [~ ~]
+      ?:  ?=(%& -.u.cached)
+        ?>  ?=([%channel *] +.u.cached)
+        =/  =channel:rss:ra  +.u.cached
+        ``rss-items+!>(items.channel)
+      ?>  ?=([%feed *] +.u.cached)
+      =/  =feed:atom:ra  +.u.cached
+      ``atom-entries+!>(entries.feed)
+  ==
 ::
 ++  on-arvo
   ::
