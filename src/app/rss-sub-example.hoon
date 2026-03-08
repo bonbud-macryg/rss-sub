@@ -79,12 +79,18 @@
   ==  ::  end of mark branches
 ::
 ++  on-watch
-  |=  =path
+  |=  =(pole knot)
   ^-  (quip card _this)
-  `this
-  ::
-  ::  XX "subscribe to updates for this url" path
-  ::  XX "subscribe to updates for all urls" path
+  ?+  pole  (on-watch:def `path`pole)
+    ::
+    ::  subscribe to updates from the feed at <url>
+    [%feed =link:ra ~]
+      `this
+    ::
+    ::  subscribe to updates from all feeds
+    [%feeds ~]
+      `this
+  ==
 ::
 ++  on-peek
   |=  =(pole knot)
