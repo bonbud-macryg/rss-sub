@@ -42,19 +42,19 @@
   ::  XX label attributes in comments (like %category and %source)
   +$  feed-element
     $+  feed-element
-    $%  [%id uri]
-        [%title text]
-        [%updated time]
-        [%author name (unit mail) (unit uri)]
-        [%category text (unit uri) (unit text)]  ::  term, scheme, label
-        [%contributor name]
-        [%generator (unit uri) (unit vers)]  ::  uri, version
-        [%icon link]
-        [%logo link]
-        [%rights text]
-        [%subtitle text]
+    $%  [%id p=uri]
+        [%title p=text]
+        [%updated p=time]
+        [%author p=name q=(unit mail) r=(unit uri)]
+        [%category p=text q=(unit uri) r=(unit text)]  ::  term, scheme, label
+        [%contributor p=name]
+        [%generator p=(unit uri) q=(unit vers)]  ::  uri, version
+        [%icon p=link]
+        [%logo p=link]
+        [%rights p=text]
+        [%subtitle p=text]
         ::  href, ref, type, hreflang, title, length
-        [%link uri (unit ref) (unit mime) (unit lang) (unit text) (unit numb)]
+        [%link p=uri q=(unit ref) r=(unit mime) s=(unit lang) t=(unit text) u=(unit numb)]
     ==
   ::
   +$  ref
@@ -63,22 +63,22 @@
   ::
   +$  entry-element
     $+  atom-entry-element
-    $%  [%id uri]
-        [%title text]
-        [%updated time]
-        [%author name]
-        [%summary text]
-        [%contributor name]
-        [%published time]
-        [%rights text]
+    $%  [%id p=uri]
+        [%title p=text]
+        [%updated p=time]
+        [%author p=name]
+        [%summary p=text]
+        [%contributor p=name]
+        [%published p=time]
+        [%rights p=text]
         ::  XX what's optional?
         ::  XX is id a link or uri?
-        [%source link text time]  ::  id, title, updated
-        [%category text (unit uri) (unit text)]  ::  term, scheme, label
+        [%source p=link q=text r=time]  ::  id, title, updated
+        [%category p=text q=(unit uri) r=(unit text)]  ::  term, scheme, label
         ::  XX check what is required in what circumstances
-        [%content (unit type) (unit uri) (unit text)]
+        [%content p=(unit type) q=(unit uri) r=(unit text)]
         ::  href, ref, type, hreflang, title, length
-        [%link uri (unit ref) (unit mime) (unit lang) (unit text) (unit numb)]
+        [%link p=uri q=(unit ref) r=(unit mime) s=(unit lang) t=(unit text) u=(unit numb)]
     ==
   ::
   ::  XX fine for a rough draft, but check against the actual RFC
@@ -106,42 +106,42 @@
   ::
   +$  item-element
     $+  rss-item-element
-    $%  [%title text]
-        [%link link]
-        [%description text]
-        [%author text]
-        [%category (unit link) text]  ::  domain, tag
-        [%comments link]
-        [%enclosure link numb mime]  ::  url, length, type
+    $%  [%title p=text]
+        [%link p=link]
+        [%description p=text]
+        [%author p=text]
+        [%category p=(unit link) q=text]  ::  domain, tag
+        [%comments p=link]
+        [%enclosure p=link q=numb r=mime]  ::  url, length, type
         ::  XX i forgot what this is, investigate
-        [%guid (unit text) link]  ::  isPermaLink, tag, value
-        [%pub-date time]
-        [%source link text]  ::  url, tag
+        [%guid p=(unit text) q=link]  ::  isPermaLink, tag, value
+        [%pub-date p=time]
+        [%source p=link q=text]  ::  url, tag
     ==
   ::
   +$  channel-element
-    $%  [%title text]
-        [%link link]
-        [%description text]
-        [%language lang]  ::  ISO639 or RFC1766 lang code
-        [%pub-date time]
-        [%last-build-date time]
-        [%docs link]
-        [%generator text]
-        [%managing-editor text]
-        [%web-master text]
-        [%copyright text]
-        [%category (unit link) text]  ::  domain, tag
-        [%ttl numb]
-        [%rating text]  ::  PICS rating; deprecated
+    $%  [%title p=text]
+        [%link p=link]
+        [%description p=text]
+        [%language p=lang]  ::  ISO639 or RFC1766 lang code
+        [%pub-date p=time]
+        [%last-build-date p=time]
+        [%docs p=link]
+        [%generator p=text]
+        [%managing-editor p=text]
+        [%web-master p=text]
+        [%copyright p=text]
+        [%category p=(unit link) q=text]  ::  domain, tag
+        [%ttl p=numb]
+        [%rating p=text]  ::  PICS rating; deprecated
         ::  title, desc, name, link
-        [%text-input text text text link]
+        [%text-input p=text q=text r=text s=link]
         ::  domain, port, path, register-procedure, protocol
-        [%cloud link numb link text text]
+        [%cloud p=link q=numb r=link s=text t=text]
         ::  url, title, link, width, height, desc
-        [%image link text link (unit numb) (unit numb) (unit text)]
-        [%skip-days (list day)]
-        [%skip-hours (list hour)]
+        [%image p=link q=text r=link s=(unit numb) t=(unit numb) u=(unit text)]
+        [%skip-days p=(list day)]
+        [%skip-hours p=(list hour)]
     ==
   --
 --
