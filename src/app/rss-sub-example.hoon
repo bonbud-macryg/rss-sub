@@ -22,11 +22,11 @@
 ::
 ++  on-init
   ^-  (quip card _this)
-  ::  XX start refresh timer on init
-  :-  ~
-  %=  this
-    refresh  ~m15
-    maximum  `1.000
+  :_  %=  this
+        refresh  ~m15
+        maximum  `1.000
+      ==
+  :~  [%pass /rss-sub/timer %arvo %b %wait (add ~m15 now.bowl)]
   ==
 ++  on-save
   !>(state)
@@ -74,11 +74,10 @@
           feed-state
         ::
         %set-refresh
-        ::  XX add logic here
-        ::       need to cancel current timer
-        ::       need to add new timer
-        ::       needs to only cancel the timer for this app, not others
-          `this
+          :_  this(refresh refresh.action)
+          :~  [%pass /rss-sub/timer %arvo %b %rest (add refresh now.bowl)]
+              [%pass /rss-sub/timer %arvo %b %wait (add refresh.action now.bowl)]
+          ==
         ::
       ==  ::  end of -.action branches
   ==  ::  end of mark branches
@@ -150,12 +149,6 @@
   ==
 ::
 ++  on-arvo
-  ::
-  ::  XX accept refresh timers from behn
-  ::
-  ::  XX handle facts from item and entry threads
-  ::       cards: update +on-watch wires
-  ::       this:  update feed-state
   ::
   |=  [=(pole knot) =sign-arvo]
   ^-  (quip card _this)
@@ -287,6 +280,16 @@
                       entries  :-(entry entries.feed)
                     ==
       ==
+    ::
+    ::  refresh timer; update feeds
+    [%rss-sub %timer ~]
+      ?>  ?=([%behn %wake *] sign-arvo)
+      :_  this
+      %+  snoc
+        ?~  feed-state
+          ~
+        (make-refresh-cards:rs ~ q.byk.bowl feed-state)
+      [%pass /rss-sub/timer %arvo %b %wait (add refresh now.bowl)]
   ==  ::  end of pole branches
 ::
 ++  on-agent  on-agent:def
