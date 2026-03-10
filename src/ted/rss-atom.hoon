@@ -187,10 +187,6 @@
     ^-  channel-element:rss:ra
     =*  tag  n.g.manx
     =*  val  (crip v:(head a.g:(head c.manx)))
-    ~&  >>  %ted-rss-atom
-    ~&  >>  %rss-channel
-    ~&  >>  tag
-    ~&  >>  val
     ?+  tag
       ::  XX error
       [%title 'foobarthisisthedefaultcase']
@@ -251,10 +247,6 @@
   ::
   %-  pure:m
   !>  ^-  [%rss * marl]
-  ~&  >>  %ted-rss-atom
-  ~&  >>  %rss-channel
-  ~&  >>  "channel tags: {<channel-tags>}"
-  ::  ~&  >>  "item tags: {<item-tags>}"
   :*  %rss
       channel-tags
       item-tags
