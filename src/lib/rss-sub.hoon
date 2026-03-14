@@ -83,7 +83,7 @@
       ::
           %add-feed
         ?~  (de-purl:html link.act)
-          ~|  "rss-sub: invalid URL {<link.act>}"
+          ~|  "{<q.byk.bowl>}: invalid URL {<link.act>}"
           !!
         :_  this
         :~  :*  %pass  /rss-sub/update/feed/(scot %t link.act)
@@ -177,7 +177,7 @@
           ?>  ?=([%khan %arow *] sign-arvo)
           ?.  ?=(%& -.p.sign-arvo)
             ~&  >>>  %on-arvo
-            ~&  >>>  "rss-sub: failed to parse rss channel or atom feed at {<(@t (slav %t link.pole))>}"
+            ~&  >>>  "{<q.byk.bowl>}: failed to parse rss channel or atom feed at {<(@t (slav %t link.pole))>}"
             `this
           ?>  ?=([%khan %arow %.y %noun *] sign-arvo)
           =/  [%khan %arow %.y %noun =vase]  sign-arvo
@@ -186,7 +186,7 @@
           ?-  -.res
               %rss
             ~&  >  %on-arvo
-            ~&  >  "rss-sub: parsed rss channel {<(@t (slav %t link.pole))>}"
+            ~&  >  "{<q.byk.bowl>}: parsed rss channel {<(@t (slav %t link.pole))>}"
             :-  %+  turn
                   items.res
                 |=  =manx
@@ -213,7 +213,7 @@
           ::
               %atom
             ~&  >  %on-arvo
-            ~&  >  "rss-sub: parsed atom feed {<(@t (slav %t link.pole))>}"
+            ~&  >  "{<q.byk.bowl>}: parsed atom feed {<(@t (slav %t link.pole))>}"
             :-  %+  turn
                   items.res
                 |=  =manx
@@ -241,10 +241,10 @@
           ?>  ?=([%khan %arow *] sign-arvo)
           ?.  ?=(%& -.p.sign-arvo)
             ~&  >>>  %on-arvo
-            ~&  >>>  "rss-sub: invalid rss item from url {<(@t (slav %t link.pole))>}"
+            ~&  >>>  "{<q.byk.bowl>}: invalid rss item from url {<(@t (slav %t link.pole))>}"
             `this
           ~&  >  %on-arvo
-          ~&  >  "rss-sub: parsed rss item from url {<(@t (slav %t link.pole))>}"
+          ~&  >  "{<q.byk.bowl>}: parsed rss item from url {<(@t (slav %t link.pole))>}"
           ?>  ?=([%khan %arow %.y %noun *] sign-arvo)
           =/  [%khan %arow %.y %noun =vase]  sign-arvo
           =/  =item:rss:ra  !<(item:rss:ra vase)
@@ -273,7 +273,7 @@
           ?>  ?=([%khan %arow *] sign-arvo)
           ?.  ?=(%& -.p.sign-arvo)
             ~&  >>>  %on-arvo
-            ~&  >>>  "rss-sub: invalid atom entry from url {<(@t (slav %t link.pole))>}"
+            ~&  >>>  "{<q.byk.bowl>}: invalid atom entry from url {<(@t (slav %t link.pole))>}"
             `this
           ?>  ?=([%khan %arow %.y %noun *] sign-arvo)
           =/  [%khan %arow %.y %noun =vase]  sign-arvo
