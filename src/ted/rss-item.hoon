@@ -13,6 +13,77 @@
       |=  node=manx
       ^-  @t
       (crip v:(head a.g:(head c.node)))
+    ::  +parse-rfc2822: parse RFC 2822 date string to @da
+    ::
+    ::    format: "Mon, 01 Jan 2024 00:00:00 GMT"
+    ::    or: "01 Jan 2024 00:00:00 GMT"
+    ::    simplified: extracts day, month, year, hour, min, sec
+    ::
+    ++  parse-rfc2822
+      |=  dat=@t
+      ^-  (unit @da)
+      =/  t=tape  (trip dat)
+      ::  skip day-of-week if present (e.g. "Mon, ")
+      =/  t=tape
+        =/  comma  (find "," t)
+        ?~  comma  t
+        (slag +(+(u.comma)) t)
+      ::  trim leading whitespace
+      =.  t
+        |-
+        ?~  t  t
+        ?:  =(' ' i.t)
+          $(t t.t)
+        t
+      ::  parse: DD Mon YYYY HH:MM:SS
+      =/  parsed
+        %+  rust  t
+        ;~  sfix
+          ;~  plug
+            digits
+            ;~(pfix ace mon-to-num)
+            ;~(pfix ace digits)
+            ;~(pfix ace digits)
+            ;~(pfix col digits)
+            ;~(pfix col digits)
+          ==
+          (star next)
+        ==
+      ?~  parsed  ~
+      =/  [dy=@ud mn=@ud yr=@ud hr=@ud mi=@ud sc=@ud]
+        u.parsed
+      `(year [[%.y yr] mn [dy hr mi sc ~]])
+    ::
+    ::  +digits: parse one or more decimal digits, allowing leading zeros
+    ::
+    ::    dim:ag rejects leading zeros (e.g. "03" fails).
+    ::    this parser accepts them, needed for zero-padded date fields.
+    ::
+    ++  digits
+      %+  cook
+        |=  a=(list @)
+      %+  roll  a
+      |=([i=@ a=@] (add (mul a 10) i))
+      (plus sid:ab)
+    ::
+    ::
+    ::  +mon-to-num: parse 3-letter month name to number
+    ::
+    ++  mon-to-num
+      ;~  pose
+        (cold 1 (jest 'Jan'))
+        (cold 2 (jest 'Feb'))
+        (cold 3 (jest 'Mar'))
+        (cold 4 (jest 'Apr'))
+        (cold 5 (jest 'May'))
+        (cold 6 (jest 'Jun'))
+        (cold 7 (jest 'Jul'))
+        (cold 8 (jest 'Aug'))
+        (cold 9 (jest 'Sep'))
+        (cold 10 (jest 'Oct'))
+        (cold 11 (jest 'Nov'))
+        (cold 12 (jest 'Dec'))
+      ==
     --
 ::
 =/  item  !<(manx arg)
@@ -78,8 +149,7 @@
       `[%guid is-permalink (get-text child)]
     ::
     %'pubDate'
-      ::  XX parse RSS date string to @da
-      `[%pub-date ~2000.1.1]
+      `[%pub-date (need (parse-rfc2822 (get-text child)))]
     ::
     %source
       =/  url=(unit @t)

@@ -243,10 +243,12 @@
             ~&  >>>  %on-arvo
             ~&  >>>  "rss-sub: invalid rss item from url {<(@t (slav %t link.pole))>}"
             `this
+          ~&  >  %on-arvo
+          ~&  >  "rss-sub: parsed rss item from url {<(@t (slav %t link.pole))>}"
           ?>  ?=([%khan %arow %.y %noun *] sign-arvo)
           =/  [%khan %arow %.y %noun =vase]  sign-arvo
           =/  =item:rss:ra  !<(item:rss:ra vase)
-          =/  cached  (~(get by feeds) (scot %t link.pole))
+          =/  cached  (~(get by feeds) (@t (slav %t link.pole)))
           ?~  cached  `this
           ?<  ?=(~ q.u.cached)
           ?>  -.u.q.u.cached
@@ -256,7 +258,7 @@
               ==
           %=  this
             feeds  %-  ~(put by feeds)
-                   :-  (scot %t link.pole)
+                   :-  (@t (slav %t link.pole))
                    :-  now.bowl
                    %-  some
                    ^-  feed
@@ -276,7 +278,7 @@
           ?>  ?=([%khan %arow %.y %noun *] sign-arvo)
           =/  [%khan %arow %.y %noun =vase]  sign-arvo
           =/  =entry:atom:ra  !<(entry:atom:ra vase)
-          =/  cached  (~(get by feeds) (scot %t link.pole))
+          =/  cached  (~(get by feeds) (@t (slav %t link.pole)))
           ?~  cached  `this
           ?<  ?=(~ q.u.cached)
           ?:  -.u.q.u.cached  `this
@@ -286,7 +288,7 @@
               ==
           %=  this
             feeds  %-  ~(put by feeds)
-                   :-  (scot %t link.pole)
+                   :-  (@t (slav %t link.pole))
                    :-  now.bowl
                    %-  some
                    ^-  feed

@@ -8,6 +8,107 @@
 =,  strand-fail:strand-fail:strand
 ^-  thread:spider
 =>  |%
+    ::  +parse-rfc2822: parse RFC 2822 date string to @da
+    ::
+    ::    format: "Mon, 01 Jan 2024 00:00:00 GMT"
+    ::    or: "01 Jan 2024 00:00:00 GMT"
+    ::    simplified: extracts day, month, year, hour, min, sec
+    ::
+    ++  parse-rfc2822
+      |=  dat=@t
+      ^-  (unit @da)
+      =/  t=tape  (trip dat)
+      ::  skip day-of-week if present (e.g. "Mon, ")
+      =/  t=tape
+        =/  comma  (find "," t)
+        ?~  comma  t
+        (slag +(+(u.comma)) t)
+      ::  trim leading whitespace
+      =.  t
+        |-
+        ?~  t  t
+        ?:  =(' ' i.t)
+          $(t t.t)
+        t
+      ::  parse: DD Mon YYYY HH:MM:SS
+      =/  parsed
+        %+  rust  t
+        ;~  sfix
+          ;~  plug
+            digits
+            ;~(pfix ace mon-to-num)
+            ;~(pfix ace digits)
+            ;~(pfix ace digits)
+            ;~(pfix col digits)
+            ;~(pfix col digits)
+          ==
+          (star next)
+        ==
+      ?~  parsed  ~
+      =/  [dy=@ud mn=@ud yr=@ud hr=@ud mi=@ud sc=@ud]
+        u.parsed
+      `(year [[%.y yr] mn [dy hr mi sc ~]])
+    ::
+    ::
+    ::  +parse-iso8601: parse ISO 8601 date string to @da
+    ::
+    ::    format: "2026-03-04T18:00:48+00:00"
+    ::    parses YYYY-MM-DDTHH:MM:SS, ignores timezone suffix (treats as UTC)
+    ::
+    ++  parse-iso8601
+      |=  dat=@t
+      ^-  (unit @da)
+      ?:  =('' dat)  ~
+      =/  t=tape  (trip dat)
+      =/  parsed
+        %+  rust  t
+        ;~  sfix
+          ;~  plug
+            digits                       ::  year
+            ;~(pfix hep digits)          ::  month
+            ;~(pfix hep digits)          ::  day
+            ;~(pfix (jest 'T') digits)   ::  hour
+            ;~(pfix col digits)          ::  minute
+            ;~(pfix col digits)          ::  second
+          ==
+          (star next)                    ::  ignore timezone
+        ==
+      ?~  parsed  ~
+      =/  [yr=@ud mn=@ud dy=@ud hr=@ud mi=@ud sc=@ud]
+        u.parsed
+      `(year [[%.y yr] mn [dy hr mi sc ~]])
+    ::
+    ::  +digits: parse one or more decimal digits, allowing leading zeros
+    ::
+    ::    dim:ag rejects leading zeros (e.g. "03" fails).
+    ::    this parser accepts them, needed for zero-padded date fields.
+    ::
+    ++  digits
+      %+  cook
+        |=  a=(list @)
+      %+  roll  a
+      |=([i=@ a=@] (add (mul a 10) i))
+      (plus sid:ab)
+    ::
+    ::
+    ::  +mon-to-num: parse 3-letter month name to number
+    ::
+    ++  mon-to-num
+      ;~  pose
+        (cold 1 (jest 'Jan'))
+        (cold 2 (jest 'Feb'))
+        (cold 3 (jest 'Mar'))
+        (cold 4 (jest 'Apr'))
+        (cold 5 (jest 'May'))
+        (cold 6 (jest 'Jun'))
+        (cold 7 (jest 'Jul'))
+        (cold 8 (jest 'Aug'))
+        (cold 9 (jest 'Sep'))
+        (cold 10 (jest 'Oct'))
+        (cold 11 (jest 'Nov'))
+        (cold 12 (jest 'Dec'))
+      ==
+    ::
     ++  sanitize
       |=  xml=@t
       ^-  @t
@@ -201,12 +302,10 @@
       %description  [tag val]
     ::
         %'pubDate'
-      ::  XX parse date from RSS time to @da
-      [%pub-date ~2000.1.1]
+      [%pub-date (need (parse-rfc2822 val))]
     ::
         %'lastBuildDate'
-      ::  XX as above
-      [%last-build-date ~2000.1.1]
+      [%last-build-date (need (parse-rfc2822 val))]
     ::
         %'managingEditor'
       !!
@@ -281,8 +380,7 @@
     %logo      `[%logo (get-text child)]
     ::
     %updated
-      ::  XX parse atom date to @da
-      `[%updated ~2000.1.1]
+      `[%updated (need (parse-iso8601 (get-text child)))]
     ::
     %author
       ::  name is in <name> child; mail and uri are optional siblings

@@ -5,6 +5,49 @@
 /+  *strandio
 =,  strand=strand:spider
 ^-  thread:spider
+=>  |%
+    ::
+    ::
+    ::  +parse-iso8601: parse ISO 8601 date string to @da
+    ::
+    ::    format: "2026-03-04T18:00:48+00:00"
+    ::    parses YYYY-MM-DDTHH:MM:SS, ignores timezone suffix (treats as UTC)
+    ::
+    ++  parse-iso8601
+      |=  dat=@t
+      ^-  (unit @da)
+      ?:  =('' dat)  ~
+      =/  t=tape  (trip dat)
+      =/  parsed
+        %+  rust  t
+        ;~  sfix
+          ;~  plug
+            digits                       ::  year
+            ;~(pfix hep digits)          ::  month
+            ;~(pfix hep digits)          ::  day
+            ;~(pfix (jest 'T') digits)   ::  hour
+            ;~(pfix col digits)          ::  minute
+            ;~(pfix col digits)          ::  second
+          ==
+          (star next)                    ::  ignore timezone
+        ==
+      ?~  parsed  ~
+      =/  [yr=@ud mn=@ud dy=@ud hr=@ud mi=@ud sc=@ud]
+        u.parsed
+      `(year [[%.y yr] mn [dy hr mi sc ~]])
+    ::
+    ::  +digits: parse one or more decimal digits, allowing leading zeros
+    ::
+    ::    dim:ag rejects leading zeros (e.g. "03" fails).
+    ::    this parser accepts them, needed for zero-padded date fields.
+    ::
+    ++  digits
+      %+  cook
+        |=  a=(list @)
+      %+  roll  a
+      |=([i=@ a=@] (add (mul a 10) i))
+      (plus sid:ab)
+    --
 |=  arg=vase
 =/  m  (strand ,vase)
 ^-  form:m
@@ -37,12 +80,10 @@
     %contributor  `[%contributor (get-text child)]
     ::
     %updated
-      ::  XX parse atom date to @da
-      `[%updated ~2000.1.1]
+      `[%updated (need (parse-iso8601 (get-text child)))]
     ::
     %published
-      ::  XX parse atom date to @da
-      `[%published ~2000.1.1]
+      `[%published (need (parse-iso8601 (get-text child)))]
     ::
     %author
       =/  name-node=(unit manx)
