@@ -37,7 +37,7 @@
   ::
   +$  entry
     $+  atom-entry
-    [%entry (list entry-element)]
+    [%entry p=(list entry-element)]
   ::
   ::  XX label attributes in comments (like %category and %source)
   +$  feed-element
@@ -102,7 +102,7 @@
   ::
   +$   item
     $+  rss-item
-    [%item (list item-element)]
+    [%item p=(list item-element)]
   ::
   +$  item-element
     $+  rss-item-element
