@@ -73,7 +73,9 @@
       =/  act  !<(rss-sub-action vase)
       ?-    -.act
           %del-feed
-        `this(feeds (~(del by feeds) link.act))
+        =/  new-feeds  (~(del by feeds) link.act)
+        :_  this(feeds new-feeds)
+        ~[[%give %fact ~[/x/feeds] feed-urls+!>(~(tap in ~(key by new-feeds)))]]
       ::
           %set-refresh
         `this(refresh ?~(refresh.act ~ `u.refresh.act))
