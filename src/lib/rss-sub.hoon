@@ -108,30 +108,30 @@
       ==
     ::
     ++  on-peek
-      |=  =path
+      |=  =(pole knot)
       ^-  (unit (unit cage))
-      ?+  path  (on-peek:og path)
+      ?+  pole  (on-peek:og `path`pole)
         ::
         ::  list all subscribed feeds
-        ::  .^(json %gx /=rss-sub-example=/urls/json)
-        ::  .^((list @t) %gx /=rss-sub-example=/urls/noun)
-          [%x %urls ~]
+        ::  .^(json %gx /=rss-sub-example=/rss-sub/urls/json)
+        ::  .^((list @t) %gx /=rss-sub-example=/rss-sub/urls/noun)
+          [%x %rss-sub %urls ~]
         ``feed-urls+!>(~(tap in ~(key by feeds)))
         ::
         ::  last-updated time for the given feed
-        ::  .^(@da %gx /=rss-sub-example=/feed/last-update/<url>/noun)
-        ::  .^(json %gx /=rss-sub-example=/feed/last-update/<url>/json)
-          [%x %feed %last-update @ ~]
-        =/  url=@t  (slav %t i.t.t.t.path)
+        ::  .^(@da %gx /=rss-sub-example=/rss-sub/feed/last-update/<url>/noun)
+        ::  .^(json %gx /=rss-sub-example=/rss-sub/feed/last-update/<url>/json)
+          [%x %rss-sub %feed %last-update link=@ta ~]
+        =/  url=@t  (slav %t link.pole)
         =/  entry  (~(get by feeds) url)
         ?~  entry  [~ ~]
         ``feed-last-update+!>(-:u.entry)
         ::
         ::  info for a feed
-        ::  .^(json %gx /=rss-sub-example=/feed/<url>/json)
-        ::  .^(channel:rss:ra %gx /=rss-sub-example=/feed/<url>/noun)
-          [%x %feed @ ~]
-        =/  url=@t  (slav %t i.t.t.path)
+        ::  .^(json %gx /=rss-sub-example=/rss-sub/feed/<url>/json)
+        ::  .^(channel:rss:ra %gx /=rss-sub-example=/rss-sub/feed/<url>/noun)
+          [%x %rss-sub %feed link=@ta ~]
+        =/  url=@t  (slav %t link.pole)
         =/  entry  (~(get by feeds) url)
         ?~  entry  [~ ~]
         =/  [last=updated cached=(unit feed)]  u.entry
@@ -149,10 +149,10 @@
         ::       just search all feeds if <time> is ~
         ::
         ::  items in a feed
-        ::  .^(json %gx /=rss-sub-example=/feed/<url>/items/json)
-        ::  .^((set item:rss:ra) %gx /=rss-sub-example=/feed/<url>/items/noun)
-          [%x %feed %items @ ~]
-        =/  url=@t  (slav %t i.t.t.t.path)
+        ::  .^(json %gx /=rss-sub-example=/rss-sub/feed/items/<url>/json)
+        ::  .^((each (set item:rss:ra) (set entry:atom:ra)) %gx /=rss-sub-example=/rss-sub/feed/items/<url>/noun)
+          [%x %rss-sub %feed %items link=@ta ~]
+        =/  url=@t  (slav %t link.pole)
         =/  entry  (~(get by feeds) url)
         ?~  entry  [~ ~]
         =/  [last=updated cached=(unit feed)]  u.entry
@@ -160,10 +160,10 @@
         ?:  ?=(%& -.u.cached)
           ?>  ?=([%channel *] +.u.cached)
           =/  =channel:rss:ra  +.u.cached
-          ``rss-items+!>(items.channel)
+          ``feed-items+!>(`(each (set item:rss:ra) (set entry:atom:ra))`[%& items.channel])
         ?>  ?=([%feed *] +.u.cached)
         =/  =feed:atom:ra  +.u.cached
-        ``atom-entries+!>(entries.feed)
+        ``feed-items+!>(`(each (set item:rss:ra) (set entry:atom:ra))`[%| entries.feed])
       ==
     ::
     ++  on-arvo
