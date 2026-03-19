@@ -189,52 +189,55 @@
               %rss
             ~&  >  %on-arvo
             ~&  >  "{<q.byk.bowl>}: parsed rss channel {<(@t (slav %t link.pole))>}"
-            :-  %+  turn
-                  items.res
-                |=  =manx
-                ^-  card
-                :*  %pass  /rss-sub/update/item/[link.pole]
-                    %arvo  %k
-                    %fard  q.byk.bowl
-                    %rss-item  [%noun !>(manx)]
-                ==
-            %=  this
-               feeds  %-  ~(put by feeds)
-                      :-  (slav %t link.pole)
-                      :-  now.bowl
-                      %-  some
-                      ^-  feed
-                      :-  %.y
-                      ^-  channel:rss:ra
-                      ::  XX what goes in headers?
-                      :*  %channel
-                          ~
-                          ((list channel-element:rss:ra) feed.res)
-                          ~
-            ==        ==
+            =/  new-feeds
+              %-  ~(put by feeds)
+              :-  (slav %t link.pole)
+              :-  now.bowl
+              %-  some
+              ^-  feed
+              :-  %.y
+              ^-  channel:rss:ra
+              ::  XX what goes in headers?
+              :*  %channel
+                  ~
+                  ((list channel-element:rss:ra) feed.res)
+                  ~
+              ==
+            :_  this(feeds new-feeds)
+            :-  [%give %fact ~[/x/urls] feed-urls+!>(~(tap in ~(key by new-feeds)))]
+            %+  turn
+              items.res
+            |=  =manx
+            ^-  card
+            :*  %pass  /rss-sub/update/item/[link.pole]
+                %arvo  %k
+                %fard  q.byk.bowl
+                %rss-item  [%noun !>(manx)]
+            ==
           ::
               %atom
             ~&  >  %on-arvo
             ~&  >  "{<q.byk.bowl>}: parsed atom feed {<(@t (slav %t link.pole))>}"
-            :-  %+  turn
-                  items.res
-                |=  =manx
-                ^-  card
-                :*  %pass  /rss-sub/update/atom-entry/[link.pole]
-                    %arvo  %k
-                    %fard  q.byk.bowl
-                    %atom-entry  [%noun !>(manx)]
-                ==
-            %=  this
-               feeds  %-  ~(put by feeds)
-                      :-  (slav %t link.pole)
-                      :-  now.bowl
-                      %-  some
-                      ^-  feed
-                      :-  %.n
-                      ^-  feed:atom:ra
-                      ::  XX what goes in headers?
-                      [%feed ~ ((list feed-element:atom:ra) feed.res) ~]
+            =/  new-feeds
+              %-  ~(put by feeds)
+              :-  (slav %t link.pole)
+              :-  now.bowl
+              %-  some
+              ^-  feed
+              :-  %.n
+              ^-  feed:atom:ra
+              ::  XX what goes in headers?
+              [%feed ~ ((list feed-element:atom:ra) feed.res) ~]
+            :_  this(feeds new-feeds)
+            :-  [%give %fact ~[/x/urls] feed-urls+!>(~(tap in ~(key by new-feeds)))]
+            %+  turn
+              items.res
+            |=  =manx
+            ^-  card
+            :*  %pass  /rss-sub/update/atom-entry/[link.pole]
+                %arvo  %k
+                %fard  q.byk.bowl
+                %atom-entry  [%noun !>(manx)]
             ==
           ==
         ::
