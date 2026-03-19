@@ -10,7 +10,7 @@
   ++  noun  item
   ++  json
     |^
-    a+(turn +.item elem-to-json)
+    a+(turn p.item elem-to-json)
     ::
     ++  unit-cord
       |=  u=(unit @t)
@@ -23,10 +23,10 @@
       ?-  -.e
         %title       (pairs:enjs ~[['type' s+'title'] ['value' s+p.e]])
         %link        (pairs:enjs ~[['type' s+'link'] ['value' s+p.e]])
-        %description (pairs:enjs ~[['type' s+'description'] ['value' s+p.e]])
+        %description  (pairs:enjs ~[['type' s+'description'] ['value' s+p.e]])
         %author      (pairs:enjs ~[['type' s+'author'] ['value' s+p.e]])
         %comments    (pairs:enjs ~[['type' s+'comments'] ['value' s+p.e]])
-        %pub-date    (pairs:enjs ~[['type' s+'pub-date'] ['value' (sect p.e)]])
+        %pub-date    (pairs:enjs ~[['type' s+'pub-date'] ['value' (sect:enjs p.e)]])
         %category
           %-  pairs:enjs
           :~  ['type' s+'category']

@@ -13,7 +13,7 @@
     %-  pairs:enjs
     :~  ['title' s+(get-title channel)]
         ['elements' a+(turn elems.channel elem-to-json)]
-        ['items' a+(turn items.channel item-to-json)]
+        ['items' a+(turn ~(tap in items.channel) item-to-json)]
     ==
     ::
     ++  get-title
@@ -81,7 +81,7 @@
     ++  item-to-json
       |=  =item:rss:ra
       ^-  ^json
-      a+(turn +.item item-elem-to-json)
+      a+(turn p.item item-elem-to-json)
     ::
     ++  item-elem-to-json
       |=  e=item-element:rss:ra

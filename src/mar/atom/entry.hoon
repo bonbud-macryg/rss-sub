@@ -10,7 +10,7 @@
   ++  noun  entry
   ++  json
     |^
-    a+(turn +.entry elem-to-json)
+    a+(turn p.entry elem-to-json)
     ::
     ++  unit-cord
       |=  u=(unit @t)
@@ -23,18 +23,18 @@
       ?-  -.e
         %id          (pairs:enjs ~[['type' s+'id'] ['value' s+p.e]])
         %title       (pairs:enjs ~[['type' s+'title'] ['value' s+p.e]])
-        %updated     (pairs:enjs ~[['type' s+'updated'] ['value' (sect p.e)]])
+        %updated     (pairs:enjs ~[['type' s+'updated'] ['value' (sect:enjs p.e)]])
         %author      (pairs:enjs ~[['type' s+'author'] ['name' s+p.e]])
         %summary     (pairs:enjs ~[['type' s+'summary'] ['value' s+p.e]])
-        %contributor (pairs:enjs ~[['type' s+'contributor'] ['value' s+p.e]])
-        %published   (pairs:enjs ~[['type' s+'published'] ['value' (sect p.e)]])
+        %contributor  (pairs:enjs ~[['type' s+'contributor'] ['value' s+p.e]])
+        %published   (pairs:enjs ~[['type' s+'published'] ['value' (sect:enjs p.e)]])
         %rights      (pairs:enjs ~[['type' s+'rights'] ['value' s+p.e]])
         %source
           %-  pairs:enjs
           :~  ['type' s+'source']
               ['id' s+p.e]
               ['title' s+q.e]
-              ['updated' (sect r.e)]
+              ['updated' (sect:enjs r.e)]
           ==
         %category
           %-  pairs:enjs
@@ -54,7 +54,7 @@
           %-  pairs:enjs
           :~  ['type' s+'link']
               ['href' s+p.e]
-              ['rel' ?~(q.e s+'' ?@(u.q.e s+u.q.e s+u.q.e))]
+              ['rel' ?~(q.e s+'' s+u.q.e)]
               ['mime' (unit-cord r.e)]
               ['lang' (unit-cord s.e)]
               ['title' (unit-cord t.e)]
