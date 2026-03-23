@@ -171,17 +171,18 @@
           ?:  =('>' i.t)  [i.t $(t t.t, s 0)]
           ?:  =(' ' i.t)  [i.t $(t t.t, s 3)]
           ?:  =('-' i.t)  ['_' $(t t.t)]
+          ?:  =(':' i.t)  ['_' $(t t.t)]
           [i.t $(t t.t)]
         ?:  =(3 s)
           ?:  =('>' i.t)   [i.t $(t t.t, s 0)]
           ?:  =('"' i.t)   [i.t $(t t.t, s 4)]
           ?:  =('\'' i.t)  [i.t $(t t.t, s 5)]
           ?:  =('-' i.t)   ['_' $(t t.t)]
-          ?:  =(' ' i.t)
+          ?:  ?|  =(' ' i.t)  =(10 i.t)  ==
             =/  rest=tape  t.t
             |-  ^-  tape
             ?~  rest  [' ' ~]
-            ?:  =(' ' i.rest)  $(rest t.rest)
+            ?:  ?|  =(' ' i.rest)  =(10 i.rest)  ==  $(rest t.rest)
             ?:  =('>' i.rest)  ['>' ^$(t t.rest, s 0)]
             [' ' ^$(t rest, s 3)]
           [i.t $(t t.t)]
@@ -199,7 +200,79 @@
             ['-' ['-' ['>' $(t t.t.t.t, s 0)]]]
           [i.t $(t t.t)]
         [i.t $(t t.t)]
-      (crip (fix-hyphens no-pis))
+      (crip (fix-hyphens (strip-ns-attrs no-pis)))
+    ::
+    ::  +strip-ns-attrs: remove xmlns: and xml: attributes from tag bodies
+    ::
+    ::    de-xml:html's +name parser rejects colons, so attributes like
+    ::    xmlns:dc="..." or xml:lang="en" on the root element cause parse
+    ::    failure.  strips only these two prefixes before handing off.
+    ::
+    ++  strip-ns-attrs
+      |=  in=tape
+      ^-  tape
+      ::  state: 0=text 1=tag-name 2=tag-body 3=dquote 4=squote
+      =/  s=@ud  0
+      |-
+      ?~  in  ~
+      ?:  =(0 s)
+        ?.  =('<' i.in)  [i.in $(in t.in)]
+        [i.in $(in t.in, s 1)]
+      ?:  =(1 s)
+        ?:  =('>' i.in)   [i.in $(in t.in, s 0)]
+        ?:  =(' ' i.in)   [i.in $(in t.in, s 2)]
+        [i.in $(in t.in)]
+      ?:  =(2 s)
+        ?:  =('>' i.in)   [i.in $(in t.in, s 0)]
+        ?:  =('"' i.in)   [i.in $(in t.in, s 3)]
+        ?:  =('\'' i.in)  [i.in $(in t.in, s 4)]
+        ?:  (starts-with in "xmlns:")  $(in (skip-ns-attr in))
+        ?:  (starts-with in "xml:")    $(in (skip-ns-attr in))
+        [i.in $(in t.in)]
+      ?:  =(3 s)
+        ?:  =('"' i.in)   [i.in $(in t.in, s 2)]
+        [i.in $(in t.in)]
+      ?:  =(4 s)
+        ?:  =('\'' i.in)  [i.in $(in t.in, s 2)]
+        [i.in $(in t.in)]
+      [i.in $(in t.in)]
+    ::
+    ::  +starts-with: check if hay begins with needle, char by char
+    ::
+    ++  starts-with
+      |=  [hay=tape needle=tape]
+      ^-  ?
+      ?~  needle  %.y
+      ?~  hay     %.n
+      ?.  =(i.hay i.needle)  %.n
+      $(hay t.hay, needle t.needle)
+    ::
+    ::  +skip-ns-attr: consume name=value, return tape after closing quote
+    ::
+    ++  skip-ns-attr
+      |=  in=tape
+      ^-  tape
+      ::  advance past =
+      =/  t=tape
+        |-  ^-  tape
+        ?~  in  ~
+        ?:  =('=' i.in)  t.in
+        $(in t.in)
+      ::  skip the quoted value
+      ?~  t  ~
+      ?:  =('"' i.t)
+        =/  rest=tape  t.t
+        |-  ^-  tape
+        ?~  rest  ~
+        ?:  =('"' i.rest)  t.rest
+        $(rest t.rest)
+      ?:  =('\'' i.t)
+        =/  rest=tape  t.t
+        |-  ^-  tape
+        ?~  rest  ~
+        ?:  =('\'' i.rest)  t.rest
+        $(rest t.rest)
+      t
     --
 |=  arg=vase
 =/  m  (strand ,vase)
@@ -249,15 +322,13 @@
   (strand-fail %bad-request ~)
 ::
 =/  xml
-  (de-xml:html (sanitize `@t`q.data.u.full-file.client-response.q.response))
+  %-  de-xml:html
+  %-  sanitize
+  `@t`q.data.u.full-file.client-response.q.response
+::
 ?~  xml
-  ::
-  ::  XX failures to parse here could be fixed by ~migrev-dolseg's patch
-  ::       test those problem feeds in %feeds and check for %parse-failed error
-  ::  XX de-xml:html has known limitations with namespaced attributes
-  ::       e.g. xml:lang="en-US" or xmlns:thr=... on the root element
-  ::       causes parse failure; would require pre-processing to strip
-  ::       namespace declarations or a patch to de-xml:html
+  ~&  >>>  %ted-rss-atom
+  ~&  >>>  %failed-to-parse-xml
   (strand-fail %failed-to-parse-xml ~)
 ::
 ::  XX is this test robust enough?
@@ -276,7 +347,7 @@
   ::
   ::  rss channel
   =/  channel-tags
-    %+  turn
+    %+  murn
       %+  skip
         c.i.-.document
       |=  =manx
@@ -285,54 +356,35 @@
           =(n.g.manx %items)
       ==
     |=  =manx
-    ^-  channel-element:rss:ra
+    ^-  (unit channel-element:rss:ra)
     =*  tag  n.g.manx
     =*  val  (crip v:(head a.g:(head c.manx)))
-    ?+  tag
-      ::  XX error
-      [%title 'foobarthisisthedefaultcase']
+    ?+  tag  ~
     ::
-      %docs         [tag val]
-      %link         [tag val]
-      %title        [tag val]
-      %rating       [tag val]
-      %language     [tag val]
-      %copyright    [tag val]
-      %generator    [tag val]
-      %description  [tag val]
+      %docs         `[tag val]
+      %link         `[tag val]
+      %title        `[tag val]
+      %rating       `[tag val]
+      %language     `[tag val]
+      %copyright    `[tag val]
+      %generator    `[tag val]
+      %description  `[tag val]
     ::
         %'pubDate'
-      [%pub-date (need (parse-rfc2822 val))]
+      `[%pub-date (need (parse-rfc2822 val))]
     ::
         %'lastBuildDate'
-      [%last-build-date (need (parse-rfc2822 val))]
+      `[%last-build-date (need (parse-rfc2822 val))]
     ::
-        %'managingEditor'
-      !!
-    ::
-        %'webMaster'
-      !!
-    ::
-        %category
-      !!
-    ::
-        %ttl
-      !!
-    ::
-        %'textInput'
-      !!
-    ::
-        %cloud
-      !!
-    ::
-        %image
-      !!
-    ::
-        %'skipDays'
-      !!
-    ::
-        %'skipHours'
-      !!
+        %'managingEditor'  ~
+        %'webMaster'       ~
+        %category          ~
+        %ttl               ~
+        %'textInput'       ~
+        %cloud             ~
+        %image             ~
+        %'skipDays'        ~
+        %'skipHours'       ~
     ==
   ::
   ::  items will be processed by /ted/item.hoon
