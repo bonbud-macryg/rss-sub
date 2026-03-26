@@ -204,7 +204,7 @@
                   ~
               ==
             :_  this(feeds new-feeds)
-            :-  [%give %fact ~[/x/urls] feed-urls+!>(~(tap in ~(key by new-feeds)))]
+            :-  [%give %fact ~[/x/rss-sub/urls] feed-urls+!>(~(tap in ~(key by new-feeds)))]
             %+  turn
               items.res
             |=  =manx
@@ -229,7 +229,7 @@
               ::  XX what goes in headers?
               [%feed ~ ((list feed-element:atom:ra) feed.res) ~]
             :_  this(feeds new-feeds)
-            :-  [%give %fact ~[/x/urls] feed-urls+!>(~(tap in ~(key by new-feeds)))]
+            :-  [%give %fact ~[/x/rss-sub/urls] feed-urls+!>(~(tap in ~(key by new-feeds)))]
             %+  turn
               items.res
             |=  =manx
