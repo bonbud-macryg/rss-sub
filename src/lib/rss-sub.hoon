@@ -178,7 +178,6 @@
         [%rss-sub %update %feed =link:ra ~]
           ?>  ?=([%khan %arow *] sign-arvo)
           ?.  ?=(%& -.p.sign-arvo)
-            ~&  >>>  %on-arvo
             ~&  >>>  "{<q.byk.bowl>}: failed to parse rss channel or atom feed at {<(@t (slav %t link.pole))>}"
             `this
           ?>  ?=([%khan %arow %.y %noun *] sign-arvo)
@@ -187,12 +186,30 @@
           =/  res  !<([?(%rss %atom) feed=* items=(list manx)] vase)
           ?-  -.res
               %rss
-            ~&  >  %on-arvo
             ~&  >  "{<q.byk.bowl>}: parsed rss channel {<(@t (slav %t link.pole))>}"
+            ~&  >>  [%update-channel now.bowl (@t (slav %t link.pole))]
+            =/  ch-elems  ((list channel-element:rss:ra) feed.res)
+            =/  last-build=(unit @da)
+              =/  scan  ch-elems
+              |-  ^-  (unit @da)
+              ?~  scan  ~
+              ?:  ?=([%last-build-date *] i.scan)
+                `p.i.scan
+              $(scan t.scan)
+            =/  prev-updated
+              =/  entry  (~(get by feeds) (@t (slav %t link.pole)))
+              ?~  entry  *@da
+              p.u.entry
+            ::  only process items if lastBuildDate
+            ::  is absent or newer than .updated
+            =/  should-process
+              ?~(last-build %.y (gth u.last-build prev-updated))
+            =/  new-updated
+              ?~(last-build now.bowl u.last-build)
             =/  new-feeds
               %-  ~(put by feeds)
               :-  (slav %t link.pole)
-              :-  now.bowl
+              :-  new-updated
               %-  some
               ^-  feed
               :-  %.y
@@ -200,11 +217,15 @@
               ::  XX what goes in headers?
               :*  %channel
                   ~
-                  ((list channel-element:rss:ra) feed.res)
+                  ch-elems
                   ~
               ==
             :_  this(feeds new-feeds)
-            :-  [%give %fact ~[/x/rss-sub/urls] feed-urls+!>(~(tap in ~(key by new-feeds)))]
+            :-  :*  %give  %fact  ~[/x/rss-sub/urls]
+                    [%feed-urls !>(~(tap in ~(key by new-feeds)))]
+                ==
+            ?.  should-process
+              ~
             %+  turn
               items.res
             |=  =manx
@@ -216,20 +237,42 @@
             ==
           ::
               %atom
-            ~&  >  %on-arvo
             ~&  >  "{<q.byk.bowl>}: parsed atom feed {<(@t (slav %t link.pole))>}"
+            ~&  >>  [%update-atom-feed now.bowl (@t (slav %t link.pole))]
+            =/  fe-elems  ((list feed-element:atom:ra) feed.res)
+            =/  feed-updated=(unit @da)
+              =/  scan  fe-elems
+              |-  ^-  (unit @da)
+              ?~  scan  ~
+              ?:  ?=([%updated *] i.scan)
+                `p.i.scan
+              $(scan t.scan)
+            =/  prev-updated
+              =/  entry  (~(get by feeds) (@t (slav %t link.pole)))
+              ?~  entry  *@da
+              p.u.entry
+            ::  only process entries if feed's updated
+            ::  attr. is absent or newer than .updated
+            =/  should-process
+              ?~(feed-updated %.y (gth u.feed-updated prev-updated))
+            =/  new-updated
+              ?~(feed-updated now.bowl u.feed-updated)
             =/  new-feeds
               %-  ~(put by feeds)
               :-  (slav %t link.pole)
-              :-  now.bowl
+              :-  new-updated
               %-  some
               ^-  feed
               :-  %.n
               ^-  feed:atom:ra
               ::  XX what goes in headers?
-              [%feed ~ ((list feed-element:atom:ra) feed.res) ~]
+              [%feed ~ fe-elems ~]
             :_  this(feeds new-feeds)
-            :-  [%give %fact ~[/x/rss-sub/urls] feed-urls+!>(~(tap in ~(key by new-feeds)))]
+            :-  :*  %give  %fact  ~[/x/rss-sub/urls]
+                    [%feed-urls !>(~(tap in ~(key by new-feeds)))]
+                ==
+            ?.  should-process
+              ~
             %+  turn
               items.res
             |=  =manx
@@ -245,10 +288,8 @@
         [%rss-sub %update %item =link:ra ~]
           ?>  ?=([%khan %arow *] sign-arvo)
           ?.  ?=(%& -.p.sign-arvo)
-            ~&  >>>  %on-arvo
             ~&  >>>  "{<q.byk.bowl>}: invalid rss item from url {<(@t (slav %t link.pole))>}"
             `this
-          ~&  >  %on-arvo
           ~&  >  "{<q.byk.bowl>}: parsed rss item from url {<(@t (slav %t link.pole))>}"
           ?>  ?=([%khan %arow %.y %noun *] sign-arvo)
           =/  [%khan %arow %.y %noun =vase]  sign-arvo
@@ -259,7 +300,9 @@
           ?>  -.u.q.u.cached
           ?>  ?=([%channel *] +.u.q.u.cached)
           =/  =channel:rss:ra  +.u.q.u.cached
-          :-  :~  [%give %fact ~[/feed/[link.pole] /feeds] %rss-item !>(item)]
+          :-  :~  :*  %give  %fact  ~[/feeds /feed/[link.pole]]
+                      [%rss-item !>(item)]
+                  ==
               ==
           %=  this
             feeds  %-  ~(put by feeds)
@@ -277,7 +320,6 @@
         [%rss-sub %update %atom-entry =link:ra ~]
           ?>  ?=([%khan %arow *] sign-arvo)
           ?.  ?=(%& -.p.sign-arvo)
-            ~&  >>>  %on-arvo
             ~&  >>>  "{<q.byk.bowl>}: invalid atom entry from url {<(@t (slav %t link.pole))>}"
             `this
           ?>  ?=([%khan %arow %.y %noun *] sign-arvo)
@@ -289,7 +331,9 @@
           ?:  -.u.q.u.cached  `this
           ?>  ?=([%feed *] +.u.q.u.cached)
           =/  af=feed:atom:ra  +.u.q.u.cached
-          :-  :~  [%give %fact ~[/feed/[link.pole] /feeds] %atom-entry !>(entry)]
+          :-  :~  :*  %give  %fact  ~[/feeds /feed/[link.pole]]
+                      [%atom-entry !>(entry)]
+                  ==
               ==
           %=  this
             feeds  %-  ~(put by feeds)
