@@ -204,12 +204,10 @@
             ::  is absent or newer than .updated
             =/  should-process
               ?~(last-build %.y (gth u.last-build prev-updated))
-            =/  new-updated
-              ?~(last-build now.bowl u.last-build)
             =/  new-feeds
               %-  ~(put by feeds)
               :-  (slav %t link.pole)
-              :-  new-updated
+              :-  now.bowl
               %-  some
               ^-  feed
               :-  %.y
@@ -255,12 +253,10 @@
             ::  attr. is absent or newer than .updated
             =/  should-process
               ?~(feed-updated %.y (gth u.feed-updated prev-updated))
-            =/  new-updated
-              ?~(feed-updated now.bowl u.feed-updated)
             =/  new-feeds
               %-  ~(put by feeds)
               :-  (slav %t link.pole)
-              :-  new-updated
+              :-  now.bowl
               %-  some
               ^-  feed
               :-  %.n
