@@ -187,7 +187,6 @@
           ?-  -.res
               %rss
             ~&  >  "{<q.byk.bowl>}: parsed rss channel {<(@t (slav %t link.pole))>}"
-            ~&  >>  [%update-channel now.bowl (@t (slav %t link.pole))]
             =/  ch-elems  ((list channel-element:rss:ra) feed.res)
             =/  last-build=(unit @da)
               =/  scan  ch-elems
@@ -236,7 +235,6 @@
           ::
               %atom
             ~&  >  "{<q.byk.bowl>}: parsed atom feed {<(@t (slav %t link.pole))>}"
-            ~&  >>  [%update-atom-feed now.bowl (@t (slav %t link.pole))]
             =/  fe-elems  ((list feed-element:atom:ra) feed.res)
             =/  feed-updated=(unit @da)
               =/  scan  fe-elems
