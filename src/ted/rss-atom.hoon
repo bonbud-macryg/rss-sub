@@ -67,7 +67,7 @@
             digits                       ::  year
             ;~(pfix hep digits)          ::  month
             ;~(pfix hep digits)          ::  day
-            ;~(pfix (jest 'T') digits)   ::  hour
+            ;~(pfix ;~(pose (jest 'T') ace) digits)   ::  hour (T or space)
             ;~(pfix col digits)          ::  minute
             ;~(pfix col digits)          ::  second
           ==
@@ -432,7 +432,9 @@
     %logo      `[%logo (get-text child)]
     ::
     %updated
-      `[%updated (need (parse-iso8601 (get-text child)))]
+      =/  d  (parse-iso8601 (get-text child))
+      ?~  d  ~
+      `[%updated u.d]
     ::
     %author
       ::  name is in <name> child; mail and uri are optional siblings

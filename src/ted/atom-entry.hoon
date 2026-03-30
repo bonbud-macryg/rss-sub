@@ -22,12 +22,12 @@
         %+  rust  t
         ;~  sfix
           ;~  plug
-            digits                       ::  year
-            ;~(pfix hep digits)          ::  month
-            ;~(pfix hep digits)          ::  day
-            ;~(pfix (jest 'T') digits)   ::  hour
-            ;~(pfix col digits)          ::  minute
-            ;~(pfix col digits)          ::  second
+            digits                                      ::  year
+            ;~(pfix hep digits)                         ::  month
+            ;~(pfix hep digits)                         ::  day
+            ;~(pfix ;~(pose (jest 'T') ace) digits)     ::  hour (T or space)
+            ;~(pfix col digits)                         ::  minute
+            ;~(pfix col digits)                         ::  second
           ==
           (star next)                    ::  ignore timezone
         ==
@@ -35,6 +35,60 @@
       =/  [yr=@ud mn=@ud dy=@ud hr=@ud mi=@ud sc=@ud]
         u.parsed
       `(year [[%.y yr] mn [dy hr mi sc ~]])
+    ::
+    ++  parse-rfc2822
+      |=  dat=@t
+      ^-  (unit @da)
+      =/  t=tape  (trip dat)
+      =/  t=tape
+        =/  comma  (find "," t)
+        ?~  comma  t
+        (slag +(+(u.comma)) t)
+      =.  t
+        |-
+        ?~  t  t
+        ?:  =(' ' i.t)  $(t t.t)
+        t
+      =/  parsed
+        %+  rust  t
+        ;~  sfix
+          ;~  plug
+            digits
+            ;~(pfix ace mon-to-num)
+            ;~(pfix ace digits)
+            ;~(pfix ace digits)
+            ;~(pfix col digits)
+            ;~(pfix col digits)
+          ==
+          (star next)
+        ==
+      ?~  parsed  ~
+      =/  [dy=@ud mn=@ud yr=@ud hr=@ud mi=@ud sc=@ud]
+        u.parsed
+      `(year [[%.y yr] mn [dy hr mi sc ~]])
+    ::
+    ++  mon-to-num
+      ;~  pose
+        (cold 1 (jest 'Jan'))
+        (cold 2 (jest 'Feb'))
+        (cold 3 (jest 'Mar'))
+        (cold 4 (jest 'Apr'))
+        (cold 5 (jest 'May'))
+        (cold 6 (jest 'Jun'))
+        (cold 7 (jest 'Jul'))
+        (cold 8 (jest 'Aug'))
+        (cold 9 (jest 'Sep'))
+        (cold 10 (jest 'Oct'))
+        (cold 11 (jest 'Nov'))
+        (cold 12 (jest 'Dec'))
+      ==
+    ::
+    ++  parse-date
+      |=  dat=@t
+      ^-  (unit @da)
+      =/  iso  (parse-iso8601 dat)
+      ?^  iso  iso
+      (parse-rfc2822 dat)
     ::
     ::  +digits: parse one or more decimal digits, allowing leading zeros
     ::
@@ -80,10 +134,14 @@
     %contributor  `[%contributor (get-text child)]
     ::
     %updated
-      `[%updated (need (parse-iso8601 (get-text child)))]
+      =/  d  (parse-date (get-text child))
+      ?~  d  ~
+      `[%updated u.d]
     ::
     %published
-      `[%published (need (parse-iso8601 (get-text child)))]
+      =/  d  (parse-date (get-text child))
+      ?~  d  ~
+      `[%published u.d]
     ::
     %author
       =/  name-node=(unit manx)
