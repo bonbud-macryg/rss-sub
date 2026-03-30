@@ -201,8 +201,8 @@
               p.u.entry
             ::  only process items if lastBuildDate
             ::  is absent or newer than .updated
-            =/  should-process
-              ?~(last-build %.y (gth u.last-build prev-updated))
+            ?.  ?~(last-build %.y (gth u.last-build prev-updated))
+              `this
             =/  new-feeds
               %-  ~(put by feeds)
               :-  (slav %t link.pole)
@@ -221,8 +221,6 @@
             :-  :*  %give  %fact  ~[/x/rss-sub/urls]
                     [%feed-urls !>(~(tap in ~(key by new-feeds)))]
                 ==
-            ?.  should-process
-              ~
             %+  turn
               items.res
             |=  =manx
@@ -249,8 +247,8 @@
               p.u.entry
             ::  only process entries if feed's updated
             ::  attr. is absent or newer than .updated
-            =/  should-process
-              ?~(feed-updated %.y (gth u.feed-updated prev-updated))
+            ?.  ?~(feed-updated %.y (gth u.feed-updated prev-updated))
+              `this
             =/  new-feeds
               %-  ~(put by feeds)
               :-  (slav %t link.pole)
@@ -265,8 +263,6 @@
             :-  :*  %give  %fact  ~[/x/rss-sub/urls]
                     [%feed-urls !>(~(tap in ~(key by new-feeds)))]
                 ==
-            ?.  should-process
-              ~
             %+  turn
               items.res
             |=  =manx
