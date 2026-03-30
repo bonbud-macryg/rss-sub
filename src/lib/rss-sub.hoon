@@ -206,7 +206,7 @@
             =/  new-feeds
               %-  ~(put by feeds)
               :-  (slav %t link.pole)
-              :-  now.bowl
+              :-  (fall last-build now.bowl)
               %-  some
               ^-  feed
               :-  %.y
@@ -252,13 +252,14 @@
             =/  new-feeds
               %-  ~(put by feeds)
               :-  (slav %t link.pole)
-              :-  now.bowl
+              :-  (fall feed-updated now.bowl)
               %-  some
               ^-  feed
               :-  %.n
               ^-  feed:atom:ra
               ::  XX what goes in headers?
               [%feed ~ fe-elems ~]
+            ~&  >>  [%atom-firing-entries (lent items.res)]
             :_  this(feeds new-feeds)
             :-  :*  %give  %fact  ~[/x/rss-sub/urls]
                     [%feed-urls !>(~(tap in ~(key by new-feeds)))]
@@ -267,6 +268,7 @@
               items.res
             |=  =manx
             ^-  card
+            ~&  >>  [%atom-entry-card n.g.manx]
             :*  %pass  /rss-sub/update/atom-entry/[link.pole]
                 %arvo  %k
                 %fard  q.byk.bowl
