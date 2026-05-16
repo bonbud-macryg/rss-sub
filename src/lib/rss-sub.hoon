@@ -1,29 +1,14 @@
-/-  ra=rss-atom
+/-  rs=rss-sub, ra=rss-atom
 /+  default-agent, dbug, verb
-::
-::  XX mark warmers for noun and json
 ::
 |%
 ++  agent
   ^-  $-(agent:gall agent:gall)
   |^  agent
-  ::
-  +$  updated  @da                                       ::  last update
-  +$  refresh  (unit @dr)                                ::  refresh timer
-  +$  feed     (each channel:rss:ra feed:atom:ra)        ::  RSS/Atom
-  +$  feeds    (map link:ra (pair updated (unit feed)))  ::  URLs and feeds
-  ::
-  +$  rss-sub-action
-    $%  [%add-feed =link:ra]
-        [%del-feed =link:ra]
-        [%set-refresh =refresh]
-        [%refresh-now link=(unit link:ra)]
-    ==
-  ::
   +$  state-0
     $:  %0
-        =feeds
-        =refresh
+        =feeds:rs
+        =refresh:rs
     ==
   ::
   +$  card  card:agent:gall
@@ -70,7 +55,7 @@
       ?.  =(%rss-sub mark)
         =^  cards  inner  (on-poke:og mark vase)
         [cards this]
-      =/  act  !<(rss-sub-action vase)
+      =/  act  !<(rss-sub-action:rs vase)
       ?-    -.act
           %del-feed
         =/  new-feeds  (~(del by feeds) link.act)
@@ -134,7 +119,7 @@
         =/  url=@t  (slav %t link.pole)
         =/  entry  (~(get by feeds) url)
         ?~  entry  [~ ~]
-        =/  [last=updated cached=(unit feed)]  u.entry
+        =/  [last=updated:rs cached=(unit feed:rs)]  u.entry
         ?~  cached  [~ ~]
         ?:  ?=(%& -.u.cached)
           ?>  ?=([%channel *] +.u.cached)
@@ -155,7 +140,7 @@
         =/  url=@t  (slav %t link.pole)
         =/  entry  (~(get by feeds) url)
         ?~  entry  [~ ~]
-        =/  [last=updated cached=(unit feed)]  u.entry
+        =/  [last=updated:rs cached=(unit feed:rs)]  u.entry
         ?~  cached  [~ ~]
         ?:  ?=(%& -.u.cached)
           ?>  ?=([%channel *] +.u.cached)
@@ -208,7 +193,7 @@
               :-  (slav %t link.pole)
               :-  (fall last-build now.bowl)
               %-  some
-              ^-  feed
+              ^-  feed:rs
               :-  %.y
               ^-  channel:rss:ra
               ::  XX what goes in headers?
@@ -254,7 +239,7 @@
               :-  (slav %t link.pole)
               :-  (fall feed-updated now.bowl)
               %-  some
-              ^-  feed
+              ^-  feed:rs
               :-  %.n
               ^-  feed:atom:ra
               ::  XX what goes in headers?
@@ -301,7 +286,7 @@
                    :-  (@t (slav %t link.pole))
                    :-  now.bowl
                    %-  some
-                   ^-  feed
+                   ^-  feed:rs
                    :-  %.y
                    ^-  channel:rss:ra
                    %=  channel
@@ -332,7 +317,7 @@
                    :-  (@t (slav %t link.pole))
                    :-  now.bowl
                    %-  some
-                   ^-  feed
+                   ^-  feed:rs
                    :-  %.n
                    ^-  feed:atom:ra
                    %=  af
@@ -361,7 +346,7 @@
   ++  set-refresh  !!
   ::
   ++  make-refresh-cards
-    |=  [link=(unit link:ra) =desk =feeds]
+    |=  [link=(unit link:ra) =desk =feeds:rs]
     ^-  (list card:agent:gall)
     ?~  link
       ::  refresh all links
@@ -385,7 +370,7 @@
   ::
   ++  make-refresh-card
     ::  XX foobarbat should all be link
-    |=  [bat=@t =updated =desk]
+    |=  [bat=@t =updated:rs =desk]
     ^-  card:agent:gall
     :*  %pass
         ::  XX should devs be able to optionally specify
