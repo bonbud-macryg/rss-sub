@@ -20,7 +20,7 @@
     ++  entry-to-json
       |=  =entry:atom:ra
       ^-  ^json
-      a+(turn +.entry elem-to-json)
+      a+(turn p.entry elem-to-json)
     ::
     ++  elem-to-json
       |=  e=entry-element:atom:ra

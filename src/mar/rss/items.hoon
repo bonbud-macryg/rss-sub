@@ -20,7 +20,7 @@
     ++  item-to-json
       |=  =item:rss:ra
       ^-  ^json
-      a+(turn +.item elem-to-json)
+      a+(turn p.item elem-to-json)
     ::
     ++  elem-to-json
       |=  e=item-element:rss:ra
