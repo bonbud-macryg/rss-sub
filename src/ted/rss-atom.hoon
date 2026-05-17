@@ -404,7 +404,6 @@
   ==
 ::
 ::  atom feed
-~&  >  %atom-feed
 =/  get-text
   |=  node=manx
   ^-  @t
