@@ -9,4 +9,9 @@
       [%del-feed =link:ra]
       [%refresh-now link=(unit link:ra)]
   ==
+::
++$  rss-sub-update
+  $%  [%feed-added =link:ra]
+      [%feed-deleted =link:ra]
+  ==
 --

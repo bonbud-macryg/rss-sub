@@ -54,7 +54,11 @@
           %del-feed
         =/  new-feeds  (~(del by feeds) link.act)
         :_  this(feeds new-feeds)
-        ~[[%give %fact ~[/x/feeds] feed-urls+!>(~(tap in ~(key by new-feeds)))]]
+        :~  :*  %give  %fact  ~[/rss-sub/feeds]
+                %noun
+                !>([%feed-deleted link.act])
+            ==
+        ==
       ::
           %refresh-now
         [(make-refresh-cards:help link.act q.byk.bowl feeds) this]
@@ -64,7 +68,11 @@
           ~|  "{<q.byk.bowl>}: invalid URL {<link.act>}"
           !!
         :_  this
-        :~  :*  %pass  /rss-sub/update/(scot %t link.act)
+        :~  :*  %give  %fact  ~[/rss-sub/feeds]
+                %noun
+                !>([%feed-added link.act])
+            ==
+            :*  %pass  /rss-sub/update/(scot %t link.act)
                 %arvo  %k
                 %fard  q.byk.bowl
                 %rss-atom  [%noun !>([now.bowl link.act])]
@@ -312,7 +320,7 @@
           ?>  -.u.q.u.cached
           ?>  ?=([%channel *] +.u.q.u.cached)
           =/  =channel:rss:ra  +.u.q.u.cached
-          :-  :~  :*  %give  %fact  ~[/feeds /feed/[link.pole]]
+          :-  :~  :*  %give  %fact  ~[/rss-sub/feeds /feed/[link.pole]]
                       [%rss-item !>(item)]
                   ==
               ==
@@ -345,7 +353,7 @@
           ?:  -.u.q.u.cached  `this
           ?>  ?=([%feed *] +.u.q.u.cached)
           =/  af=feed:atom:ra  +.u.q.u.cached
-          :-  :~  :*  %give  %fact  ~[/feeds /feed/[link.pole]]
+          :-  :~  :*  %give  %fact  ~[/rss-sub/feeds /feed/[link.pole]]
                       [%atom-entry !>(entry)]
                   ==
               ==
@@ -362,7 +370,11 @@
           ==       ==
       ==
     ::
-    ++  on-agent  on-agent:def
+    ++  on-agent
+      |=  [=(pole knot) =sign:agent:gall]
+      ^-  (quip card _this)
+      =^  cards  inner  (on-agent:og pole sign)
+      [cards this]
     ++  on-leave  on-leave:def
     ++  on-fail   on-fail:def
     --
