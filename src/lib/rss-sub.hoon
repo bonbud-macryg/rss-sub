@@ -8,7 +8,6 @@
   +$  state-0
     $:  %0
         =feeds:rs
-        =refresh:rs
     ==
   ::
   +$  card  card:agent:gall
@@ -27,13 +26,8 @@
     ::
     ++  on-init
       ^-  (quip card _this)
-      ::  XX don't do anything here, have agent poke this in
-      ::      e.g. invent:gossip pattern
       =^  cards  inner  on-init:og
-      :_  %=  this
-            refresh  `~m15
-          ==
-      (snoc cards [%pass /rss-sub/timer %arvo %b %wait (add ~m15 now.bowl)])
+      [cards this]
     ::
     ++  on-save
       !>([[%rss-sub state] on-save:og])
@@ -61,9 +55,6 @@
         =/  new-feeds  (~(del by feeds) link.act)
         :_  this(feeds new-feeds)
         ~[[%give %fact ~[/x/feeds] feed-urls+!>(~(tap in ~(key by new-feeds)))]]
-      ::
-          %set-refresh
-        `this(refresh ?~(refresh.act ~ `u.refresh.act))
       ::
           %refresh-now
         [(make-refresh-cards:help link.act q.byk.bowl feeds) this]
@@ -369,18 +360,6 @@
                    %=  af
                      entries  (~(put in entries.af) entry)
           ==       ==
-        ::
-        ::  refresh timer; update feeds
-        [%rss-sub %timer ~]
-          ?>  ?=([%behn %wake *] sign-arvo)
-          :_  this
-          ?~  refresh
-            ~
-          %+  snoc
-            ?~  feeds
-              ~
-            (make-refresh-cards:help ~ q.byk.bowl feeds)
-          [%pass /rss-sub/timer %arvo %b %wait (add u.refresh now.bowl)]
       ==
     ::
     ++  on-agent  on-agent:def
@@ -411,8 +390,6 @@
     ?:  ?=([%updated *] i.p.entry)
       `p.i.p.entry
     $(p.entry t.p.entry)
-  ::
-  ++  set-refresh  !!
   ::
   ++  make-refresh-cards
     |=  [link=(unit link:ra) =desk =feeds:rs]
