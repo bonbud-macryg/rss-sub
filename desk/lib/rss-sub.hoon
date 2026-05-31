@@ -55,8 +55,7 @@
         =/  new-feeds  (~(del by feeds) link.act)
         :_  this(feeds new-feeds)
         :~  :*  %give  %fact  ~[/rss-sub/feeds]
-                %noun
-                !>([%feed-deleted link.act])
+                %rss-sub-update  !>([%feed-deleted link.act])
             ==
         ==
       ::
@@ -69,8 +68,7 @@
           !!
         :_  this
         :~  :*  %give  %fact  ~[/rss-sub/feeds]
-                %noun
-                !>([%feed-added link.act])
+                %rss-sub-update  !>([%feed-added link.act])
             ==
             :*  %pass  /rss-sub/update/(scot %t link.act)
                 %arvo  %k
@@ -83,12 +81,21 @@
     ++  on-watch
       |=  =path
       ^-  (quip card _this)
-      ?+  path
-        =^  cards  inner  (on-watch:og path)
-        [cards this]
+      ?+    path  =^  cards  inner  (on-watch:og path)
+                  [cards this]
+          [%rss-sub %feeds ~]
+        :_  this
+        %+  turn
+          ^-  (list link:ra)
+          ~(tap in ~(key by feeds))
+        |=  =link:ra
+        ^-  card
+        :*  %give  %fact  ~
+            [%feed-added !>(link)]
+        ==
       ::
-        [%feeds ~]          `this
-        [%feed =link:ra ~]  `this
+          [%rss-sub %feed =link:ra ~]
+        `this
       ==
     ::
     ++  on-peek
@@ -320,7 +327,7 @@
           ?>  -.u.q.u.cached
           ?>  ?=([%channel *] +.u.q.u.cached)
           =/  =channel:rss:ra  +.u.q.u.cached
-          :-  :~  :*  %give  %fact  ~[/rss-sub/feeds /feed/[link.pole]]
+          :-  :~  :*  %give  %fact  ~[/rss-sub/feed/[link.pole]]
                       [%rss-item !>(item)]
                   ==
               ==
@@ -380,70 +387,70 @@
     --
   ::
   ++  help
-  |%
-  ++  rss-item-published
-    |=  =item:rss:ra
-    ^-  (unit @da)
-    |-
-    ?~  p.item
-      ~
-    ?:  ?=([%pub-date *] i.p.item)
-      `p.i.p.item
-    $(p.item t.p.item)
-  ::
-  ++  atom-entry-published
-    |=  =entry:atom:ra
-    ^-  (unit @da)
-    |-
-    ?~  p.entry
-      ~
-    ?:  ?=([%published *] i.p.entry)
-      `p.i.p.entry
-    ?:  ?=([%updated *] i.p.entry)
-      `p.i.p.entry
-    $(p.entry t.p.entry)
-  ::
-  ++  make-refresh-cards
-    |=  [link=(unit link:ra) =desk =feeds:rs]
-    ^-  (list card:agent:gall)
-    ?~  link
-      ::  refresh all links
-      %+  turn
-        ~(tap in ~(key by feeds))
-      |=  =link:ra
-      %:  make-refresh-card
-          link
-          p:(~(got by feeds) link)
-          desk
-      ==
-    ::  refresh given link
-    ?.  (~(has by feeds) u.link)
-      ~
-    :~  %:  make-refresh-card
-            u.link
-            p:(~(got by feeds) u.link)
+    |%
+    ++  rss-item-published
+      |=  =item:rss:ra
+      ^-  (unit @da)
+      |-
+      ?~  p.item
+        ~
+      ?:  ?=([%pub-date *] i.p.item)
+        `p.i.p.item
+      $(p.item t.p.item)
+    ::
+    ++  atom-entry-published
+      |=  =entry:atom:ra
+      ^-  (unit @da)
+      |-
+      ?~  p.entry
+        ~
+      ?:  ?=([%published *] i.p.entry)
+        `p.i.p.entry
+      ?:  ?=([%updated *] i.p.entry)
+        `p.i.p.entry
+      $(p.entry t.p.entry)
+    ::
+    ++  make-refresh-cards
+      |=  [link=(unit link:ra) =desk =feeds:rs]
+      ^-  (list card:agent:gall)
+      ?~  link
+        ::  refresh all links
+        %+  turn
+          ~(tap in ~(key by feeds))
+        |=  =link:ra
+        %:  make-refresh-card
+            link
+            p:(~(got by feeds) link)
             desk
         ==
-    ==
-  ::
-  ++  make-refresh-card
-    |=  [=link:ra =updated:rs =desk]
-    ^-  card:agent:gall
-    :*  %pass
-        /rss-sub/update/(scot %t link)
-        %arvo
-        %k
-        %fard
-        desk
-        %rss-atom
-        %noun
-        !>([updated link])
-    ==
-  ::
-  ::  XX convert rss time to @da
-  ::
-  ::  XX convert atom time to @da
-  ::
-  --
+      ::  refresh given link
+      ?.  (~(has by feeds) u.link)
+        ~
+      :~  %:  make-refresh-card
+              u.link
+              p:(~(got by feeds) u.link)
+              desk
+          ==
+      ==
+    ::
+    ++  make-refresh-card
+      |=  [=link:ra =updated:rs =desk]
+      ^-  card:agent:gall
+      :*  %pass
+          /rss-sub/update/(scot %t link)
+          %arvo
+          %k
+          %fard
+          desk
+          %rss-atom
+          %noun
+          !>([updated link])
+      ==
+    ::
+    ::  XX convert rss time to @da
+    ::
+    ::  XX convert atom time to @da
+    ::
+    --
   --
 --
