@@ -12,6 +12,11 @@
   ::
   +$  card  card:agent:gall
   ::
+  +$  result
+    $%  [%rss =link:ra channel=(list channel-element:rss:ra) items=(list item:rss:ra)]
+        [%atom =link:ra feed=(list feed-element:atom:ra) entries=(list entry:atom:ra)]
+    ==
+  ::
   ++  agent
     |=  inner=agent:gall
     =|  state-0
@@ -60,20 +65,33 @@
         ==
       ::
           %refresh-now
-        [(make-refresh-cards:help link.act q.byk.bowl feeds) this]
-      ::
-          %add-feed
-        ?~  (de-purl:html link.act)
-          ~|  "{<q.byk.bowl>}: invalid URL {<link.act>}"
-          !!
+        =/  links=(list link:ra)
+          ?~  link.act
+            ~(tap in ~(key by feeds))
+          ?.  (~(has by feeds) u.link.act)
+            ~
+          ~[u.link.act]
+        ?~  links
+          `this
         :_  this
-        :~  :*  %give  %fact  ~[/rss-sub/feeds]
-                %rss-sub-update  !>([%feed-added link.act])
-            ==
-            :*  %pass  /rss-sub/update/(scot %t link.act)
+        :~  :*  %pass  /rss-sub/refresh-feeds
                 %arvo  %k
                 %fard  q.byk.bowl
-                %rss-atom  [%noun !>([now.bowl link.act])]
+                %fetch-feeds  [%noun !>(links)]
+            ==
+        ==
+      ::
+          %add-feeds
+        ?.  (valid-links:help links.act)
+          ~|  "{<q.byk.bowl>}: invalid URL in %add-feeds"
+          !!
+        ?~  links.act
+          `this
+        :_  this
+        :~  :*  %pass  /rss-sub/add-feeds
+                %arvo  %k
+                %fard  q.byk.bowl
+                %fetch-feeds  [%noun !>(links.act)]
             ==
         ==
       ==
@@ -91,11 +109,11 @@
         |=  =link:ra
         ^-  card
         :*  %give  %fact  ~
-            [%feed-added !>(link)]
+            %rss-sub-update  !>([%feed-added link])
         ==
       ::
-          [%rss-sub %feed =link:ra ~]
-        `this
+          [%rss-sub %feed link=@ta ~]
+        [(feed-facts:help (slav %t i.t.t.path) feeds) this]
       ==
     ::
     ++  on-peek
@@ -163,6 +181,30 @@
       ?+  pole
         =^  cards  inner  (on-arvo:og pole sign-arvo)
         [cards this]
+        ::
+        ::  add a batch of feeds from one fetch-feeds thread call
+        [%rss-sub %add-feeds ~]
+          ?>  ?=([%khan %arow *] sign-arvo)
+          ?.  ?=(%& -.p.sign-arvo)
+            ~&  >>>  "{<q.byk.bowl>}: failed to fetch added feeds"
+            `this
+          ?>  ?=([%khan %arow %.y %noun *] sign-arvo)
+          =/  [%khan %arow %.y %noun =vase]  sign-arvo
+          =/  results  !<((list result) vase)
+          =/  new-feeds  (add-results:help results now.bowl feeds)
+          [(feed-added-facts:help results) this(feeds new-feeds)]
+        ::
+        ::  refresh cached feeds in one fetch-feeds thread call
+        [%rss-sub %refresh-feeds ~]
+          ?>  ?=([%khan %arow *] sign-arvo)
+          ?.  ?=(%& -.p.sign-arvo)
+            ~&  >>>  "{<q.byk.bowl>}: failed to refresh feeds"
+            `this
+          ?>  ?=([%khan %arow %.y %noun *] sign-arvo)
+          =/  [%khan %arow %.y %noun =vase]  sign-arvo
+          =/  results  !<((list result) vase)
+          =/  new-feeds  (add-results:help results now.bowl feeds)
+          [(result-facts:help results) this(feeds new-feeds)]
         ::
         ::  parse full feed and index all items/entries
         [%rss-sub %index =link:ra ~]
@@ -360,7 +402,7 @@
           ?:  -.u.q.u.cached  `this
           ?>  ?=([%feed *] +.u.q.u.cached)
           =/  af=feed:atom:ra  +.u.q.u.cached
-          :-  :~  :*  %give  %fact  ~[/rss-sub/feeds /feed/[link.pole]]
+          :-  :~  :*  %give  %fact  ~[/rss-sub/feed/[link.pole]]
                       [%atom-entry !>(entry)]
                   ==
               ==
@@ -388,6 +430,147 @@
   ::
   ++  help
     |%
+    ++  valid-links
+      |=  links=(list link:ra)
+      ^-  ?
+      |-
+      ?~  links
+        %.y
+      ?~  (de-purl:html i.links)
+        %.n
+      $(links t.links)
+    ::
+    ++  add-results
+      |=  [results=(list result) now=@da cur=feeds:rs]
+      ^-  feeds:rs
+      |-
+      ?~  results
+        cur
+      %=  $
+        results  t.results
+        cur      (add-result i.results now cur)
+      ==
+    ::
+    ++  add-result
+      |=  [res=result now=@da cur=feeds:rs]
+      ^-  feeds:rs
+      ?-    -.res
+          %rss
+        %-  ~(put by cur)
+        :-  link.res
+        :-  now
+        %-  some
+        ^-  feed:rs
+        :-  %.y
+        ^-  channel:rss:ra
+        :*  %channel
+            ~
+            channel.res
+            (rss-items-set items.res)
+        ==
+      ::
+          %atom
+        %-  ~(put by cur)
+        :-  link.res
+        :-  now
+        %-  some
+        ^-  feed:rs
+        :-  %.n
+        ^-  feed:atom:ra
+        :*  %feed
+            ~
+            feed.res
+            (atom-entries-set entries.res)
+        ==
+      ==
+    ::
+    ++  feed-added-facts
+      |=  results=(list result)
+      ^-  (list card:agent:gall)
+      |-
+      ?~  results
+        ~
+      :-  :*  %give  %fact  ~[/rss-sub/feeds]
+              %rss-sub-update  !>([%feed-added link.i.results])
+          ==
+      $(results t.results)
+    ::
+    ++  feed-facts
+      |=  [=link:ra =feeds:rs]
+      ^-  (list card:agent:gall)
+      =/  entry  (~(get by feeds) link)
+      ?~  entry  ~
+      ?~  q.u.entry  ~
+      ?:  -.u.q.u.entry
+        ?>  ?=([%channel *] +.u.q.u.entry)
+        =/  =channel:rss:ra  +.u.q.u.entry
+        %+  turn
+          ~(tap in items.channel)
+        |=  =item:rss:ra
+        :*  %give  %fact  ~
+            %rss-item  !>(item)
+        ==
+      ?>  ?=([%feed *] +.u.q.u.entry)
+      =/  =feed:atom:ra  +.u.q.u.entry
+      %+  turn
+        ~(tap in entries.feed)
+      |=  =entry:atom:ra
+      :*  %give  %fact  ~
+          %atom-entry  !>(entry)
+      ==
+    ::
+    ++  result-facts
+      |=  results=(list result)
+      ^-  (list card:agent:gall)
+      %+  roll  results
+      |=  [res=result cards=(list card:agent:gall)]
+      %+  weld
+        (result-facts-one res)
+      cards
+    ::
+    ++  result-facts-one
+      |=  res=result
+      ^-  (list card:agent:gall)
+      ?-    -.res
+          %rss
+        %+  turn  items.res
+        |=  =item:rss:ra
+        :*  %give  %fact  ~[/rss-sub/feed/(scot %t link.res)]
+            %rss-item  !>(item)
+        ==
+      ::
+          %atom
+        %+  turn  entries.res
+        |=  =entry:atom:ra
+        :*  %give  %fact  ~[/rss-sub/feed/(scot %t link.res)]
+            %atom-entry  !>(entry)
+        ==
+      ==
+    ::
+    ++  rss-items-set
+      |=  items=(list item:rss:ra)
+      ^-  (set item:rss:ra)
+      =/  out=(set item:rss:ra)  *(set item:rss:ra)
+      |-
+      ?~  items
+        out
+      %=  $
+        items  t.items
+        out    (~(put in out) i.items)
+      ==
+    ::
+    ++  atom-entries-set
+      |=  entries=(list entry:atom:ra)
+      ^-  (set entry:atom:ra)
+      =/  out=(set entry:atom:ra)  *(set entry:atom:ra)
+      |-
+      ?~  entries
+        out
+      %=  $
+        entries  t.entries
+        out      (~(put in out) i.entries)
+      ==
+    ::
     ++  rss-item-published
       |=  =item:rss:ra
       ^-  (unit @da)

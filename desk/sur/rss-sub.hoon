@@ -5,7 +5,7 @@
 +$  feeds    (map link:ra (pair updated (unit feed)))  ::  URLs and feeds
 ::
 +$  rss-sub-action
-  $%  [%add-feed =link:ra]
+  $%  [%add-feeds links=(list link:ra)]
       [%del-feed =link:ra]
       [%refresh-now link=(unit link:ra)]
   ==

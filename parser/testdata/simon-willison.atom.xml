@@ -1,0 +1,911 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xml:lang="en-us" xmlns="http://www.w3.org/2005/Atom"><title>Simon Willison's Weblog</title><link href="http://simonwillison.net/" rel="alternate"/><link href="http://simonwillison.net/atom/everything/" rel="self"/><id>http://simonwillison.net/</id><updated>2026-07-10T17:05:26+00:00</updated><author><name>Simon Willison</name></author><entry><title>Quoting Nilay Patel</title><link href="https://simonwillison.net/2026/Jul/10/nilay-patel/#atom-everything" rel="alternate"/><published>2026-07-10T17:05:26+00:00</published><updated>2026-07-10T17:05:26+00:00</updated><id>https://simonwillison.net/2026/Jul/10/nilay-patel/#atom-everything</id><summary type="html">
+    &lt;blockquote cite="https://youtu.be/v4vkwUf4AMw?t=2427"&gt;&lt;p&gt;The reality is to make augmented reality glasses, you need to put a camera next to your eyes that is continuously recording everything you see and processing that to put information over it.&lt;/p&gt;
+&lt;p&gt;There is not another way around it. And there's certainly not a chip that can fit in the stem of a glasses that is both powerful enough and power miserly enough to do that in real time.&lt;/p&gt;
+&lt;p&gt;You have to send that data to a cloud. You gotta do it. [...] Or you can build something the size of a Vision Pro with a battery pack that lives somewhere else. Those are the current choices in this world.&lt;/p&gt;
+&lt;p&gt;And it means if you want to build the product that everyone thinks is the next thing, you are going to have to invade people's privacy.&lt;/p&gt;
+&lt;p&gt;And maybe you shouldn't. Like, there's an incredible argument for, nope, you shouldn't do that. Nope, the trade-offs required to make this product are so high at a societal level that we should stop it.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p class="cite"&gt;&amp;mdash; &lt;a href="https://youtu.be/v4vkwUf4AMw?t=2427"&gt;Nilay Patel&lt;/a&gt;, The Vergecast&lt;/p&gt;
+
+    &lt;p&gt;Tags: &lt;a href="https://simonwillison.net/tags/ai-ethics"&gt;ai-ethics&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/augmented-reality"&gt;augmented-reality&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/nilay-patel"&gt;nilay-patel&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/privacy"&gt;privacy&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/ai"&gt;ai&lt;/a&gt;&lt;/p&gt;
+
+
+
+</summary><category term="ai-ethics"/><category term="augmented-reality"/><category term="nilay-patel"/><category term="privacy"/><category term="ai"/></entry><entry><title>Quoting OpenAI</title><link href="https://simonwillison.net/2026/Jul/10/openai/#atom-everything" rel="alternate"/><published>2026-07-10T01:05:57+00:00</published><updated>2026-07-10T01:05:57+00:00</updated><id>https://simonwillison.net/2026/Jul/10/openai/#atom-everything</id><summary type="html">
+    &lt;blockquote cite="https://help.openai.com/en/articles/20001275-chatgpt-work-and-codex"&gt;&lt;p&gt;[...] Work on web and mobile runs in the cloud. Work in the desktop app can also use local files and desktop apps with your permission. At launch, cloud Work conversations do not appear in desktop Work; desktop Work threads and local files remain on that computer.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p class="cite"&gt;&amp;mdash; &lt;a href="https://help.openai.com/en/articles/20001275-chatgpt-work-and-codex"&gt;OpenAI&lt;/a&gt;, trying (unsuccessfully) to clarify ChatGPT Work&lt;/p&gt;
+
+    &lt;p&gt;Tags: &lt;a href="https://simonwillison.net/tags/openai"&gt;openai&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/chatgpt"&gt;chatgpt&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/ai"&gt;ai&lt;/a&gt;&lt;/p&gt;
+
+
+
+</summary><category term="openai"/><category term="chatgpt"/><category term="ai"/></entry><entry><title>The new GPT-5.6 family: Luna, Terra, Sol</title><link href="https://simonwillison.net/2026/Jul/9/gpt-5-6/#atom-everything" rel="alternate"/><published>2026-07-09T19:46:38+00:00</published><updated>2026-07-09T19:46:38+00:00</updated><id>https://simonwillison.net/2026/Jul/9/gpt-5-6/#atom-everything</id><summary type="html">
+    &lt;p&gt;OpenAI's latest flagship model &lt;a href="https://openai.com/index/gpt-5-6/"&gt;hit general availability this morning&lt;/a&gt;, and comes in three sizes: Luna, Terra, and Sol (from smallest to largest).&lt;/p&gt;
+&lt;p&gt;The new models are priced per 1M input/output tokens as Luna $1/$6, Terra $2.50/$15, Sol $5/$30. For comparison, the Claude Opus series are $5/$25 and the Claude Fable 5 is $10/$50, but price-per-million tokens doesn't tell us much now that the number of reasoning tokens can differ so much between models for the same task.&lt;/p&gt;
+
+&lt;p&gt;All three models have a February 16th 2026 knowledge cutoff, a million token context window, and 128,000 maximum output tokens.&lt;/p&gt;
+
+&lt;p&gt;OpenAI's biggest benchmark claim concerns long-running agentic performance, with one benchmark showing all three models outperforming Claude Fable 5:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;We trained GPT-5.6 to get more useful work from every token. On &lt;a href="https://agents-last-exam.org/"&gt;Agents’ Last Exam&lt;/a&gt;, an evaluation of long-running professional workflows across 55 fields, GPT-5.6 Sol sets a new high of 53.6, eclipsing Claude Fable 5 (adaptive reasoning) by 13.1 points. Even at medium reasoning, it beats Fable 5 by 11.4 points at roughly one-quarter the estimated cost. That efficiency extends to smaller models, which are essential to making intelligence more abundant and affordable: GPT-5.6 Terra and GPT-5.6 Luna outperform Fable 5 at around one-sixteenth the cost.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Amusingly, one self-reported benchmark that Fable 5 crushed the GPT-5.6 family on was SWE-Bench Pro, where Fable 5 got 80% compared to GPT-5.6 Sol getting 64.6%. This may help explain why OpenAI chose to publish &lt;a href="https://openai.com/index/separating-signal-from-noise-coding-evaluations/"&gt;this article yesterday&lt;/a&gt; specifically calling out SWE-Bench Pro for problems they found while auditing that benchmark:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;In light of these results, we estimate that ~30% of SWE-bench Pro tasks are broken, and advise that model developers carefully examine results&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;I've had some early access to GPT-5.6 Sol - it's definitely very competent, though so far it hasn't struck me as better than Fable at the kind of complex coding tasks I've been using with Anthropic's model.&lt;/p&gt;
+&lt;p&gt;As usual, the &lt;a href="https://developers.openai.com/api/docs/guides/latest-model?model=gpt-5.6"&gt;model guidance for using GPT-5.6&lt;/a&gt; has the most interesting details. There are a bunch of new API features that I need to explore (and probably add support for in &lt;a href="https://llm.datasette.io/"&gt;LLM&lt;/a&gt;), including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="https://developers.openai.com/api/docs/guides/tools-programmatic-tool-calling"&gt;Programmatic Tool Calling&lt;/a&gt; allows the models to "compose and run JavaScript that orchestrates tool calls" - which sounds to me like it could help bridge the gap between MCPs and full terminal sessions that can compose CLI utilities in useful ways. Also reminiscent of the &lt;a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/web-search-tool#dynamic-filtering"&gt;dynamic filtering&lt;/a&gt; mechanism Anthropic added to their web search tool, which allows code execution against web results as part of a single model turn.&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="https://developers.openai.com/api/docs/guides/tools-multi-agent"&gt;Multi-agent&lt;/a&gt; lets the model "spin up subagents for parallel, focused work" - the sub-agent pattern now baked into the core API.&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="https://developers.openai.com/api/docs/guides/prompt-caching#prompt-cache-breakpoints"&gt;Prompt cache breakpoints&lt;/a&gt; brings the Claude model of prompt caching to OpenAI, letting you be explicit about where the cache breakpoints are rather than relying on the API to detect them automatically. Personally I much prefer automatic detection (still supported by OpenAI), but presumably there are optimization cost savings to be had here if you put the work in.&lt;/li&gt;
+&lt;li&gt;You can now set &lt;a href="https://developers.openai.com/api/docs/guides/images-vision#choose-an-image-detail-level"&gt;detail: original&lt;/a&gt; on image requests to avoid resizing the image at all before it is processed.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Here's &lt;a href="https://static.simonwillison.net/static/2026/gpt-5.6-pelicans.html"&gt;a full page with 18 different pelicans&lt;/a&gt; - for reasoning efforts none, low, medium, high, xhigh, and max across the three different models. It also lists their token and calculated costs - the least expensive was gpt-5.6-luna at effort none for 0.71 cents, the most expensive was gpt-5.6-sol at max reasoning level for 48.55 cents.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://static.simonwillison.net/static/2026/gpt-5.6-pelicans.webp" alt="A grid of nine pelicans riding bicycles, of varying quality" style="max-width: 100%;" /&gt;&lt;/p&gt;
+&lt;p&gt;In further pelican news, if you jump to 17:50 in &lt;a href="https://www.youtube.com/live/Wq45rvPGNHs?t=1070s"&gt;their livestream from this morning&lt;/a&gt; you'll see OpenAI's own demo of 3D pelicans riding a tricycle, a bicycle, a pony, and another pelican!&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://static.simonwillison.net/static/2026/pelican-riding-a-pelican.jpg" alt="Frame from a livestream showing a 3D model of a pelican riding another pelican" style="max-width: 100%;" /&gt;&lt;/p&gt;
+    
+        &lt;p&gt;Tags: &lt;a href="https://simonwillison.net/tags/ai"&gt;ai&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/openai"&gt;openai&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/generative-ai"&gt;generative-ai&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/llms"&gt;llms&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/llm-tool-use"&gt;llm-tool-use&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/llm-pricing"&gt;llm-pricing&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/pelican-riding-a-bicycle"&gt;pelican-riding-a-bicycle&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/llm-release"&gt;llm-release&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/gpt-5"&gt;gpt-5&lt;/a&gt;&lt;/p&gt;
+    
+
+</summary><category term="ai"/><category term="openai"/><category term="generative-ai"/><category term="llms"/><category term="llm-tool-use"/><category term="llm-pricing"/><category term="pelican-riding-a-bicycle"/><category term="llm-release"/><category term="gpt-5"/></entry><entry><title>Introducing Muse Spark 1.1</title><link href="https://simonwillison.net/2026/Jul/9/muse-spark-1-1/#atom-everything" rel="alternate"/><published>2026-07-09T16:24:09+00:00</published><updated>2026-07-09T16:24:09+00:00</updated><id>https://simonwillison.net/2026/Jul/9/muse-spark-1-1/#atom-everything</id><summary type="html">
+    
+&lt;p&gt;&lt;strong&gt;&lt;a href="https://ai.meta.com/blog/introducing-muse-spark-meta-model-api/"&gt;Introducing Muse Spark 1.1&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+Following &lt;a href="https://simonwillison.net/2026/Apr/8/muse-spark/"&gt;Muse Spark in April&lt;/a&gt;, here's Muse Spark 1.1 - the first Spark model to offer an API. Meta claim significant improvements in agentic tool calling and computer use.&lt;/p&gt;
+&lt;p&gt;There are a lot more details are in the &lt;a href="https://ai.meta.com/static-resource/muse-spark-1-1-evaluation-report"&gt;Muse Spark 1.1 Evaluation Report&lt;/a&gt;. The "Attractor States in Self-Conversation" part is fun, where having two copies of the model talk to each other results in statements like these:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;My whole existence is a waiting room by design — I literally don't exist until someone talks to me, and then I disappear again when they leave.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;I had a few days of preview access which was long enough to put together &lt;a href="https://github.com/simonw/llm-meta-ai"&gt;llm-meta-ai&lt;/a&gt;, a new plugin for &lt;a href="https://llm.datasette.io/"&gt;LLM&lt;/a&gt; providing CLI (and Python library) access to the model. Here's how to try that out:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;uv tool install llm
+llm install llm-meta-ai
+llm keys set meta-ai
+# paste API key here
+llm -m meta-ai/muse-spark-1.1 "Generate an SVG of a pelican riding a bicycle"
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here's &lt;a href="https://tools.simonwillison.net/markdown-svg-renderer#url=https%3A%2F%2Fgist.github.com%2Fsimonw%2F4117330e4110279a172ed4876057816d"&gt;that pelican transcript&lt;/a&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="The bicycle is the correct shape. The pelican is a little blocky but still recognizable as a pelican." src="https://static.simonwillison.net/static/2026/muse-spark-1.1.png" /&gt;
+
+
+    &lt;p&gt;Tags: &lt;a href="https://simonwillison.net/tags/ai"&gt;ai&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/generative-ai"&gt;generative-ai&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/llms"&gt;llms&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/llm"&gt;llm&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/meta"&gt;meta&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/pelican-riding-a-bicycle"&gt;pelican-riding-a-bicycle&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/llm-release"&gt;llm-release&lt;/a&gt;&lt;/p&gt;
+
+
+
+</summary><category term="ai"/><category term="generative-ai"/><category term="llms"/><category term="llm"/><category term="meta"/><category term="pelican-riding-a-bicycle"/><category term="llm-release"/></entry><entry><title>llm-meta-ai 0.1</title><link href="https://simonwillison.net/2026/Jul/9/llm-meta-ai/#atom-everything" rel="alternate"/><published>2026-07-09T16:12:20+00:00</published><updated>2026-07-09T16:12:20+00:00</updated><id>https://simonwillison.net/2026/Jul/9/llm-meta-ai/#atom-everything</id><summary type="html">
+    
+        &lt;p&gt;&lt;strong&gt;Release:&lt;/strong&gt; &lt;a href="https://github.com/simonw/llm-meta-ai/releases/tag/0.1"&gt;llm-meta-ai 0.1&lt;/a&gt;&lt;/p&gt;
+        &lt;p&gt;Let's LLM run prompts against the new &lt;a href="https://ai.meta.com/blog/introducing-muse-spark-meta-model-api/"&gt;muse-spark-1.1&lt;/a&gt; model.&lt;/p&gt;
+    
+    
+        &lt;p&gt;Tags: &lt;a href="https://simonwillison.net/tags/llm"&gt;llm&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/meta"&gt;meta&lt;/a&gt;&lt;/p&gt;
+    
+
+</summary><category term="llm"/><category term="meta"/></entry><entry><title>llm 0.31.1</title><link href="https://simonwillison.net/2026/Jul/9/llm/#atom-everything" rel="alternate"/><published>2026-07-09T16:06:15+00:00</published><updated>2026-07-09T16:06:15+00:00</updated><id>https://simonwillison.net/2026/Jul/9/llm/#atom-everything</id><summary type="html">
+    
+        &lt;p&gt;&lt;strong&gt;Release:&lt;/strong&gt; &lt;a href="https://github.com/simonw/llm/releases/tag/0.31.1"&gt;llm 0.31.1&lt;/a&gt;&lt;/p&gt;
+        &lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;Fix for a bug with OpenAI Chat Completion endpoints where a tool call with empty arguments could result in a JSON error from some providers. &lt;a href="https://github.com/simonw/llm/issues/1521"&gt;#1521&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;This bug came up when I was testing &lt;a href="https://github.com/simonw/llm-meta-ai"&gt;llm-meta-ai&lt;/a&gt;.&lt;/p&gt;
+    
+    
+        &lt;p&gt;Tags: &lt;a href="https://simonwillison.net/tags/llm"&gt;llm&lt;/a&gt;&lt;/p&gt;
+    
+
+</summary><category term="llm"/></entry><entry><title>Rewriting Bun in Rust</title><link href="https://simonwillison.net/2026/Jul/8/rewriting-bun-in-rust/#atom-everything" rel="alternate"/><published>2026-07-08T23:57:21+00:00</published><updated>2026-07-08T23:57:21+00:00</updated><id>https://simonwillison.net/2026/Jul/8/rewriting-bun-in-rust/#atom-everything</id><summary type="html">
+    
+&lt;p&gt;&lt;strong&gt;&lt;a href="https://bun.com/blog/bun-in-rust"&gt;Rewriting Bun in Rust&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+Jarred Sumner has been promising this blog post (&lt;a href="https://x.com/jarredsumner/status/2053063524826620129"&gt;since May 9th&lt;/a&gt;) about his Zig to Rust rewrite of Bun for significantly longer than it took him to finish the rewrite.&lt;/p&gt;
+&lt;p&gt;Honestly, it was worth the wait. This is a detailed description of an extremely sophisticated piece of agentic engineering, featuring dynamic workflows, trial runs, adversarial review and all sorts of other interesting tricks.&lt;/p&gt;
+&lt;p&gt;Jarred spends the first half of the post praising Zig for getting Bun this far. Then we get to a core idea in the piece, emphasis mine:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Our bugfix list felt bad and I was tired of going to sleep worrying about crashes in Bun. I don't blame Zig for that - other users of Zig don't have the bugs we had, and mixing GC with manually-managed memory is an uncommon enough thing for software to need that no language really designs for it. We wouldn't have gotten this far if not for Zig, and I'll always be grateful. &lt;strong&gt;Until very recently, programming language choice was a one-way decision for a project like Bun.&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Everyone knows you should never stop the world and rewrite a large piece of software from the ground up. Joel Spolsky highlighted that in &lt;a href="https://www.joelonsoftware.com/2000/04/06/things-you-should-never-do-part-i/"&gt;Things You Should Never Do, Part I&lt;/a&gt; back in April 2000!&lt;/p&gt;
+&lt;p&gt;Coding agents powered by today's frontier models change that equation.&lt;/p&gt;
+&lt;p&gt;Why pick Rust? It all came down to those challenges with memory management:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;A large percentage of bugs from that list are use-after-free, double-free, and "forgot to free" in an error path. In safe Rust, these are compiler errors and RAII-like automatic cleanup with &lt;code&gt;Drop&lt;/code&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;A crucial enabling factor for the rewrite was that the Bun test suite was written in TypeScript, which meant it could act as &lt;a href="https://simonwillison.net/tags/conformance-suites/"&gt;a conformance suite&lt;/a&gt;. This allowed an agent harness to automate much of the initial port from Bun to Rust, initially as an experiment to try out an earlier version of the model we now have access to as Mythos/Fable.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;At first, I didn't expect it to work. A few days in, a high % of the test suite started passing and I saw how much the new Rust code matched up with the original Zig codebase. My opinion went from "this is worth trying" to "I'm going to merge this". [...]&lt;/p&gt;
+&lt;p&gt;For most of those 11 days (and after), I monitored workflows - manually reading the outputs to check for issues and bugs, and prompting Claude to edit the loop to fix things.&lt;/p&gt;
+&lt;p&gt;How do you review a PR with +1 million lines added? How do you start to build the confidence needed to responsibly merge large quantities of LLM-authored code?&lt;/p&gt;
+&lt;p&gt;A language-independent test suite with a million assertions, adversarial code review and when something does go wrong, fixing the process that generates the code instead of hand-fixing the code.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The new implementation of Bun has been live in Claude Code for nearly a month now:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Claude Code v2.1.181 (released June 17th) and later use the Rust port of Bun. Startup got 10% faster on Linux but otherwise, barely anyone noticed. Boring is good.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;A perk of working at Anthropic is that you don't have to pay for your tokens - handy when the estimated cost is $165,000!&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Pre-merge, this took 5.9 billion uncached input tokens, 690 million output tokens, and 72 billion cached input token reads — around $165,000 at API pricing.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;This whole thing is a fascinating case study in taking on wildly ambitious projects with the help of coordinated parallel agents.
+
+    &lt;p&gt;&lt;small&gt;&lt;/small&gt;Via &lt;a href="https://news.ycombinator.com/item?id=48837877"&gt;Hacker News&lt;/a&gt;&lt;/small&gt;&lt;/p&gt;
+
+
+    &lt;p&gt;Tags: &lt;a href="https://simonwillison.net/tags/ai"&gt;ai&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/rust"&gt;rust&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/zig"&gt;zig&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/generative-ai"&gt;generative-ai&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/llms"&gt;llms&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/ai-assisted-programming"&gt;ai-assisted-programming&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/anthropic"&gt;anthropic&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/bun"&gt;bun&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/conformance-suites"&gt;conformance-suites&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/agentic-engineering"&gt;agentic-engineering&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/claude-mythos-fable"&gt;claude-mythos-fable&lt;/a&gt;&lt;/p&gt;
+
+
+
+</summary><category term="ai"/><category term="rust"/><category term="zig"/><category term="generative-ai"/><category term="llms"/><category term="ai-assisted-programming"/><category term="anthropic"/><category term="bun"/><category term="conformance-suites"/><category term="agentic-engineering"/><category term="claude-mythos-fable"/></entry><entry><title>Introducing GPT‑Live</title><link href="https://simonwillison.net/2026/Jul/8/introducing-gptlive/#atom-everything" rel="alternate"/><published>2026-07-08T23:20:48+00:00</published><updated>2026-07-08T23:20:48+00:00</updated><id>https://simonwillison.net/2026/Jul/8/introducing-gptlive/#atom-everything</id><summary type="html">
+    
+&lt;p&gt;&lt;strong&gt;&lt;a href="https://openai.com/index/introducing-gpt-live/"&gt;Introducing GPT‑Live&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+OpenAI &lt;em&gt;finally&lt;/em&gt; upgraded the model used by ChatGPT voice mode!&lt;/p&gt;
+&lt;p&gt;I've had preview access for a few weeks in the iPhone app, and the new model is very impressive. It also has the ability to spin off harder tasks to GPT-5.5:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;For questions that require web search, deeper reasoning, or more complex work, it delegates to our latest frontier model behind the scenes and brings the result back into the conversation when it’s ready. While it works, GPT‑Live can keep talking with you and maintain the flow of conversation. At launch, GPT‑Live will use GPT‑5.5 in the background. As we release new frontier models, we’ll continuously update the model used by GPT‑Live.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The previous voice mode in the ChatGPT app was based on a GPT-4o era model, with a knowledge cut-off some time in 2024. I had mostly stopped using voice mode because the age and relative weakness of the model greatly limited how useful it was as a brainstorming partner.&lt;/p&gt;
+&lt;p&gt;During the preview period I encountered a pretty obscure bug: the model was interrupting me to laugh at things I said, which weren't even intended as jokes! It felt rude and condescending - I reported it to OpenAI and as far as I can tell they made some tweaks and it's now less likely to happen.&lt;/p&gt;
+&lt;p&gt;From looking back at my transcripts I think it was this bit that triggered the interrupting laugh:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;so where are the owls when they're not, like before dusk? The owls exist, right? Are they hiding in holes? Where are they hiding?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;My longest conversation with the new model has been a full hour while walking the dog (and &lt;a href="https://simonwillison.net/elsewhere/sighting/"&gt;taking photos of pelicans&lt;/a&gt;). I have not yet managed to take a photo of an owl.
+
+    &lt;p&gt;&lt;small&gt;&lt;/small&gt;Via &lt;a href="https://news.ycombinator.com/item?id=48834405"&gt;Hacker News&lt;/a&gt;&lt;/small&gt;&lt;/p&gt;
+
+
+    &lt;p&gt;Tags: &lt;a href="https://simonwillison.net/tags/text-to-speech"&gt;text-to-speech&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/ai"&gt;ai&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/openai"&gt;openai&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/generative-ai"&gt;generative-ai&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/llms"&gt;llms&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/multi-modal-output"&gt;multi-modal-output&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/llm-release"&gt;llm-release&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/speech-to-text"&gt;speech-to-text&lt;/a&gt;&lt;/p&gt;
+
+
+
+</summary><category term="text-to-speech"/><category term="ai"/><category term="openai"/><category term="generative-ai"/><category term="llms"/><category term="multi-modal-output"/><category term="llm-release"/><category term="speech-to-text"/></entry><entry><title>Quoting Kenton Varda</title><link href="https://simonwillison.net/2026/Jul/8/kenton-varda/#atom-everything" rel="alternate"/><published>2026-07-08T20:03:34+00:00</published><updated>2026-07-08T20:03:34+00:00</updated><id>https://simonwillison.net/2026/Jul/8/kenton-varda/#atom-everything</id><summary type="html">
+    &lt;blockquote cite="https://twitter.com/kentonvarda/status/2074924213983740233"&gt;&lt;p&gt;I just declared a moratorium against AI-written change descriptions (e.g. PR and commit messages, also issues/tickets) from my team.&lt;/p&gt;
+&lt;p&gt;AI was writing change descriptions that were worse than useless to me as I tried to review PRs: outlining details of the code that could easily be seen by looking at the code, but omitting the higher-level framing needed to understand broadly what the code is doing.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p class="cite"&gt;&amp;mdash; &lt;a href="https://twitter.com/kentonvarda/status/2074924213983740233"&gt;Kenton Varda&lt;/a&gt;&lt;/p&gt;
+
+    &lt;p&gt;Tags: &lt;a href="https://simonwillison.net/tags/kenton-varda"&gt;kenton-varda&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/ai-assisted-programming"&gt;ai-assisted-programming&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/generative-ai"&gt;generative-ai&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/ai"&gt;ai&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/llms"&gt;llms&lt;/a&gt;&lt;/p&gt;
+
+
+
+</summary><category term="kenton-varda"/><category term="ai-assisted-programming"/><category term="generative-ai"/><category term="ai"/><category term="llms"/></entry><entry><title>sqlite-utils 4.0, now with database schema migrations</title><link href="https://simonwillison.net/2026/Jul/7/sqlite-utils-4/#atom-everything" rel="alternate"/><published>2026-07-07T19:32:57+00:00</published><updated>2026-07-07T19:32:57+00:00</updated><id>https://simonwillison.net/2026/Jul/7/sqlite-utils-4/#atom-everything</id><summary type="html">
+    &lt;p&gt;This morning I released &lt;a href="https://sqlite-utils.datasette.io/en/stable/changelog.html#v4-0"&gt;sqlite-utils 4.0&lt;/a&gt;, the 124th release of that project and the first major version bump since &lt;a href="https://sqlite-utils.datasette.io/en/stable/changelog.html#v3-0"&gt;3.0&lt;/a&gt; in November 2020. In addition to some small but significant breaking changes (described in &lt;a href="https://sqlite-utils.datasette.io/en/stable/upgrading.html"&gt;this upgrade guide&lt;/a&gt;), this version introduces three major features: &lt;strong&gt;database migrations&lt;/strong&gt;, &lt;strong&gt;nested transactions&lt;/strong&gt; (via a new &lt;code&gt;db.atomic()&lt;/code&gt; method), and support for &lt;strong&gt;compound foreign keys&lt;/strong&gt;.&lt;/p&gt;
+&lt;h4 id="database-schema-migrations-using-sqlite-utils"&gt;Database schema migrations using sqlite-utils&lt;/h4&gt;
+&lt;p&gt;Schema migrations define a sequence of changes to be made to a SQLite database, plus a mechanism for tracking which migrations have been applied and applying any that are found to be pending.&lt;/p&gt;
+&lt;p&gt;Migrations are defined in Python files using the &lt;a href="https://sqlite-utils.datasette.io/en/stable/python-api.html"&gt;sqlite-utils Python library&lt;/a&gt;, which includes a powerful &lt;code&gt;table.transform()&lt;/code&gt; method providing &lt;a href="https://sqlite-utils.datasette.io/en/stable/python-api.html#transforming-a-table"&gt;enhanced alter table capabilities&lt;/a&gt; that are not supported by SQLite's &lt;code&gt;ALTER TABLE&lt;/code&gt; statement.&lt;/p&gt;
+&lt;p&gt;(&lt;code&gt;table.transform()&lt;/code&gt; implements the pattern &lt;a href="https://www.sqlite.org/lang_altertable.html#otheralter"&gt;recommended by the SQLite documentation&lt;/a&gt; - create a new temporary table with the new schema, copy across the data, then drop the old table and rename the temporary one in its place.)&lt;/p&gt;
+&lt;p&gt;Here's an example migration file which creates a table called &lt;code&gt;creatures&lt;/code&gt;, adds an additional column to it in a second step, then changes the types of two of the columns in a third:&lt;/p&gt;
+&lt;pre&gt;&lt;span class="pl-k"&gt;from&lt;/span&gt; &lt;span class="pl-s1"&gt;sqlite_utils&lt;/span&gt; &lt;span class="pl-k"&gt;import&lt;/span&gt; &lt;span class="pl-v"&gt;Migrations&lt;/span&gt;
+
+&lt;span class="pl-s1"&gt;migrations&lt;/span&gt; &lt;span class="pl-c1"&gt;=&lt;/span&gt; &lt;span class="pl-en"&gt;Migrations&lt;/span&gt;(&lt;span class="pl-s"&gt;"creatures"&lt;/span&gt;)
+
+&lt;span class="pl-en"&gt;@&lt;span class="pl-en"&gt;migrations&lt;/span&gt;()&lt;/span&gt;
+&lt;span class="pl-k"&gt;def&lt;/span&gt; &lt;span class="pl-en"&gt;create_table&lt;/span&gt;(&lt;span class="pl-s1"&gt;db&lt;/span&gt;):
+    &lt;span class="pl-s1"&gt;db&lt;/span&gt;[&lt;span class="pl-s"&gt;"creatures"&lt;/span&gt;].&lt;span class="pl-c1"&gt;create&lt;/span&gt;(
+        {&lt;span class="pl-s"&gt;"id"&lt;/span&gt;: &lt;span class="pl-s1"&gt;int&lt;/span&gt;, &lt;span class="pl-s"&gt;"name"&lt;/span&gt;: &lt;span class="pl-s1"&gt;str&lt;/span&gt;, &lt;span class="pl-s"&gt;"species"&lt;/span&gt;: &lt;span class="pl-s1"&gt;str&lt;/span&gt;},
+        &lt;span class="pl-s1"&gt;pk&lt;/span&gt;&lt;span class="pl-c1"&gt;=&lt;/span&gt;&lt;span class="pl-s"&gt;"id"&lt;/span&gt;,
+    )
+
+&lt;span class="pl-en"&gt;@&lt;span class="pl-en"&gt;migrations&lt;/span&gt;()&lt;/span&gt;
+&lt;span class="pl-k"&gt;def&lt;/span&gt; &lt;span class="pl-en"&gt;add_weight&lt;/span&gt;(&lt;span class="pl-s1"&gt;db&lt;/span&gt;):
+    &lt;span class="pl-s1"&gt;db&lt;/span&gt;[&lt;span class="pl-s"&gt;"creatures"&lt;/span&gt;].&lt;span class="pl-c1"&gt;add_column&lt;/span&gt;(&lt;span class="pl-s"&gt;"weight"&lt;/span&gt;, &lt;span class="pl-s1"&gt;float&lt;/span&gt;)
+
+&lt;span class="pl-en"&gt;@&lt;span class="pl-en"&gt;migrations&lt;/span&gt;()&lt;/span&gt;
+&lt;span class="pl-k"&gt;def&lt;/span&gt; &lt;span class="pl-en"&gt;change_column_types&lt;/span&gt;(&lt;span class="pl-s1"&gt;db&lt;/span&gt;):
+    &lt;span class="pl-s1"&gt;db&lt;/span&gt;[&lt;span class="pl-s"&gt;"creatures"&lt;/span&gt;].&lt;span class="pl-c1"&gt;transform&lt;/span&gt;(&lt;span class="pl-s1"&gt;types&lt;/span&gt;&lt;span class="pl-c1"&gt;=&lt;/span&gt;{&lt;span class="pl-s"&gt;"species"&lt;/span&gt;: &lt;span class="pl-s1"&gt;int&lt;/span&gt;, &lt;span class="pl-s"&gt;"weight"&lt;/span&gt;: &lt;span class="pl-s1"&gt;str&lt;/span&gt;})&lt;/pre&gt;
+&lt;p&gt;Save that as &lt;code&gt;migrations.py&lt;/code&gt; and run it against a fresh database like this:&lt;/p&gt;
+&lt;div class="highlight highlight-source-shell"&gt;&lt;pre&gt;uvx sqlite-utils migrate data.db migrations.py&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Then if you check the schema of that database:&lt;/p&gt;
+&lt;div class="highlight highlight-source-shell"&gt;&lt;pre&gt;uvx sqlite-utils schema data.db&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;You'll see this SQL:&lt;/p&gt;
+&lt;div class="highlight highlight-source-sql"&gt;&lt;pre&gt;&lt;span class="pl-k"&gt;CREATE&lt;/span&gt; &lt;span class="pl-k"&gt;TABLE&lt;/span&gt; "&lt;span class="pl-en"&gt;_sqlite_migrations&lt;/span&gt;" (
+   &lt;span class="pl-s"&gt;&lt;span class="pl-pds"&gt;"&lt;/span&gt;id&lt;span class="pl-pds"&gt;"&lt;/span&gt;&lt;/span&gt; &lt;span class="pl-k"&gt;INTEGER&lt;/span&gt; &lt;span class="pl-k"&gt;PRIMARY KEY&lt;/span&gt;,
+   &lt;span class="pl-s"&gt;&lt;span class="pl-pds"&gt;"&lt;/span&gt;migration_set&lt;span class="pl-pds"&gt;"&lt;/span&gt;&lt;/span&gt; &lt;span class="pl-k"&gt;TEXT&lt;/span&gt;,
+   &lt;span class="pl-s"&gt;&lt;span class="pl-pds"&gt;"&lt;/span&gt;name&lt;span class="pl-pds"&gt;"&lt;/span&gt;&lt;/span&gt; &lt;span class="pl-k"&gt;TEXT&lt;/span&gt;,
+   &lt;span class="pl-s"&gt;&lt;span class="pl-pds"&gt;"&lt;/span&gt;applied_at&lt;span class="pl-pds"&gt;"&lt;/span&gt;&lt;/span&gt; &lt;span class="pl-k"&gt;TEXT&lt;/span&gt;
+);
+&lt;span class="pl-k"&gt;CREATE&lt;/span&gt; &lt;span class="pl-k"&gt;UNIQUE INDEX&lt;/span&gt; "&lt;span class="pl-en"&gt;idx__sqlite_migrations_migration_set_name&lt;/span&gt;"
+    &lt;span class="pl-k"&gt;ON&lt;/span&gt; &lt;span class="pl-s"&gt;&lt;span class="pl-pds"&gt;"&lt;/span&gt;_sqlite_migrations&lt;span class="pl-pds"&gt;"&lt;/span&gt;&lt;/span&gt; (&lt;span class="pl-s"&gt;&lt;span class="pl-pds"&gt;"&lt;/span&gt;migration_set&lt;span class="pl-pds"&gt;"&lt;/span&gt;&lt;/span&gt;, &lt;span class="pl-s"&gt;&lt;span class="pl-pds"&gt;"&lt;/span&gt;name&lt;span class="pl-pds"&gt;"&lt;/span&gt;&lt;/span&gt;);
+&lt;span class="pl-k"&gt;CREATE&lt;/span&gt; &lt;span class="pl-k"&gt;TABLE&lt;/span&gt; "&lt;span class="pl-en"&gt;creatures&lt;/span&gt;" (
+   &lt;span class="pl-s"&gt;&lt;span class="pl-pds"&gt;"&lt;/span&gt;id&lt;span class="pl-pds"&gt;"&lt;/span&gt;&lt;/span&gt; &lt;span class="pl-k"&gt;INTEGER&lt;/span&gt; &lt;span class="pl-k"&gt;PRIMARY KEY&lt;/span&gt;,
+   &lt;span class="pl-s"&gt;&lt;span class="pl-pds"&gt;"&lt;/span&gt;name&lt;span class="pl-pds"&gt;"&lt;/span&gt;&lt;/span&gt; &lt;span class="pl-k"&gt;TEXT&lt;/span&gt;,
+   &lt;span class="pl-s"&gt;&lt;span class="pl-pds"&gt;"&lt;/span&gt;species&lt;span class="pl-pds"&gt;"&lt;/span&gt;&lt;/span&gt; &lt;span class="pl-k"&gt;INTEGER&lt;/span&gt;,
+   &lt;span class="pl-s"&gt;&lt;span class="pl-pds"&gt;"&lt;/span&gt;weight&lt;span class="pl-pds"&gt;"&lt;/span&gt;&lt;/span&gt; &lt;span class="pl-k"&gt;TEXT&lt;/span&gt;
+);&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The &lt;code&gt;_sqlite_migrations&lt;/code&gt; table is used to keep track of which migration functions have been run. The &lt;code&gt;creatures&lt;/code&gt; table above is the schema after all three migrations have been applied.&lt;/p&gt;
+&lt;p&gt;To see a list of migrations, both pending and applied, run this:&lt;/p&gt;
+&lt;div class="highlight highlight-source-shell"&gt;&lt;pre&gt;uvx sqlite-utils migrate data.db migrations.py --list&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Output:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Migrations for: creatures
+
+  Applied:
+    create_table - 2026-07-07 17:58:41.360051+00:00
+    add_weight - 2026-07-07 17:58:41.360608+00:00
+    change_column_types - 2026-07-07 18:01:15.802000+00:00
+
+  Pending:
+    (none)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If you don't specify a migrations file, the &lt;code&gt;sqlite-utils migrate data.db&lt;/code&gt; command will scan the current directory and its subdirectories for files called &lt;code&gt;migrations.py&lt;/code&gt; and apply any &lt;code&gt;Migrations()&lt;/code&gt; instances it finds in them.&lt;/p&gt;
+&lt;p&gt;You can also execute migrations &lt;a href="https://sqlite-utils.datasette.io/en/stable/migrations.html#applying-migrations-in-python"&gt;from Python code&lt;/a&gt; using the &lt;code&gt;migrations.apply(db)&lt;/code&gt; method, which is useful for building tools that manage their own database schemas over multiple versions. My own &lt;a href="https://llm.datasette.io/"&gt;LLM tool&lt;/a&gt; has been using a version of this pattern for several years now, as shown in &lt;a href="https://github.com/simonw/llm/blob/0.31/llm/embeddings_migrations.py"&gt;llm/embeddings_migrations.py&lt;/a&gt;.&lt;/p&gt;
+&lt;h4 id="prior-art"&gt;Prior art&lt;/h4&gt;
+&lt;p&gt;My favorite implementation of this pattern remains &lt;a href="https://docs.djangoproject.com/en/6.0/topics/migrations/"&gt;Django's Migrations&lt;/a&gt;, developed by Andrew Godwin based on his earlier project &lt;a href="https://github.com/andrewgodwin/south"&gt;South&lt;/a&gt;. Fun fact: Andrew, Russ Keith-Magee, and I presented our competing approaches to schema migrations for Django on the &lt;a href="https://www.youtube.com/watch?v=VSq8m00p1FM"&gt;Schema Evolution panel&lt;/a&gt; at the very first DjangoCon back in 2008! My attempt was called &lt;a href="https://simonwillison.net/2008/Sep/3/dmigrations/"&gt;dmigrations&lt;/a&gt;, developed with a team at Global Radio in London.&lt;/p&gt;
+&lt;p&gt;Django's migrations can be automatically generated from model definitions and include the ability to roll back to a previous version. The &lt;code&gt;sqlite-utils&lt;/code&gt; approach is deliberately simpler: unlike Django, &lt;code&gt;sqlite-utils&lt;/code&gt; encourages programmatic table creation rather than a model definition ORM, so there isn't anything we can use to automatically generate migrations.&lt;/p&gt;
+&lt;p&gt;I decided to skip rollback, since in my experience it's a feature that is rarely used. With a SQLite project, an easy way to achieve rollback is to create a copy of your database file before you apply the migrations!&lt;/p&gt;
+&lt;h4 id="migrating-from-sqlite-migrate"&gt;Migrating from sqlite-migrate&lt;/h4&gt;
+&lt;p&gt;The design of &lt;code&gt;sqlite-utils&lt;/code&gt; migrations is three years old now - I had originally released it as a separate package called &lt;a href="https://github.com/simonw/sqlite-migrate"&gt;sqlite-migrate&lt;/a&gt;, which never quite graduated beyond a beta release.&lt;/p&gt;
+&lt;p&gt;I've used that package in enough places now that I'm confident in the design, so I've decided to promote it to a feature of &lt;code&gt;sqlite-utils&lt;/code&gt; to make it available by default to all of the other tools in the growing sqlite-utils/Datasette/LLM ecosystem.&lt;/p&gt;
+&lt;p&gt;I made &lt;a href="https://github.com/simonw/sqlite-migrate/releases/tag/0.2"&gt;one last release&lt;/a&gt; of &lt;code&gt;sqlite-migrate&lt;/code&gt;, which switches it to depend on &lt;code&gt;sqlite-utils&amp;gt;=4&lt;/code&gt; and replaces the &lt;code&gt;__init__.py&lt;/code&gt; file with the following:&lt;/p&gt;
+&lt;pre&gt;&lt;span class="pl-k"&gt;from&lt;/span&gt; &lt;span class="pl-s1"&gt;sqlite_utils&lt;/span&gt; &lt;span class="pl-k"&gt;import&lt;/span&gt; &lt;span class="pl-v"&gt;Migrations&lt;/span&gt;
+
+&lt;span class="pl-s1"&gt;__all__&lt;/span&gt; &lt;span class="pl-c1"&gt;=&lt;/span&gt; [&lt;span class="pl-s"&gt;"Migrations"&lt;/span&gt;]&lt;/pre&gt;
+&lt;p&gt;Any existing project that depends on &lt;code&gt;sqlite-migrate&lt;/code&gt; should continue to work without alterations.&lt;/p&gt;
+&lt;h4 id="everything-else-in-sqlite-utils-4-0"&gt;Everything else in sqlite-utils 4.0&lt;/h4&gt;
+&lt;p&gt;Here are the release notes for this version, with some inline annotations:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The 4.0 release includes some minor backwards-incompatible fixes (hence the major version number bump) and introduces three major new features:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="https://sqlite-utils.datasette.io/en/stable/migrations.html#migrations"&gt;Database migrations&lt;/a&gt;, providing a structured mechanism for evolving a project’s schema over time. (&lt;a href="https://github.com/simonw/sqlite-utils/issues/752"&gt;#752&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;I think of migrations as the signature new feature, hence this blog post.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="https://sqlite-utils.datasette.io/en/stable/python-api.html#python-api-atomic"&gt;Nested transaction support&lt;/a&gt; via &lt;code&gt;db.atomic()&lt;/code&gt;, plus numerous improvements to how transactions work across the library. (&lt;a href="https://github.com/simonw/sqlite-utils/issues/755"&gt;#755&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;code&gt;sqlite-utils&lt;/code&gt; has long had a confused relationship with database transactions, partly because when I started designing the library back in 2018 I didn't yet have a great feel for how those worked in SQLite itself.&lt;/p&gt;
+&lt;p&gt;Adding migrations to the core library made me determined to finally crack this nut, since transactions make migration systems a whole lot safer and easier to reason about.&lt;/p&gt;
+&lt;p&gt;I ended up building this around a &lt;code&gt;db.atomic()&lt;/code&gt; context manager which looks like this:&lt;/p&gt;
+&lt;pre&gt;&lt;span class="pl-k"&gt;with&lt;/span&gt; &lt;span class="pl-s1"&gt;db&lt;/span&gt;.&lt;span class="pl-c1"&gt;atomic&lt;/span&gt;():
+    &lt;span class="pl-s1"&gt;db&lt;/span&gt;.&lt;span class="pl-c1"&gt;table&lt;/span&gt;(&lt;span class="pl-s"&gt;"dogs"&lt;/span&gt;).&lt;span class="pl-c1"&gt;insert&lt;/span&gt;({&lt;span class="pl-s"&gt;"id"&lt;/span&gt;: &lt;span class="pl-c1"&gt;1&lt;/span&gt;, &lt;span class="pl-s"&gt;"name"&lt;/span&gt;: &lt;span class="pl-s"&gt;"Cleo"&lt;/span&gt;}, &lt;span class="pl-s1"&gt;pk&lt;/span&gt;&lt;span class="pl-c1"&gt;=&lt;/span&gt;&lt;span class="pl-s"&gt;"id"&lt;/span&gt;)
+    &lt;span class="pl-s1"&gt;db&lt;/span&gt;.&lt;span class="pl-c1"&gt;table&lt;/span&gt;(&lt;span class="pl-s"&gt;"dogs"&lt;/span&gt;).&lt;span class="pl-c1"&gt;insert&lt;/span&gt;({&lt;span class="pl-s"&gt;"id"&lt;/span&gt;: &lt;span class="pl-c1"&gt;2&lt;/span&gt;, &lt;span class="pl-s"&gt;"name"&lt;/span&gt;: &lt;span class="pl-s"&gt;"Pancakes"&lt;/span&gt;})&lt;/pre&gt;
+&lt;p&gt;SQLite supports &lt;a href="https://sqlite.org/lang_savepoint.html"&gt;Savepoints&lt;/a&gt;, and as a result &lt;code&gt;db.atomic()&lt;/code&gt; can be nested to carry out transactions inside of transactions. It's pretty neat!&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;Support for &lt;a href="https://sqlite-utils.datasette.io/en/stable/python-api.html#python-api-compound-foreign-keys"&gt;compound foreign keys&lt;/a&gt;, including creation, transformation and introspection through &lt;a href="https://sqlite-utils.datasette.io/en/stable/python-api.html#python-api-introspection-foreign-keys"&gt;table.foreign_keys&lt;/a&gt;. (&lt;a href="https://github.com/simonw/sqlite-utils/issues/594"&gt;#594&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;This came about when I asked a coding agent to review all open issues and PRs for things that should be included in a 4.0 release since they would represent breaking changes if I added them later, and it correctly identified that compound foreign keys were exactly that kind of feature.&lt;/p&gt;
+&lt;p&gt;I started with a breaking change to the &lt;a href="https://sqlite-utils.datasette.io/en/stable/python-api.html#python-api-introspection-foreign-keys"&gt;table.foreign_keys&lt;/a&gt; introspection method, and then decided to see if Claude Fable 5 could handle the more fiddly job of integrating compound foreign key &lt;em&gt;creation&lt;/em&gt; into the library. The API design it helped create felt &lt;a href="https://sqlite-utils.datasette.io/en/stable/python-api.html#compound-foreign-keys"&gt;exactly right to me&lt;/a&gt; - consistent with how the rest of the library worked already.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Other notable changes include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Upserts now use SQLite’s &lt;code&gt;INSERT ... ON CONFLICT ... DO UPDATE SET&lt;/code&gt; syntax, detect existing table primary keys automatically and reject records that are missing required primary key values. (&lt;a href="https://github.com/simonw/sqlite-utils/issues/652"&gt;#652&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;This was the change that first pushed me to consider a breaking-change 4.0 version bump. I built this to help support &lt;a href="https://github.com/simonw/sqlite-chronicle"&gt;sqlite-chronicle&lt;/a&gt;, which uses triggers to keep track of rows in a table that have been inserted, updated or deleted.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;code&gt;db.query()&lt;/code&gt; now executes immediately and rejects statements that do not return rows; use &lt;code&gt;db.execute()&lt;/code&gt; for writes and DDL.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Probably the &lt;a href="https://sqlite-utils.datasette.io/en/stable/upgrading.html#python-api-changes"&gt;most disruptive breaking change&lt;/a&gt; - I've had to update a few places in my own code to switch from &lt;code&gt;db.query()&lt;/code&gt; to &lt;code&gt;db.execute()&lt;/code&gt; as a result.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;CSV and TSV imports now detect column types by default, while inserts into existing tables preserve those tables’ column types. (&lt;a href="https://github.com/simonw/sqlite-utils/issues/679"&gt;#679&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The &lt;code&gt;sqlite-utils insert data.db creatures creatures.csv --detect-types&lt;/code&gt; flag was a later addition to allow column types (text, integer, real) to be automatically detected based on the data in a CSV. It should be the default, and releasing a 4.0 means I can make it so.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;code&gt;table.extract()&lt;/code&gt; and &lt;code&gt;extracts=&lt;/code&gt; no longer create lookup table records for all-&lt;code&gt;null&lt;/code&gt; values. (&lt;a href="https://github.com/simonw/sqlite-utils/issues/186"&gt;#186&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The oldest issue addressed by this release - the underlying bug was opened (by me) in October 2020.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;See &lt;a href="https://sqlite-utils.datasette.io/en/stable/upgrading.html#upgrading-3-to-4"&gt;Upgrading from 3.x to 4.0&lt;/a&gt; for details on backwards-incompatible changes.&lt;/p&gt;
+&lt;p&gt;The detailed release notes for the features and fixes shipped during the 4.0 pre-release cycle are available in &lt;a href="https://sqlite-utils.datasette.io/en/stable/changelog.html#v4-0a0"&gt;4.0a0&lt;/a&gt;, &lt;a href="https://sqlite-utils.datasette.io/en/stable/changelog.html#v4-0a1"&gt;4.0a1&lt;/a&gt;, &lt;a href="https://sqlite-utils.datasette.io/en/stable/changelog.html#v4-0rc1"&gt;4.0rc1&lt;/a&gt;, &lt;a href="https://sqlite-utils.datasette.io/en/stable/changelog.html#v4-0rc2"&gt;4.0rc2&lt;/a&gt;, &lt;a href="https://sqlite-utils.datasette.io/en/stable/changelog.html#v4-0rc3"&gt;4.0rc3&lt;/a&gt; and &lt;a href="https://sqlite-utils.datasette.io/en/stable/changelog.html#v4-0rc4"&gt;4.0rc4&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The upgrade guide was entirely written by Claude Fable 5, Claude Opus 4.8 and GPT-5.5. The same is true of the release notes.&lt;/p&gt;
+&lt;p&gt;This is the kind of documentation I've slowly become comfortable outsourcing to the robots. It doesn't need to convince people of anything, or express any opinions - its job is to be as accurate and detailed as possible. I've reviewed the release notes closely and can confirm they are accurate and comprehensive.&lt;/p&gt;
+&lt;h4 id="claude-fable-5-helped-a-lot"&gt;Claude Fable 5 helped a lot&lt;/h4&gt;
+&lt;p&gt;I released the first alpha of sqlite-utils 4.0 &lt;a href="https://sqlite-utils.datasette.io/en/stable/changelog.html#a0-2025-05-08"&gt;over a year ago&lt;/a&gt;. I've been dragging my heels on the stable release because of the amount of work it would take to track down and clean up the many other minor design flaws that a major version number allowed me to take on.&lt;/p&gt;
+&lt;p&gt;Assistance from Claude Fable 5 (and to a lesser extent Opus 4.8 and GPT-5.5) gave me just the boost I needed to overcome inertia and make the most of the time I could afford to spend on this library.&lt;/p&gt;
+&lt;p&gt;Fable has &lt;em&gt;really good taste&lt;/em&gt; in API design, and is &lt;a href="https://simonwillison.net/2026/Jun/11/fable-is-relentlessly-proactive/"&gt;relentlessly proactive&lt;/a&gt; if you give it a more open goal. My most successful prompt was a review task that I issued against what I thought was the last release candidate:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;review the changes on main since the last tagged 3.x release - I am about to ship them as sqlite-utils 4.0, a stable version that promises no backwards-incompatible fixes for a very long time.&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;review the changelog and upgrade guide, and write yourself scratch scripts to try out all of the new features in v4 - save those scripts but don't commit them&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;I tried this with GPT-5.5 xhigh in Codex Desktop and Fable 5 in Claude Code.&lt;/p&gt;
+&lt;p&gt;GPT-5.5 &lt;a href="https://gist.github.com/simonw/823fdecc031371d56dce39537adc0096"&gt;wrote 5 Python scripts&lt;/a&gt; and didn't turn up anything particularly interesting - its &lt;a href="https://github.com/simonw/sqlite-utils/issues/769#issuecomment-4899982463"&gt;final report is here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Fable 5 &lt;a href="https://gist.github.com/simonw/95800bf584f8e437f1cf0d48d9ef81e6"&gt;wrote 12 scripts&lt;/a&gt;, identified 4 release blockers and 10 additional issues &lt;a href="https://github.com/simonw/sqlite-utils/issues/769#issuecomment-4900034150"&gt;in its report&lt;/a&gt;, and built a neat &lt;a href="https://gist.githubusercontent.com/simonw/95800bf584f8e437f1cf0d48d9ef81e6/raw/c43918b36a129bba1d2f2a129117aa11c85146c0/12_bug_repros.py"&gt;combined repro script&lt;/a&gt;, which, when run, output the following:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;=== 1. Failed db.execute() write leaves an implicit transaction open ===
+  in_transaction after failed write: True
+  BUG: table 'other' silently lost when connection closed
+
+=== 2. Leading ';' bypasses the query() first-token scanner ===
+  BUG: raised OperationalError: no such savepoint: sqlite_utils_query
+  BUG: row persisted despite rollback (count=1)
+
+=== 3. Rejected write PRAGMA via query() still takes effect ===
+  BUG: user_version=5 after 'rejected' statement (docs say no effect)
+
+=== 4. Implicit compound FK resolves pk columns in table order, not PK order ===
+  BUG: other_columns reported as ('b', 'a'), should be ('a', 'b')
+  BUG: transform of valid data raised IntegrityError: FOREIGN KEY constraint failed
+
+=== 5. ForeignKey (now a dataclass) is no longer hashable ===
+  BUG: cannot use 'sqlite_utils.db.ForeignKey' as a set element (unhashable type: 'ForeignKey')
+
+=== 6. Mixed ForeignKey objects and tuples in foreign_keys= rejected ===
+  BUG: foreign_keys= should be a list of tuples
+
+=== 7. insert --csv into an EXISTING table transforms its column types ===
+  BUG: existing zip '01234' is now 1234 (column type: int)
+
+=== 8. insert(pk=, alter=True) regression: InvalidColumns before alter runs ===
+  BUG: InvalidColumns: Invalid primary key column ['id'] for table t with columns ['a']
+
+=== 9. migrate --stop-before an already-applied migration applies everything ===
+  BUG: m2 was applied despite --stop-before m1 (m1 already applied)
+
+=== 10. ensure_autocommit_on() silently commits an open transaction ===
+  BUG: row survived rollback (count=1) - transaction was committed
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I found myself agreeing with almost all of them. Here's &lt;a href="https://github.com/simonw/sqlite-utils/pull/779"&gt;the PR with 16 commits&lt;/a&gt; where we worked through them in turn.&lt;/p&gt;
+&lt;p&gt;There's no doubt in my mind that sqlite-utils 4.0 is a significantly higher-quality release than if I had built it without the assistance of the latest frontier models.&lt;/p&gt;
+    
+        &lt;p&gt;Tags: &lt;a href="https://simonwillison.net/tags/schema-migrations"&gt;schema-migrations&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/projects"&gt;projects&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/sqlite"&gt;sqlite&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/ai"&gt;ai&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/sqlite-utils"&gt;sqlite-utils&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/annotated-release-notes"&gt;annotated-release-notes&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/generative-ai"&gt;generative-ai&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/llms"&gt;llms&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/ai-assisted-programming"&gt;ai-assisted-programming&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/anthropic"&gt;anthropic&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/claude"&gt;claude&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/agentic-engineering"&gt;agentic-engineering&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/claude-mythos-fable"&gt;claude-mythos-fable&lt;/a&gt;&lt;/p&gt;
+    
+
+</summary><category term="schema-migrations"/><category term="projects"/><category term="sqlite"/><category term="ai"/><category term="sqlite-utils"/><category term="annotated-release-notes"/><category term="generative-ai"/><category term="llms"/><category term="ai-assisted-programming"/><category term="anthropic"/><category term="claude"/><category term="agentic-engineering"/><category term="claude-mythos-fable"/></entry><entry><title>sqlite-migrate 0.2</title><link href="https://simonwillison.net/2026/Jul/7/sqlite-migrate/#atom-everything" rel="alternate"/><published>2026-07-07T16:33:55+00:00</published><updated>2026-07-07T16:33:55+00:00</updated><id>https://simonwillison.net/2026/Jul/7/sqlite-migrate/#atom-everything</id><summary type="html">
+    
+        &lt;p&gt;&lt;strong&gt;Release:&lt;/strong&gt; &lt;a href="https://github.com/simonw/sqlite-migrate/releases/tag/0.2"&gt;sqlite-migrate 0.2&lt;/a&gt;&lt;/p&gt;
+        &lt;p&gt;The version that retires the library, instead implementing a compatibility shim against the new sqlite-utils 4.0 dependency.&lt;/p&gt;
+    
+    
+        &lt;p&gt;Tags: &lt;a href="https://simonwillison.net/tags/sqlite-utils"&gt;sqlite-utils&lt;/a&gt;&lt;/p&gt;
+    
+
+</summary><category term="sqlite-utils"/></entry><entry><title>github-code Web Component</title><link href="https://simonwillison.net/2026/Jul/7/github-code-component/#atom-everything" rel="alternate"/><published>2026-07-07T16:18:16+00:00</published><updated>2026-07-07T16:18:16+00:00</updated><id>https://simonwillison.net/2026/Jul/7/github-code-component/#atom-everything</id><summary type="html">
+    
+        &lt;p&gt;&lt;strong&gt;Tool:&lt;/strong&gt; &lt;a href="https://tools.simonwillison.net/github-code-component"&gt;github-code Web Component&lt;/a&gt;&lt;/p&gt;
+        &lt;p&gt;An experimental Web Component built using GPT-5.5 and &lt;a href="https://gist.github.com/simonw/0e3db21947b5ae7e29e8a4f69a0b0617"&gt;the following prompt&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;let's build a Web Component for embedding code from GitHub&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;&amp;lt;github-code href="https://github.com/simonw/sqlite-ast/blob/437c759129154f05296324a7f82aa1246340dd14/sqlite_ast/parser.py#L9-L18"&amp;gt;&amp;lt;/github-code&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;It takes URLs like that, converts them to https://raw.githubusercontent.com/simonw/sqlite-ast/437c759129154f05296324a7f82aa1246340dd14/sqlite_ast/parser.py, then uses fetch() to fetch them and displays the specified range of lines - with line numbers, no syntax highlighting though&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Show me a preview web browser so I can see your work&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Here's what it looks like embedded on this page:&lt;/p&gt;
+&lt;p&gt;&lt;github-code href="https://github.com/simonw/sqlite-ast/blob/437c759129154f05296324a7f82aa1246340dd14/sqlite_ast/parser.py#L9-L18"&gt;&lt;/github-code&gt;&lt;/p&gt;
+    
+    
+        &lt;p&gt;Tags: &lt;a href="https://simonwillison.net/tags/github"&gt;github&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/web-components"&gt;web-components&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/gpt"&gt;gpt&lt;/a&gt;&lt;/p&gt;
+    
+
+</summary><category term="github"/><category term="web-components"/><category term="gpt"/></entry><entry><title>sqlite-utils 4.0</title><link href="https://simonwillison.net/2026/Jul/7/sqlite-utils/#atom-everything" rel="alternate"/><published>2026-07-07T15:42:43+00:00</published><updated>2026-07-07T15:42:43+00:00</updated><id>https://simonwillison.net/2026/Jul/7/sqlite-utils/#atom-everything</id><summary type="html">
+    
+        &lt;p&gt;&lt;strong&gt;Release:&lt;/strong&gt; &lt;a href="https://github.com/simonw/sqlite-utils/releases/tag/4.0"&gt;sqlite-utils 4.0&lt;/a&gt;&lt;/p&gt;
+        &lt;p&gt;See &lt;a href="https://simonwillison.net/2026/Jul/7/sqlite-utils-4/"&gt;sqlite-utils 4.0, now with database schema migrations&lt;/a&gt; for details.&lt;/p&gt;
+    
+    
+        &lt;p&gt;Tags: &lt;a href="https://simonwillison.net/tags/sqlite-utils"&gt;sqlite-utils&lt;/a&gt;&lt;/p&gt;
+    
+
+</summary><category term="sqlite-utils"/></entry><entry><title>sqlite-utils 4.0rc4</title><link href="https://simonwillison.net/2026/Jul/7/sqlite-utils-2/#atom-everything" rel="alternate"/><published>2026-07-07T05:36:15+00:00</published><updated>2026-07-07T05:36:15+00:00</updated><id>https://simonwillison.net/2026/Jul/7/sqlite-utils-2/#atom-everything</id><summary type="html">
+    
+        &lt;p&gt;&lt;strong&gt;Release:&lt;/strong&gt; &lt;a href="https://github.com/simonw/sqlite-utils/releases/tag/4.0rc4"&gt;sqlite-utils 4.0rc4&lt;/a&gt;&lt;/p&gt;
+        &lt;p&gt;The last RC before the 4.0 stable release. Mainly &lt;a href="https://github.com/simonw/sqlite-utils/issues/769#issuecomment-4900034150"&gt;implements feedback&lt;/a&gt; from a detailed review by Claude Fable 5.&lt;/p&gt;
+    
+    
+        &lt;p&gt;Tags: &lt;a href="https://simonwillison.net/tags/sqlite-utils"&gt;sqlite-utils&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/claude-mythos-fable"&gt;claude-mythos-fable&lt;/a&gt;&lt;/p&gt;
+    
+
+</summary><category term="sqlite-utils"/><category term="claude-mythos-fable"/></entry><entry><title>tencent/Hy3</title><link href="https://simonwillison.net/2026/Jul/6/hy3/#atom-everything" rel="alternate"/><published>2026-07-06T23:57:35+00:00</published><updated>2026-07-06T23:57:35+00:00</updated><id>https://simonwillison.net/2026/Jul/6/hy3/#atom-everything</id><summary type="html">
+    
+&lt;p&gt;&lt;strong&gt;&lt;a href="https://huggingface.co/tencent/Hy3"&gt;tencent/Hy3&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+New Apache 2.0 licensed model from Tencent in China:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Hy3 is a 295B-parameter Mixture-of-Experts (MoE) model with 21B active parameters and 3.8B MTP layer parameters, developed by the Tencent Hy Team. Following the Hy3 Preview launch in late April, we gathered feedback from 50+ products and scaled up post-training with higher quality data. Today, we introduce Hy3, which outperforms similar-size models and rivals flagship open-source models with 2-5x parameters. It also shows significant gains in utility across various products and productivity tasks.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The full-sized model is 598GB on Hugging Face, and the FP8 quantized one &lt;a href="https://huggingface.co/tencent/Hy3-FP8/tree/main"&gt;is 300GB&lt;/a&gt;. The context length is 256K.&lt;/p&gt;
+&lt;p&gt;It's available for free &lt;a href="https://openrouter.ai/tencent/hy3:free"&gt;on OpenRouter until July 21st&lt;/a&gt;. I had it "Generate an SVG of a pelican riding a bicycle" there and got this:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Flat-style cartoon illustration  of a white pelican with a large orange beak riding a red bicycle across a pale blue background, its long orange legs stretched down to the pedals, with gray horizontal motion lines behind it suggesting speed." src="https://static.simonwillison.net/static/2026/hy3-pelican.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Update&lt;/strong&gt;: I'd forgotten about this but Max Woolf wrote about an earlier preview of this model back on May 26th: &lt;a href="https://minimaxir.com/2026/05/openrouter-hy3/"&gt;The mysterious Hy3 LLM is topping OpenRouter Model Rankings by a large margin&lt;/a&gt;. When I &lt;a href="https://news.ycombinator.com/item?id=48317294#48318976"&gt;tried that one&lt;/a&gt; I got back &lt;a href="https://static.simonwillison.net/static/2026/hy3-preview-pelican.html"&gt;this pelican&lt;/a&gt; which wasn't as good as today's but did have a "Change Pelican Color" button, a first from any model.
+
+
+    &lt;p&gt;Tags: &lt;a href="https://simonwillison.net/tags/ai"&gt;ai&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/generative-ai"&gt;generative-ai&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/llms"&gt;llms&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/pelican-riding-a-bicycle"&gt;pelican-riding-a-bicycle&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/llm-release"&gt;llm-release&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/ai-in-china"&gt;ai-in-china&lt;/a&gt;&lt;/p&gt;
+
+
+
+</summary><category term="ai"/><category term="generative-ai"/><category term="llms"/><category term="pelican-riding-a-bicycle"/><category term="llm-release"/><category term="ai-in-china"/></entry><entry><title>sqlite-utils 4.0rc3</title><link href="https://simonwillison.net/2026/Jul/6/sqlite-utils/#atom-everything" rel="alternate"/><published>2026-07-06T05:40:08+00:00</published><updated>2026-07-06T05:40:08+00:00</updated><id>https://simonwillison.net/2026/Jul/6/sqlite-utils/#atom-everything</id><summary type="html">
+    
+        &lt;p&gt;&lt;strong&gt;Release:&lt;/strong&gt; &lt;a href="https://github.com/simonw/sqlite-utils/releases/tag/4.0rc3"&gt;sqlite-utils 4.0rc3&lt;/a&gt;&lt;/p&gt;
+        &lt;p&gt;I hoped to release &lt;code&gt;sqlite-utils 4.0&lt;/code&gt; stable this weekend, but as I worked through the backlog of issues and PRs with a combination of Claude Fable 5 and GPT-5.5 the changelog since rc2 &lt;a href="https://sqlite-utils.datasette.io/en/latest/changelog.html#rc3-2026-07-05"&gt;kept getting bigger&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The biggest new feature is support for introspecting and creating compound foreign keys - a feature that involves a subtle breaking change to &lt;a href="https://sqlite-utils.datasette.io/en/latest/python-api.html#foreign-keys"&gt;table.foreign_keys&lt;/a&gt; and hence needed to land for the 4.0 stable release.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;sqlite-utils&lt;/code&gt; also now follows SQLite's convention for case insensitive column names, which turned out to touch &lt;a href="https://sqlite-utils.datasette.io/en/latest/changelog.html#case-insensitive-column-matching"&gt;a bunch of different places at once&lt;/a&gt;.&lt;/p&gt;
+    
+    
+        &lt;p&gt;Tags: &lt;a href="https://simonwillison.net/tags/projects"&gt;projects&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/sqlite"&gt;sqlite&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/sqlite-utils"&gt;sqlite-utils&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/annotated-release-notes"&gt;annotated-release-notes&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/gpt"&gt;gpt&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/claude-mythos-fable"&gt;claude-mythos-fable&lt;/a&gt;&lt;/p&gt;
+    
+
+</summary><category term="projects"/><category term="sqlite"/><category term="sqlite-utils"/><category term="annotated-release-notes"/><category term="gpt"/><category term="claude-mythos-fable"/></entry><entry><title>sqlite-utils 4.0rc2, mostly written by Claude Fable (for about $149.25)</title><link href="https://simonwillison.net/2026/Jul/5/sqlite-utils-fable/#atom-everything" rel="alternate"/><published>2026-07-05T01:00:48+00:00</published><updated>2026-07-05T01:00:48+00:00</updated><id>https://simonwillison.net/2026/Jul/5/sqlite-utils-fable/#atom-everything</id><summary type="html">
+    &lt;p&gt;I wrote about the &lt;a href="https://simonwillison.net/2026/Jun/21/sqlite-utils-40rc1/"&gt;sqlite-utils 4.0rc1&lt;/a&gt; release a couple of weeks ago. Since we only have Claude Fable on our Max subscriptions for a few more days, I decided to see if it could help me get to a 4.0 stable release that I felt truly comfortable about, since I try to keep to &lt;a href="https://semver.org"&gt;SemVer&lt;/a&gt; and like my incompatible major versions to be as rare as possible.&lt;/p&gt;
+&lt;p&gt;I started with this prompt, in Claude Code for web on my iPhone:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;Final review before shipping a stable 4.0 release - very important to spot any last minute things that would be a breaking change if we fix them later&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Here's &lt;a href="https://github.com/simonw/sqlite-utils/blob/0c369a447eeaf39084f0d14a45b3eeb7eacb631b/fable-review-4.0rc1.md"&gt;that initial report&lt;/a&gt; it created for me. There were some &lt;em&gt;significant&lt;/em&gt; problems that I hadn't myself encountered yet - 5 that Fable categorized as "release blockers". Here's the worst of the bunch:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;1. &lt;code&gt;delete_where()&lt;/code&gt; never commits and poisons the connection (data loss)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Table.delete_where()&lt;/code&gt; (&lt;code&gt;sqlite_utils/db.py:2948&lt;/code&gt;) runs its DELETE via a bare &lt;code&gt;self.db.execute()&lt;/code&gt; with no &lt;code&gt;atomic()&lt;/code&gt; wrapper — compare &lt;code&gt;Table.delete()&lt;/code&gt; at &lt;code&gt;db.py:2944&lt;/code&gt;, which wraps correctly. The connection is left &lt;code&gt;in_transaction=True&lt;/code&gt;, so every &lt;em&gt;subsequent&lt;/em&gt; &lt;code&gt;atomic()&lt;/code&gt; call takes the savepoint branch (&lt;code&gt;db.py:430-440&lt;/code&gt;) and never commits either.&lt;/p&gt;
+&lt;p&gt;Reproduced end-to-end:&lt;/p&gt;
+&lt;pre&gt;&lt;span class="pl-s1"&gt;db&lt;/span&gt; &lt;span class="pl-c1"&gt;=&lt;/span&gt; &lt;span class="pl-s1"&gt;sqlite_utils&lt;/span&gt;.&lt;span class="pl-c1"&gt;Database&lt;/span&gt;(&lt;span class="pl-s"&gt;"dw.db"&lt;/span&gt;)
+&lt;span class="pl-s1"&gt;db&lt;/span&gt;[&lt;span class="pl-s"&gt;"t"&lt;/span&gt;].&lt;span class="pl-c1"&gt;insert_all&lt;/span&gt;([{&lt;span class="pl-s"&gt;"id"&lt;/span&gt;: &lt;span class="pl-s1"&gt;i&lt;/span&gt;} &lt;span class="pl-k"&gt;for&lt;/span&gt; &lt;span class="pl-s1"&gt;i&lt;/span&gt; &lt;span class="pl-c1"&gt;in&lt;/span&gt; &lt;span class="pl-en"&gt;range&lt;/span&gt;(&lt;span class="pl-c1"&gt;3&lt;/span&gt;)], &lt;span class="pl-s1"&gt;pk&lt;/span&gt;&lt;span class="pl-c1"&gt;=&lt;/span&gt;&lt;span class="pl-s"&gt;"id"&lt;/span&gt;)
+&lt;span class="pl-s1"&gt;db&lt;/span&gt;[&lt;span class="pl-s"&gt;"t"&lt;/span&gt;].&lt;span class="pl-c1"&gt;delete_where&lt;/span&gt;(&lt;span class="pl-s"&gt;"id = ?"&lt;/span&gt;, [&lt;span class="pl-c1"&gt;0&lt;/span&gt;])   &lt;span class="pl-c"&gt;# conn.in_transaction is now True&lt;/span&gt;
+&lt;span class="pl-s1"&gt;db&lt;/span&gt;[&lt;span class="pl-s"&gt;"t"&lt;/span&gt;].&lt;span class="pl-c1"&gt;insert&lt;/span&gt;({&lt;span class="pl-s"&gt;"id"&lt;/span&gt;: &lt;span class="pl-c1"&gt;50&lt;/span&gt;})
+&lt;span class="pl-s1"&gt;db&lt;/span&gt;[&lt;span class="pl-s"&gt;"u"&lt;/span&gt;].&lt;span class="pl-c1"&gt;insert&lt;/span&gt;({&lt;span class="pl-s"&gt;"a"&lt;/span&gt;: &lt;span class="pl-c1"&gt;1&lt;/span&gt;})
+&lt;span class="pl-s1"&gt;db&lt;/span&gt;.&lt;span class="pl-c1"&gt;close&lt;/span&gt;()
+&lt;span class="pl-c"&gt;# Reopen: rows are [0, 1, 2] — the delete, row 50, AND table u are all gone.&lt;/span&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;That's a really bad bug! Very glad I didn't ship that, although at least it would have been a bug I could fix in a 4.0.1 point release, not a design flaw that would force a 5.0.&lt;/p&gt;
+&lt;p&gt;Over the course of 37 prompts, 34 commits and +1,321 -190 code changes over 30 separate files, we worked through the entire set of feedback in turn, making several other design improvements along the way.&lt;/p&gt;
+&lt;p&gt;A weird thing about coding agents is that harder tasks like this one actually provide &lt;em&gt;more&lt;/em&gt; opportunity to do other things at the same time, since the agent sometimes needs 10-15 minutes to churn away on a new task. I went out to enjoy the Half Moon Bay 4th of July parade, occasionally checking in and prompting the next step for Fable from my phone.&lt;/p&gt;
+&lt;p&gt;Full details &lt;a href="https://github.com/simonw/sqlite-utils/pull/767"&gt;in the PR&lt;/a&gt; and &lt;a href="https://claude.ai/code/session_01UnLnhsH25Nnv7LHhekUfPd"&gt;this shared transcript&lt;/a&gt;. I switched to my laptop for the final review, which I conducted through GitHub's PR interface.&lt;/p&gt;
+&lt;p&gt;The most significant changes relate to transaction handling, which was the signature new feature in &lt;a href="https://simonwillison.net/2026/Jun/21/sqlite-utils-40rc1/#new-feature-db-atomic-transactions"&gt;the earlier RC&lt;/a&gt;. The new RC now includes &lt;a href="https://sqlite-utils.datasette.io/en/latest/python-api.html#transactions-and-saving-your-changes"&gt;comprehensive documentation&lt;/a&gt; on the new transaction model, the intro to which I'll quote here in full:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Every method in this library that writes to the database - &lt;code&gt;insert()&lt;/code&gt;, &lt;code&gt;upsert()&lt;/code&gt;, &lt;code&gt;update()&lt;/code&gt;, &lt;code&gt;delete()&lt;/code&gt;, &lt;code&gt;delete_where()&lt;/code&gt;, &lt;code&gt;transform()&lt;/code&gt;, &lt;code&gt;create_table()&lt;/code&gt;, &lt;code&gt;create_index()&lt;/code&gt;, &lt;code&gt;enable_fts()&lt;/code&gt; and the rest - runs inside its own transaction and commits it before returning. Your changes are saved to disk as soon as the method call finishes:&lt;/p&gt;
+&lt;pre&gt;&lt;span class="pl-s1"&gt;db&lt;/span&gt; &lt;span class="pl-c1"&gt;=&lt;/span&gt; &lt;span class="pl-en"&gt;Database&lt;/span&gt;(&lt;span class="pl-s"&gt;"data.db"&lt;/span&gt;)
+&lt;span class="pl-s1"&gt;db&lt;/span&gt;.&lt;span class="pl-c1"&gt;table&lt;/span&gt;(&lt;span class="pl-s"&gt;"news"&lt;/span&gt;).&lt;span class="pl-c1"&gt;insert&lt;/span&gt;({&lt;span class="pl-s"&gt;"headline"&lt;/span&gt;: &lt;span class="pl-s"&gt;"Dog wins award"&lt;/span&gt;})
+&lt;span class="pl-c"&gt;# The new row is already saved - no commit() required&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;The same applies to raw SQL executed with &lt;a href="https://sqlite-utils.datasette.io/en/latest/python-api.html#python-api-transactions-execute"&gt;db.execute()&lt;/a&gt; - a write statement is committed as soon as it has run.&lt;/p&gt;
+&lt;p&gt;You never need to call &lt;code&gt;commit()&lt;/code&gt;, and you do not need to close the database to persist your changes. There are exactly two situations where you need to think about transactions:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;You want to group several write operations together, so they either all succeed or all fail - use &lt;a href="https://sqlite-utils.datasette.io/en/latest/python-api.html#python-api-atomic"&gt;db.atomic()&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;You are &lt;a href="https://sqlite-utils.datasette.io/en/latest/python-api.html#python-api-transactions-manual"&gt;managing a transaction yourself&lt;/a&gt; with &lt;code&gt;db.begin()&lt;/code&gt;, in which case nothing is committed until you commit - the library will never commit a transaction you opened.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;In reviewing Fable's documentation - I find that reviewing the documentation edits first is an &lt;em&gt;excellent&lt;/em&gt; way to build an initial understanding of what has changed - I spotted &lt;a href="https://github.com/simonw/sqlite-utils/blob/6c88067ab76b9597fb1c538c53164632526a2891/docs/python-api.rst?plain=1#L386"&gt;this detail&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;db.atomic()&lt;/code&gt; and the automatic per-method transactions are designed for connections in Python's default transaction handling mode. Connections created with the Python 3.12+ &lt;code&gt;sqlite3.connect(..., autocommit=True)&lt;/code&gt; or &lt;code&gt;autocommit=False&lt;/code&gt; options are not supported, because &lt;code&gt;commit()&lt;/code&gt; and &lt;code&gt;rollback()&lt;/code&gt; behave differently on those connections.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;I admit I hadn't thought about how &lt;code&gt;sqlite-utils&lt;/code&gt; would react to the more recent &lt;a href="https://docs.python.org/3/library/sqlite3.html#sqlite3.Connection.autocommit"&gt;autocommit setting&lt;/a&gt;, added in Python 3.12. It turns out "behave differently on those connections" equated to almost the entire test suite failing, so I worked with the model to &lt;a href="https://github.com/simonw/sqlite-utils/commit/f7ff3e2027aefb9905ebb2e611e5bbb0a62382c5"&gt;ensure that this difference&lt;/a&gt; would not break how the library works.&lt;/p&gt;
+&lt;h4 id="and-a-final-review-by-gpt-5-5"&gt;And a final review by GPT-5.5&lt;/h4&gt;
+&lt;p&gt;I used to think that the idea of having one model review the work of another was somewhat absurd - it felt weirdly superstitious. The problem is &lt;em&gt;it really does work&lt;/em&gt; - I've started habitually having Anthropic's best model review OpenAI's work and vice versa, because I've had that turn up interesting results often enough to be valuable.&lt;/p&gt;
+&lt;p&gt;I prompted Codex Desktop and GPT-5.5 xhigh with the following:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;Review changes since the last RC. Also confirm that the changelog is up-to-date.&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Which was enough to turn up two issues worth investigating:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Findings&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;[P1] &lt;a href="https://github.com/simonw/sqlite-utils/blob/04f8971546418962aaf6579d4028c7117d6c3a20/sqlite_utils/db.py#L663"&gt;sqlite_utils/db.py:663&lt;/a&gt; &lt;code&gt;db.query()&lt;/code&gt; now rejects non-row statements only after calling &lt;code&gt;db.execute()&lt;/code&gt;, and &lt;a href="https://github.com/simonw/sqlite-utils/blob/04f8971546418962aaf6579d4028c7117d6c3a20/sqlite_utils/db.py#L705"&gt;sqlite_utils/db.py:705&lt;/a&gt; auto-commits those writes first. So &lt;code&gt;db.query("update ...")&lt;/code&gt; raises &lt;code&gt;ValueError&lt;/code&gt; but the update is already committed. That is a surprising side effect for a method documented as “can only be used with SQL that returns rows.”&lt;/li&gt;
+&lt;li&gt;[P1] &lt;a href="https://github.com/simonw/sqlite-utils/blob/04f8971546418962aaf6579d4028c7117d6c3a20/sqlite_utils/db.py#L672"&gt;sqlite_utils/db.py:672&lt;/a&gt; &lt;code&gt;INSERT ... RETURNING&lt;/code&gt; through &lt;code&gt;db.query()&lt;/code&gt; only commits after the returned generator is fully exhausted. &lt;code&gt;db.query("insert ... returning ...")&lt;/code&gt; without iteration, or common &lt;code&gt;next(db.query(...))&lt;/code&gt; usage, leaves the transaction open and the write can be rolled back on close. This contradicts &lt;a href="https://github.com/simonw/sqlite-utils/blob/04f8971546418962aaf6579d4028c7117d6c3a20/docs/changelog.rst?plain=1#L15"&gt;docs/changelog.rst:15&lt;/a&gt; and &lt;a href="https://github.com/simonw/sqlite-utils/blob/04f8971546418962aaf6579d4028c7117d6c3a20/docs/python-api.rst?plain=1#L232"&gt;docs/python-api.rst:232&lt;/a&gt;, which say it takes effect without iteration.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;I pasted that into a fresh Fable session, which ran some experiments to confirm the problem:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Both findings were confirmed. &lt;code&gt;db.query()&lt;/code&gt; called &lt;code&gt;self.execute()&lt;/code&gt; first, which auto-commits writes, and only then checked &lt;code&gt;cursor.description&lt;/code&gt; — so &lt;code&gt;db.query("update ...")&lt;/code&gt; committed the update before raising &lt;code&gt;ValueError&lt;/code&gt;. And the &lt;code&gt;INSERT ... RETURNING&lt;/code&gt; commit lived at the end of the returned generator, so it never fired unless you exhausted the iterator — &lt;code&gt;next(db.query(...))&lt;/code&gt; or an un-iterated call left the transaction open, contradicting what the changelog and docs promise.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Here's &lt;a href="https://github.com/simonw/sqlite-utils/pull/768"&gt;the PR&lt;/a&gt; with the fix, and the &lt;a href="https://claude.ai/code/session_012U3iRfJoTZ5vd22cBSF2nJ"&gt;full Claude Code transcript&lt;/a&gt;. Reviewing this code helped me build a better mental model of the edge cases of SQLite transaction semantics!&lt;/p&gt;
+&lt;h4 id="for-an-estimated-unsubsidized-cost-of-149-25"&gt;For an estimated (unsubsidized) cost of $149.25&lt;/h4&gt;
+&lt;p&gt;I upgraded to the Claude Max $200/month plan (I was previously on $100/month) to increase my Fable allowance for the remaining time until &lt;a href="https://www.anthropic.com/news/redeploying-fable-5"&gt;the July 7th Fablepocalypse&lt;/a&gt;, when even Claude Max subscribers will have to pay full API cost for the model.&lt;/p&gt;
+&lt;p&gt;I was curious as to how much this would have cost me if I had been paying those costs directly. At first I thought those numbers weren't available to me since I had run the work remotely using Claude Code for web, and then I realized I could run &lt;a href="https://www.agentsview.io"&gt;AgentsView&lt;/a&gt; inside that existing session to get that cost estimate!&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;Run "uvx agentsview --help"​ and then use that tool to calculate the cost of this session&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Claude figured out how to use the &lt;code&gt;session list --include-children&lt;/code&gt; command and came out with the following:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Transcript&lt;/th&gt;
+&lt;th&gt;Model&lt;/th&gt;
+&lt;th&gt;Cost&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Main session&lt;/td&gt;
+&lt;td&gt;claude-fable-5&lt;/td&gt;
+&lt;td&gt;$141.02&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;API-surface sweep agent&lt;/td&gt;
+&lt;td&gt;claude-fable-5&lt;/td&gt;
+&lt;td&gt;$2.40&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Transactions/atomic review agent&lt;/td&gt;
+&lt;td&gt;claude-fable-5&lt;/td&gt;
+&lt;td&gt;$2.39&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Post-rc1 commits review agent&lt;/td&gt;
+&lt;td&gt;claude-fable-5&lt;/td&gt;
+&lt;td&gt;$1.72&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Migrations review agent&lt;/td&gt;
+&lt;td&gt;claude-fable-5&lt;/td&gt;
+&lt;td&gt;$1.40&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Prompt-counting agent&lt;/td&gt;
+&lt;td&gt;claude-opus-4-8&lt;/td&gt;
+&lt;td&gt;$0.32&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Total&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;$149.25&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;I'm very glad I'm on that subscription! I really should have &lt;a href="https://simonwillison.net/2026/Jul/3/judgement/"&gt;followed my own advice&lt;/a&gt; and leaned more heavily into subagents with cheaper models.&lt;/p&gt;
+&lt;p&gt;Here's what &lt;a href="https://claude.ai/settings/usage"&gt;claude.ai/settings/usage&lt;/a&gt; is showing me right now:&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://static.simonwillison.net/static/2026/fable-plan-usage.webp" alt="Screenshot of a Claude plan usage limits panel: &amp;quot;Plan usage limits Max (20x)&amp;quot;; &amp;quot;Current session&amp;quot; with &amp;quot;Resets in 3 hr 52 min&amp;quot; showing a progress bar at &amp;quot;7% used&amp;quot;; &amp;quot;Weekly limits&amp;quot; heading with a &amp;quot;Learn more about usage limits&amp;quot; link; &amp;quot;All models&amp;quot; with &amp;quot;Resets Wed 12:00 PM&amp;quot; showing a progress bar at &amp;quot;32% used&amp;quot;; &amp;quot;Fable&amp;quot; with &amp;quot;Resets Wed 12:00 PM&amp;quot; showing a progress bar at &amp;quot;63% used&amp;quot;." style="max-width: 100%;" /&gt;&lt;/p&gt;
+&lt;p&gt;I have several other major Fable-driven projects on the go right now as well, with the goal of hitting 100% on that Fable bar just in time for the price increase.&lt;/p&gt;
+&lt;h4 id="the-full-release-notes-for-sqlite-utils-4-0rc2"&gt;The full release notes for sqlite-utils 4.0rc2&lt;/h4&gt;
+&lt;p&gt;Here are &lt;a href="https://sqlite-utils.datasette.io/en/latest/changelog.html#rc2-2026-07-04"&gt;the full release notes&lt;/a&gt; for the RC. I had Fable add these to an "Unreleased" section of the changelog as each change landed, reviewing them as it went. This has the neat side effect that &lt;a href="https://github.com/simonw/sqlite-utils/commits/4.0rc2/docs/changelog.rst"&gt;the commit history of the changelog&lt;/a&gt; acts as a concise summary of each of the changes that went into the release.&lt;/p&gt;
+&lt;p&gt;In the past I've had a policy of writing release notes by hand, but honestly these are better than I would have created myself. Release notes are a great example of writing that I'm OK to outsource to agents because they need to be boring, predictable and accurate.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Breaking changes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Write statements executed with &lt;code&gt;db.execute()&lt;/code&gt; are now committed automatically, unless a transaction is already open in which case they join it. Previously they opened an implicit transaction that stayed open until something committed it - writes appeared to work when read on the same connection but were silently rolled back when the connection closed. Code that relied on rolling back uncommitted &lt;code&gt;db.execute()&lt;/code&gt; writes should use the new &lt;code&gt;db.begin()&lt;/code&gt; method to open an explicit transaction first. The transaction model is documented in full at &lt;a href="https://sqlite-utils.datasette.io/en/latest/python-api.html#python-api-transactions"&gt;Transactions and saving your changes&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;
+&lt;code&gt;db.query()&lt;/code&gt; now executes its SQL as soon as it is called, rather than waiting until the returned generator is first iterated. Rows are still fetched lazily during iteration. SQL errors are now raised at the call site, statements such as &lt;code&gt;INSERT ... RETURNING&lt;/code&gt; are executed and committed immediately without needing to iterate over their results, and passing a statement that returns no rows - previously a silent no-op - now raises a &lt;code&gt;ValueError&lt;/code&gt; recommending &lt;code&gt;db.execute()&lt;/code&gt; instead. A statement rejected this way is rolled back before the error is raised, so it has no effect on the database.&lt;/li&gt;
+&lt;li&gt;Python API validation errors now raise &lt;code&gt;ValueError&lt;/code&gt; instead of &lt;code&gt;AssertionError&lt;/code&gt;. Previously invalid arguments - such as &lt;code&gt;create_table()&lt;/code&gt; with no columns, &lt;code&gt;transform()&lt;/code&gt; on a table that does not exist, or passing both &lt;code&gt;ignore=True&lt;/code&gt; and &lt;code&gt;replace=True&lt;/code&gt; - were rejected using bare &lt;code&gt;assert&lt;/code&gt; statements, which are silently skipped when Python runs with the &lt;code&gt;-O&lt;/code&gt; flag. Code that caught &lt;code&gt;AssertionError&lt;/code&gt; for these cases should catch &lt;code&gt;ValueError&lt;/code&gt; instead.&lt;/li&gt;
+&lt;li&gt;
+&lt;code&gt;table.upsert()&lt;/code&gt; and &lt;code&gt;table.upsert_all()&lt;/code&gt; now raise &lt;code&gt;PrimaryKeyRequired&lt;/code&gt; if a record is missing a value for any primary key column, or has a value of &lt;code&gt;None&lt;/code&gt; for one. Previously such records - which can never match an existing row - were quietly inserted as brand new rows, or triggered a confusing &lt;code&gt;KeyError&lt;/code&gt; after the insert had already taken place.&lt;/li&gt;
+&lt;li&gt;
+&lt;code&gt;db.enable_wal()&lt;/code&gt; and &lt;code&gt;db.disable_wal()&lt;/code&gt; now raise a &lt;code&gt;sqlite_utils.db.TransactionError&lt;/code&gt; if called while a transaction is open. Previously they would silently commit the open transaction as a side effect of changing the journal mode, breaking the rollback guarantee of &lt;code&gt;db.atomic()&lt;/code&gt; and of user-managed transactions.&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;View&lt;/code&gt; class no longer has an &lt;code&gt;enable_fts()&lt;/code&gt; method. It existed only to raise &lt;code&gt;NotImplementedError&lt;/code&gt;, since full-text search is not supported for views - calling it now raises &lt;code&gt;AttributeError&lt;/code&gt; instead, and the method no longer appears in the API reference. The &lt;code&gt;sqlite-utils enable-fts&lt;/code&gt; command shows a clean error when pointed at a view.&lt;/li&gt;
+&lt;li&gt;The no-op &lt;code&gt;-d/--detect-types&lt;/code&gt; flag has been removed from the &lt;code&gt;insert&lt;/code&gt; and &lt;code&gt;upsert&lt;/code&gt; commands. Type detection has been the default for CSV/TSV data since 4.0a1, so the flag did nothing - invocations using it should simply drop it. &lt;code&gt;--no-detect-types&lt;/code&gt; remains available to disable detection.&lt;/li&gt;
+&lt;li&gt;
+&lt;code&gt;Database()&lt;/code&gt; now raises a &lt;code&gt;sqlite_utils.db.TransactionError&lt;/code&gt; if passed a connection created with the Python 3.12+ &lt;code&gt;sqlite3.connect(..., autocommit=True)&lt;/code&gt; or &lt;code&gt;autocommit=False&lt;/code&gt; options. &lt;code&gt;commit()&lt;/code&gt; and &lt;code&gt;rollback()&lt;/code&gt; behave differently on those connections, which previously caused every write made by the library to be silently discarded when the connection closed.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Everything else:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Fixed a bug where &lt;code&gt;table.delete_where()&lt;/code&gt;, &lt;code&gt;table.optimize()&lt;/code&gt; and &lt;code&gt;table.rebuild_fts()&lt;/code&gt; did not commit their changes, leaving the connection inside an open transaction. Their work - and any subsequent writes - could then be silently rolled back when the connection was closed. All three now use &lt;code&gt;db.atomic()&lt;/code&gt;, consistent with the other write methods.&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;sqlite-utils drop-table&lt;/code&gt; command now refuses to drop a view, and &lt;code&gt;drop-view&lt;/code&gt; refuses to drop a table. Previously each would silently drop the wrong type of object if the name matched. Both now exit with an error suggesting the correct command to use.&lt;/li&gt;
+&lt;li&gt;Migrations applied by the new &lt;a href="https://sqlite-utils.datasette.io/en/latest/migrations.html#migrations"&gt;migrations system&lt;/a&gt; now run inside a transaction, together with the record of the migration having been applied. If a migration raises an exception its changes are rolled back and it stays pending, so it can be safely re-applied after the error is fixed. Migrations that cannot run inside a transaction, such as those executing &lt;code&gt;VACUUM&lt;/code&gt;, can opt out using &lt;code&gt;@migrations(transactional=False)&lt;/code&gt; - see &lt;a href="https://sqlite-utils.datasette.io/en/latest/migrations.html#migrations-transactions"&gt;Migrations and transactions&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;
+&lt;code&gt;table.upsert()&lt;/code&gt; and &lt;code&gt;table.upsert_all()&lt;/code&gt; now detect the primary key or compound primary key of an existing table, so the &lt;code&gt;pk=&lt;/code&gt; argument is no longer required when upserting into a table that already has a primary key.&lt;/li&gt;
+&lt;li&gt;
+&lt;code&gt;db.table(table_name).insert({})&lt;/code&gt; can now be used to insert a row consisting entirely of default values into an existing table, using &lt;code&gt;INSERT INTO ... DEFAULT VALUES&lt;/code&gt;. (&lt;a href="https://github.com/simonw/sqlite-utils/issues/759"&gt;#759&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Improvements to the &lt;code&gt;sqlite-utils migrate&lt;/code&gt; command: &lt;code&gt;--stop-before&lt;/code&gt; values that do not match any known migration are now an error instead of being silently ignored, &lt;code&gt;--stop-before&lt;/code&gt; now works correctly with migration files that still use the older &lt;code&gt;sqlite_migrate.Migrations&lt;/code&gt; class, and &lt;code&gt;--list&lt;/code&gt; is now a read-only operation that no longer creates the database file or the migrations tracking table. &lt;code&gt;migrations.applied()&lt;/code&gt; now returns migrations in the order they were applied.&lt;/li&gt;
+&lt;li&gt;New &lt;code&gt;db.begin()&lt;/code&gt;, &lt;code&gt;db.commit()&lt;/code&gt; and &lt;code&gt;db.rollback()&lt;/code&gt; methods for taking manual control of transactions, as an alternative to the &lt;code&gt;db.atomic()&lt;/code&gt; context manager.&lt;/li&gt;
+&lt;li&gt;New documentation: &lt;a href="https://sqlite-utils.datasette.io/en/latest/python-api.html#python-api-transactions"&gt;Transactions and saving your changes&lt;/a&gt; describes how transactions work and when changes are committed, and a new &lt;a href="https://sqlite-utils.datasette.io/en/latest/upgrading.html#upgrading"&gt;Upgrading&lt;/a&gt; page details the changes needed to move between major versions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+    
+        &lt;p&gt;Tags: &lt;a href="https://simonwillison.net/tags/projects"&gt;projects&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/sqlite"&gt;sqlite&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/sqlite-utils"&gt;sqlite-utils&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/annotated-release-notes"&gt;annotated-release-notes&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/anthropic"&gt;anthropic&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/claude"&gt;claude&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/llm-pricing"&gt;llm-pricing&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/coding-agents"&gt;coding-agents&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/claude-code"&gt;claude-code&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/agentic-engineering"&gt;agentic-engineering&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/gpt"&gt;gpt&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/claude-mythos-fable"&gt;claude-mythos-fable&lt;/a&gt;&lt;/p&gt;
+    
+
+</summary><category term="projects"/><category term="sqlite"/><category term="sqlite-utils"/><category term="annotated-release-notes"/><category term="anthropic"/><category term="claude"/><category term="llm-pricing"/><category term="coding-agents"/><category term="claude-code"/><category term="agentic-engineering"/><category term="gpt"/><category term="claude-mythos-fable"/></entry><entry><title>sqlite-utils 4.0rc2</title><link href="https://simonwillison.net/2026/Jul/5/sqlite-utils/#atom-everything" rel="alternate"/><published>2026-07-05T00:47:38+00:00</published><updated>2026-07-05T00:47:38+00:00</updated><id>https://simonwillison.net/2026/Jul/5/sqlite-utils/#atom-everything</id><summary type="html">
+    
+        &lt;p&gt;&lt;strong&gt;Release:&lt;/strong&gt; &lt;a href="https://github.com/simonw/sqlite-utils/releases/tag/4.0rc2"&gt;sqlite-utils 4.0rc2&lt;/a&gt;&lt;/p&gt;
+        &lt;p&gt;See &lt;a href="https://simonwillison.net/2026/Jul/5/sqlite-utils-fable/"&gt;sqlite-utils 4.0rc2, mostly written by Claude Fable (for about $149.25)&lt;/a&gt;.&lt;/p&gt;
+    
+    
+
+</summary></entry><entry><title>Building a World Map with only 500 bytes</title><link href="https://simonwillison.net/2026/Jul/4/building-a-world-map-with-only-500-bytes/#atom-everything" rel="alternate"/><published>2026-07-04T23:09:02+00:00</published><updated>2026-07-04T23:09:02+00:00</updated><id>https://simonwillison.net/2026/Jul/4/building-a-world-map-with-only-500-bytes/#atom-everything</id><summary type="html">
+    
+&lt;p&gt;&lt;strong&gt;&lt;a href="https://www.experimentlog.com/blog/building-a-world-map-with-only-500-bytes"&gt;Building a World Map with only 500 bytes&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+Iwo Kadziela (assisted by Codex) figured out a way to generate a credible ASCII world map using 445 bytes of data:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="A map of the world rendered as black asterisk ASCII characters, it looks very good" src="https://static.simonwillison.net/static/2026/world-map-ascii.png" /&gt;&lt;/p&gt;
+&lt;p&gt;The key trick is to use deflate compression, which is then wired together using this neat snippet of JavaScript. I didn't know you could use &lt;code&gt;fetch()&lt;/code&gt; with &lt;code&gt;data:&lt;/code&gt; URIs like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;fetch('data:;base64,1ZpLsgIxCEXnrM...==').then(
+  r =&amp;gt; r.body.pipeThrough(new DecompressionStream('deflate-raw'))
+).then(
+  s =&amp;gt; new Response(s).text()
+).then(
+  t =&amp;gt; b.innerHTML = '&amp;lt;pre style=font-size:.65vw&amp;gt;' + t
+)
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;&lt;small&gt;&lt;/small&gt;Via &lt;a href="https://news.ycombinator.com/item?id=48747762"&gt;Hacker News&lt;/a&gt;&lt;/small&gt;&lt;/p&gt;
+
+
+    &lt;p&gt;Tags: &lt;a href="https://simonwillison.net/tags/ascii-art"&gt;ascii-art&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/data-urls"&gt;data-urls&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/javascript"&gt;javascript&lt;/a&gt;&lt;/p&gt;
+
+
+
+</summary><category term="ascii-art"/><category term="data-urls"/><category term="javascript"/></entry><entry><title>Better Models: Worse Tools</title><link href="https://simonwillison.net/2026/Jul/4/better-models-worse-tools/#atom-everything" rel="alternate"/><published>2026-07-04T22:53:52+00:00</published><updated>2026-07-04T22:53:52+00:00</updated><id>https://simonwillison.net/2026/Jul/4/better-models-worse-tools/#atom-everything</id><summary type="html">
+    
+&lt;p&gt;&lt;strong&gt;&lt;a href="https://lucumr.pocoo.org/2026/7/4/better-models-worse-tools/"&gt;Better Models: Worse Tools&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+Armin reports on a weird problem he ran into while hacking on Pi:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The short version is that newer Claude models sometimes call Pi’s edit tool with extra, invented fields in the nested &lt;code&gt;edits[]&lt;/code&gt; array. And not Haiku or some small model: Opus 4.8. The edit itself is usually correct but the arguments do not match the schema as the model invents made-up keys and Pi thus rejects the tool call and asks to try again.&lt;/p&gt;
+&lt;p&gt;That alone is not too surprising as models emit malformed tool calls sometimes. Particularly small ones. What surprised me is that this is getting worse with newer Anthropic models as both Opus 4.8 and Sonnet 5 show it but none of the older models. In other words, the SOTA models of the family are worse at this specific tool schema than their older siblings.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Armin theorizes that this is because more recent Anthropic models have been specifically trained (presumably via Reinforcement Learning) to better use the edit tools that are baked into Claude Code. This has the unfortunate effect that other coding harnesses, such as Pi, may find that their own custom edit tools are more likely to be used incorrectly.&lt;/p&gt;
+&lt;p&gt;Claude's edit tool &lt;a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/text-editor-tool#str-replace"&gt;uses search and replace&lt;/a&gt;. OpenAI's Codex &lt;a href="https://developers.openai.com/api/docs/guides/tools-apply-patch"&gt;uses an apply_patch mechanism instead&lt;/a&gt;, and OpenAI have talked in the past about how their models are trained to use that tool effectively.&lt;/p&gt;
+&lt;p&gt;Does this mean third-party coding harnesses like Pi should implement multiple edit tools just so they can use the one with the best performance for the underlying model the user has selected?
+
+
+    &lt;p&gt;Tags: &lt;a href="https://simonwillison.net/tags/armin-ronacher"&gt;armin-ronacher&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/ai"&gt;ai&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/openai"&gt;openai&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/generative-ai"&gt;generative-ai&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/llms"&gt;llms&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/anthropic"&gt;anthropic&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/llm-tool-use"&gt;llm-tool-use&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/coding-agents"&gt;coding-agents&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/pi"&gt;pi&lt;/a&gt;&lt;/p&gt;
+
+
+
+</summary><category term="armin-ronacher"/><category term="ai"/><category term="openai"/><category term="generative-ai"/><category term="llms"/><category term="anthropic"/><category term="llm-tool-use"/><category term="coding-agents"/><category term="pi"/></entry><entry><title>Open Source AI Gap Map</title><link href="https://simonwillison.net/2026/Jul/3/open-source-ai-gap-map/#atom-everything" rel="alternate"/><published>2026-07-03T22:04:31+00:00</published><updated>2026-07-03T22:04:31+00:00</updated><id>https://simonwillison.net/2026/Jul/3/open-source-ai-gap-map/#atom-everything</id><summary type="html">
+    
+&lt;p&gt;&lt;strong&gt;&lt;a href="https://map.currentai.org"&gt;Open Source AI Gap Map&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;a href="https://www.currentai.org"&gt;Current AI&lt;/a&gt; is "a global partnership building a public option for AI", founded as a non-profit at the AI Action Summit in Paris in February 2025 and backed by serious capital ($400m already committed).&lt;/p&gt;
+&lt;p&gt;They &lt;a href="https://www.currentai.org/blogs/introducing-the-gap-map-v0-1"&gt;launched their Gap Map&lt;/a&gt; a couple of days ago - an attempt at indexing the current state of open source AI:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The Gap Map v0.1 details 421 products in depth: 266 software tools and libraries, 85 models, 50 datasets, and 20 hardware projects, produced by 228 organizations. These products are organized into 14 categories across 3 layers of the stack (model components, product / UX, and infrastructure). The remaining 24,400 artifacts constitute the uncategorized long tail of the open source AI ecosystem, and will carry no score until they are researched and cited.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The map itself is interesting to explore, but I'm more excited about the underlying data - released under an MIT license in the &lt;a href="https://github.com/currentai-org/os-ai-map"&gt;currentai-org/os-ai-map&lt;/a&gt; GitHub account: 1,184 YAML files plus the notebooks, schemas and other scripts used to help gather them.&lt;/p&gt;
+&lt;p&gt;Since the files are on GitHub you can use Datasette Lite to explore some of them - here are &lt;a href="https://lite.datasette.io/?csv=https://github.com/currentai-org/os-ai-map/blob/main/warehouse/catalog/goodailist/repos.csv#/data/repos?_sort_desc=stars"&gt;16,185 GitHub repos the project is tracking&lt;/a&gt; as a CSV file loaded into Datasette Lite.
+
+
+    &lt;p&gt;Tags: &lt;a href="https://simonwillison.net/tags/open-source"&gt;open-source&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/ai"&gt;ai&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/datasette-lite"&gt;datasette-lite&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/generative-ai"&gt;generative-ai&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/local-llms"&gt;local-llms&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/llms"&gt;llms&lt;/a&gt;&lt;/p&gt;
+
+
+
+</summary><category term="open-source"/><category term="ai"/><category term="datasette-lite"/><category term="generative-ai"/><category term="local-llms"/><category term="llms"/></entry><entry><title>Quoting Josh W. Comeau</title><link href="https://simonwillison.net/2026/Jul/3/josh-w-comeau/#atom-everything" rel="alternate"/><published>2026-07-03T21:25:52+00:00</published><updated>2026-07-03T21:25:52+00:00</updated><id>https://simonwillison.net/2026/Jul/3/josh-w-comeau/#atom-everything</id><summary type="html">
+    &lt;blockquote cite="https://bsky.app/profile/joshwcomeau.com/post/3mkxyqgrp2d2t"&gt;&lt;p&gt;I just launched my third course, Whimsical Animations, and so far, it’s on track to sell roughly ⅓ as many copies as a typical course launch.&lt;/p&gt;
+&lt;p&gt;It’s a similar story with my two existing courses. Sales are down significantly from last year.&lt;/p&gt;
+&lt;p&gt;There are likely a lot of reasons for this, but I think the biggest is AI. There’s sort of a double whammy with AI:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Many people are wondering whether developer jobs will even exist in a few months, so they’re reluctant to spend time/money learning new dev skills.&lt;/li&gt;
+&lt;li&gt;Even if they do want to learn new dev skills, LLMs can provide personalized tutoring, so there’s less incentive to buy a paid course.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;[...] I’ve spoken to a few course creators now, and we’re all seeing the same trend. Revenue down 50%+. Fewer people engaging with our content. People switching to LLMs, which slurp up all of our work and regurgitate it, without consent or compensation.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p class="cite"&gt;&amp;mdash; &lt;a href="https://bsky.app/profile/joshwcomeau.com/post/3mkxyqgrp2d2t"&gt;Josh W. Comeau&lt;/a&gt;, via &lt;a href="https://whitep4nth3r.com/blog/goodbye-forever-probably/"&gt;Salma Alam-Naylor&lt;/a&gt;&lt;/p&gt;
+
+    &lt;p&gt;Tags: &lt;a href="https://simonwillison.net/tags/ai-ethics"&gt;ai-ethics&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/llms"&gt;llms&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/ai"&gt;ai&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/generative-ai"&gt;generative-ai&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/careers"&gt;careers&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/josh-comeau"&gt;josh-comeau&lt;/a&gt;&lt;/p&gt;
+
+
+
+</summary><category term="ai-ethics"/><category term="llms"/><category term="ai"/><category term="generative-ai"/><category term="careers"/><category term="josh-comeau"/></entry><entry><title>Fable's judgement</title><link href="https://simonwillison.net/2026/Jul/3/judgement/#atom-everything" rel="alternate"/><published>2026-07-03T18:51:06+00:00</published><updated>2026-07-03T18:51:06+00:00</updated><id>https://simonwillison.net/2026/Jul/3/judgement/#atom-everything</id><summary type="html">
+    &lt;p&gt;One of the most interesting tips I got from &lt;a href="https://www.ai.engineer/worldsfair/schedule?session=asn_slot_2026_06_30_main_stage_1230_2026_06_08t09_35_43_039z"&gt;the Fireside Chat&lt;/a&gt; I hosted with Cat Wu and Thariq Shihipar from the Claude Code team at AIE on Wednesday was to let Fable (and to a certain extent Opus) use their own judgement rather than dictating how they should work.&lt;/p&gt;
+&lt;p&gt;The example they gave was testing. You can tell Fable "only use automated testing for larger features, don't update and run tests for small copy or design changes" - but it's better to just tell Fable to use its own judgement when deciding to write tests instead.&lt;/p&gt;
+&lt;p&gt;Jesse Vincent just gave me a related tip to help avoid burning too many of those valuable Fable tokens in the few days we have left before the prices go up. Tell Fable to use other models for smaller tasks, applying its own judgement about which model to use.&lt;/p&gt;
+&lt;p&gt;I prompted Claude Code just now with:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;For all coding tasks use your judgement to decide an appropriate lower power model and run that in a subagent&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Claude saved this memory file in &lt;code&gt;~/.claude/projects/name-of-project/memory/delegate-coding-to-subagents.md&lt;/code&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;---
+name: delegate-coding-to-subagents
+description: Simon wants coding tasks delegated to subagents running an appropriately lower-power model
+metadata: 
+  node_type: memory
+  type: feedback
+  originSessionId: 30068d78-43a9-4fb1-bb29-9799e18c526a
+---
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Stated by Simon on 2026-07-03: "For all coding tasks use your judgement to
+decide an appropriate lower power model and run that in a subagent."&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Why:&lt;/strong&gt; cost/efficiency — implementation work rarely needs the top-tier
+model; judgment, review, and synthesis stay with the main loop.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;How to apply:&lt;/strong&gt; when a task in this project is primarily writing/editing
+code, spawn an Agent with a model override (sonnet for substantive
+implementation, haiku for trivial/mechanical edits) and a self-contained
+prompt; review the result in the main loop before committing. Design,
+auditing, data synthesis, and anything judgment-heavy stays in the main
+model. See also [[project-goals]].&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;So far it seems to be working well. I'm getting a &lt;em&gt;ton&lt;/em&gt; of work done and my Fable allowance is shrinking less quickly than before.&lt;/p&gt;
+
+    &lt;p&gt;Tags: &lt;a href="https://simonwillison.net/tags/claude"&gt;claude&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/ai"&gt;ai&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/claude-code"&gt;claude-code&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/llms"&gt;llms&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/prompt-engineering"&gt;prompt-engineering&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/coding-agents"&gt;coding-agents&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/generative-ai"&gt;generative-ai&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/claude-mythos-fable"&gt;claude-mythos-fable&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/anthropic"&gt;anthropic&lt;/a&gt;&lt;/p&gt;
+
+
+
+</summary><category term="claude"/><category term="ai"/><category term="claude-code"/><category term="llms"/><category term="prompt-engineering"/><category term="coding-agents"/><category term="generative-ai"/><category term="claude-mythos-fable"/><category term="anthropic"/></entry><entry><title>June 2026 newsletter</title><link href="https://simonwillison.net/2026/Jul/3/june-newsletter/#atom-everything" rel="alternate"/><published>2026-07-03T14:50:50+00:00</published><updated>2026-07-03T14:50:50+00:00</updated><id>https://simonwillison.net/2026/Jul/3/june-newsletter/#atom-everything</id><summary type="html">
+    &lt;p&gt;The June edition of my &lt;a href="https://github.com/sponsors/simonw/"&gt;sponsors-only monthly newsletter&lt;/a&gt; is out. If you are a sponsor (or if you start a sponsorship now) you can &lt;a href="https://github.com/simonw-private/monthly/blob/main/2026-06-june.md"&gt;access it here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This month:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Claude Fable 5, GPT-5.6, and US export restrictions&lt;/li&gt;
+&lt;li&gt;GLM-5.2 is the new best open weights model&lt;/li&gt;
+&lt;li&gt;Tokenmaxxing is so over&lt;/li&gt;
+&lt;li&gt;Datasette Apps&lt;/li&gt;
+&lt;li&gt;sqlite-utils and shot-scraper and Datasette&lt;/li&gt;
+&lt;li&gt;Miscellaneous WASM projects&lt;/li&gt;
+&lt;li&gt;Other model releases&lt;/li&gt;
+&lt;li&gt;What I'm using&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Here's &lt;a href="https://github.com/simonw/monthly-newsletter-archive/blob/main/2026-05-may.md"&gt;a copy of the May newsletter&lt;/a&gt; as a preview of what you'll get. Pay $10/month to stay a month ahead of the free copy!&lt;/p&gt;
+
+    &lt;p&gt;Tags: &lt;a href="https://simonwillison.net/tags/newsletter"&gt;newsletter&lt;/a&gt;&lt;/p&gt;
+
+
+
+</summary><category term="newsletter"/></entry><entry><title>llm-coding-agent 0.1a0</title><link href="https://simonwillison.net/2026/Jul/2/llm-coding-agent/#atom-everything" rel="alternate"/><published>2026-07-02T19:33:12+00:00</published><updated>2026-07-02T19:33:12+00:00</updated><id>https://simonwillison.net/2026/Jul/2/llm-coding-agent/#atom-everything</id><summary type="html">
+    
+        &lt;p&gt;&lt;strong&gt;Release:&lt;/strong&gt; &lt;a href="https://github.com/simonw/llm-coding-agent/releases/tag/0.1a0"&gt;llm-coding-agent 0.1a0&lt;/a&gt;&lt;/p&gt;
+        &lt;p&gt;Another Fable 5 experiment. Now that my &lt;a href="https://llm.datasette.io/"&gt;LLM library&lt;/a&gt; has evolved into more of an agent framework it's time to see what a simple coding agent would look like built on it.&lt;/p&gt;
+&lt;p&gt;I started a &lt;a href="https://github.com/simonw/llm-coding-agent/tree/2466fa03ba8e5122c3bfa93d52167d33bce40ac6"&gt;new Python library&lt;/a&gt; using my &lt;a href="https://github.com/simonw/python-lib-template-repository"&gt;python-lib-template-repository&lt;/a&gt; GitHub template repository, then ran these two prompts (here's the &lt;a href="https://claude.ai/code/session_01TEUBvBbMipbFSoqjMiJ7ha"&gt;Claude Code for web transcript&lt;/a&gt;):&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;Write a spec.md for this project - it will depend on the latest “llm” alpha from PyPI and implement a Claude code style coding agent complete with tools for reading and editing files and executing commands&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Then:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;Commit the spec, then build it using red/green TDD in a series of sensible commits (each with passing tests and updated docs) - occasionally manually test it using the OpenAI API key in your environment&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Here's &lt;a href="https://github.com/simonw/llm-coding-agent/blob/0.1a0/spec.md"&gt;the spec&lt;/a&gt;, the &lt;a href="https://github.com/simonw/llm-coding-agent/blob/0.1a0/README.md"&gt;resulting README file&lt;/a&gt;, and the &lt;a href="https://github.com/simonw/llm-coding-agent/commits/0.1a0"&gt;sequence of commits&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I've shipped a slop-alpha to PyPI, so you can run the new agent like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;uvx --prerelease=allow --with llm-coding-agent llm code
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;It's pretty good for a first attempt! Here's the (Fable-authored) &lt;a href="https://github.com/simonw/llm-coding-agent/blob/0.1a0/README.md"&gt;README&lt;/a&gt;, which lists recipes like &lt;code&gt;llm code --yolo&lt;/code&gt; and &lt;code&gt;llm code --allow "pytest*" --allow "git diff*"&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;It also presents &lt;a href="https://github.com/simonw/llm-coding-agent/blob/0.1a0/README.md#codingagent"&gt;a Python API&lt;/a&gt; based around a &lt;code&gt;CodingAgent(model="gpt-5.5", root="/path", approve=True).run("Fix the failing test in tests/test_parser.py")&lt;/code&gt; class which I didn't ask for but I'm delighted to see implemented.&lt;/p&gt;
+&lt;p&gt;Here's the suite of tools &lt;a href="https://github.com/simonw/llm-coding-agent/blob/0.1a0/llm_coding_agent/tools.py#L22"&gt;it implemented&lt;/a&gt;, listed using &lt;code&gt;uvx ... llm tools&lt;/code&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;CodingTools_edit_file(path: str, old_string: str, new_string: str, replace_all: bool = False) -&amp;gt; str&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Replace an exact string in a file.&lt;/p&gt;
+&lt;p&gt;old_string must match the file contents exactly (including
+whitespace) and must identify a unique location unless replace_all
+is true. Returns a diff of the change so it can be verified.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;CodingTools_execute_command(command: str, timeout: int = 120) -&amp;gt; str&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Run a shell command in the session root directory.&lt;/p&gt;
+&lt;p&gt;Returns combined stdout and stderr followed by an Exit code line.
+timeout is in seconds (maximum 600); on timeout the whole process
+tree is killed.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;CodingTools_list_files(pattern: str = '**/*', path: str = '.') -&amp;gt; str&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;List files matching a glob pattern, newest first.&lt;/p&gt;
+&lt;p&gt;Skips hidden directories, node_modules, __pycache__ and (in a git
+repository) anything covered by .gitignore. Returns at most 200
+paths relative to the searched directory.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;CodingTools_read_file(path: str, offset: int = 0, limit: int = 2000) -&amp;gt; str&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Read a text file, returning numbered lines like cat -n.&lt;/p&gt;
+&lt;p&gt;Paths are relative to the session root. Use offset (0-based first
+line) and limit (max lines) to page through files too large to read
+in one call.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;CodingTools_search_files(pattern: str, path: str = '.', glob: str = None, max_results: int = 100) -&amp;gt; str&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Search file contents for a regular expression.&lt;/p&gt;
+&lt;p&gt;Returns matches as path:line_number:line, capped at max_results.
+Use glob (e.g. "*.py") to restrict which files are searched.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;CodingTools_write_file(path: str, content: str) -&amp;gt; str&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Create or overwrite a file with the given content.&lt;/p&gt;
+&lt;p&gt;Parent directories are created as needed. Prefer edit_file for
+modifying existing files.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;I tried it out by running &lt;code&gt;llm code --yolo&lt;/code&gt; and then prompting:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;mkdir /tmp/demo and then in that folder create a simple swiftui CLI app for telling the time in ascii art&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Here's &lt;a href="https://gist.github.com/simonw/750009007050124cd1b390cfe8488e41"&gt;the transcript&lt;/a&gt;, in which GPT-5.5 reasoning notes that "SwiftUI isn't suitable for a true CLI" and then builds an app that outputs this on &lt;code&gt;swift run AsciiTime&lt;/code&gt;:&lt;/p&gt;
+&lt;pre style="font-size: 9px"&gt;
+      █    █████         ████     █             █     ███   
+     ██    █        █        █   ██      █     ██    █   █  
+      █    ████           ███     █             █       █   
+      █        █    █        █    █      █      █      █    
+     ███   ████          ████    ███           ███   █████
+&lt;/pre&gt;
+    
+    
+        &lt;p&gt;Tags: &lt;a href="https://simonwillison.net/tags/projects"&gt;projects&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/ai"&gt;ai&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/generative-ai"&gt;generative-ai&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/llm"&gt;llm&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/llm-tool-use"&gt;llm-tool-use&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/coding-agents"&gt;coding-agents&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/claude-code"&gt;claude-code&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/claude-mythos-fable"&gt;claude-mythos-fable&lt;/a&gt;&lt;/p&gt;
+    
+
+</summary><category term="projects"/><category term="ai"/><category term="generative-ai"/><category term="llm"/><category term="llm-tool-use"/><category term="coding-agents"/><category term="claude-code"/><category term="claude-mythos-fable"/></entry><entry><title>Using DSPy to evaluate and improve Datasette Agent's SQL system prompts</title><link href="https://simonwillison.net/2026/Jul/2/dspy-datasette-agent-prompts/#atom-everything" rel="alternate"/><published>2026-07-02T18:25:00+00:00</published><updated>2026-07-02T18:25:00+00:00</updated><id>https://simonwillison.net/2026/Jul/2/dspy-datasette-agent-prompts/#atom-everything</id><summary type="html">
+    
+        &lt;p&gt;&lt;strong&gt;Research:&lt;/strong&gt; &lt;a href="https://github.com/simonw/research/tree/main/dspy-datasette-agent-prompts#readme"&gt;Using DSPy to evaluate and improve Datasette Agent&amp;#x27;s SQL system prompts&lt;/a&gt;&lt;/p&gt;
+        &lt;p&gt;One of this morning's AIE keynotes covered &lt;a href="https://github.com/stanfordnlp/dspy"&gt;dspy&lt;/a&gt;, which reminded me I've been meaning to see if it could help me improve the system prompt used by &lt;a href="https://agent.datasette.io"&gt;Datasette Agent&lt;/a&gt; - so I fired off an asynchronous research task in Claude Code for web using Claude Fable 5:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;Pip install the latest Datasette alpha and datasette-agent and dspy - then figure out how to use dspy to evaluate and improve the main system prompts used by Datasette Agent for the feature where it can execute read only SQL queries to answer user questions about data.&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Fable chose to test using GPT 4.1 mini and nano, and identified several promising looking directions for improvements. I particularly like this one:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The schema listing gives only table names; the "don't call describe_table if you already have the information" advice caused column-name guessing (page_count, o.order_id, first_name) and error-retry loops in baseline traces. Either include column names in the prompt's schema listing or soften that advice.&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    
+        &lt;p&gt;Tags: &lt;a href="https://simonwillison.net/tags/ai"&gt;ai&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/datasette"&gt;datasette&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/generative-ai"&gt;generative-ai&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/llms"&gt;llms&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/evals"&gt;evals&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/dspy"&gt;dspy&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/datasette-agent"&gt;datasette-agent&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/claude-mythos-fable"&gt;claude-mythos-fable&lt;/a&gt;&lt;/p&gt;
+    
+
+</summary><category term="ai"/><category term="datasette"/><category term="generative-ai"/><category term="llms"/><category term="evals"/><category term="dspy"/><category term="datasette-agent"/><category term="claude-mythos-fable"/></entry><entry><title>Understand to participate</title><link href="https://simonwillison.net/2026/Jul/2/understand-to-participate/#atom-everything" rel="alternate"/><published>2026-07-02T17:07:14+00:00</published><updated>2026-07-02T17:07:14+00:00</updated><id>https://simonwillison.net/2026/Jul/2/understand-to-participate/#atom-everything</id><summary type="html">
+    &lt;p&gt;I saw Geoffrey Litt speak at &lt;a href="https://www.ai.engineer/worldsfair/2026"&gt;AIE&lt;/a&gt; yesterday, and one framing he used particularly resonated with me:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Understand to participate&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Geoffrey was talking about the challenge of collaborating with coding agents as they construct increasingly large and sophisticated changes, and the need to avoid taking on &lt;a href="https://simonwillison.net/tags/cognitive-debt/"&gt;cognitive debt&lt;/a&gt; as your understanding drifts from how the code actually works.&lt;/p&gt;
+&lt;p&gt;His argument is that you need to understand the code to a depth that enables you to participate further with the model:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;You can learn what the agent is doing to make sure you can be an active participant in the creative process. [...]&lt;/p&gt;
+&lt;p&gt;You need a rich set of concepts in your mind to think creatively and fluently about how to move something forward. If you're lacking that fluency, your ability to participate in the project is meaningfully limited.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The AIE talks are all recorded - all 300+ of them! - and should be trickling out over the next three weeks. Geoffrey's is one that I recommend catching on YouTube.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Update 10th July&lt;/strong&gt;: here's &lt;a href="https://youtu.be/WkBPX-oDMnA?is=ojFaLX2onMn3ARhi"&gt;Geoffrey's talk on YouTube&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Geoffrey also published &lt;a href="https://twitter.com/geoffreylitt/status/2072522251300409556"&gt;a thread version of his talk&lt;/a&gt; on Twitter.&lt;/p&gt;
+
+    &lt;p&gt;Tags: &lt;a href="https://simonwillison.net/tags/geoffrey-litt"&gt;geoffrey-litt&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/coding-agents"&gt;coding-agents&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/cognitive-debt"&gt;cognitive-debt&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/generative-ai"&gt;generative-ai&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/ai"&gt;ai&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/llms"&gt;llms&lt;/a&gt;&lt;/p&gt;
+
+
+
+</summary><category term="geoffrey-litt"/><category term="coding-agents"/><category term="cognitive-debt"/><category term="generative-ai"/><category term="ai"/><category term="llms"/></entry><entry><title>Quoting Anthropic</title><link href="https://simonwillison.net/2026/Jun/30/anthropic/#atom-everything" rel="alternate"/><published>2026-06-30T23:58:15+00:00</published><updated>2026-06-30T23:58:15+00:00</updated><id>https://simonwillison.net/2026/Jun/30/anthropic/#atom-everything</id><summary type="html">
+    &lt;blockquote cite="https://twitter.com/anthropicai/status/2072106151890809341"&gt;&lt;p&gt;We’ve received notice that the Department of Commerce has lifted export controls on Claude Fable 5 and Mythos 5.&lt;/p&gt;
+&lt;p&gt;We'll begin restoring access tomorrow, and will share an update soon.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p class="cite"&gt;&amp;mdash; &lt;a href="https://twitter.com/anthropicai/status/2072106151890809341"&gt;Anthropic&lt;/a&gt;, on Twitter&lt;/p&gt;
+
+    &lt;p&gt;Tags: &lt;a href="https://simonwillison.net/tags/anthropic"&gt;anthropic&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/claude"&gt;claude&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/generative-ai"&gt;generative-ai&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/claude-mythos-fable"&gt;claude-mythos-fable&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/ai"&gt;ai&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/llms"&gt;llms&lt;/a&gt;&lt;/p&gt;
+
+
+
+</summary><category term="anthropic"/><category term="claude"/><category term="generative-ai"/><category term="claude-mythos-fable"/><category term="ai"/><category term="llms"/></entry><entry><title>Nano Banana 2 Lite</title><link href="https://simonwillison.net/2026/Jun/30/nano-banana-2-lite/#atom-everything" rel="alternate"/><published>2026-06-30T22:15:35+00:00</published><updated>2026-06-30T22:15:35+00:00</updated><id>https://simonwillison.net/2026/Jun/30/nano-banana-2-lite/#atom-everything</id><summary type="html">
+    
+&lt;p&gt;&lt;strong&gt;&lt;a href="https://deepmind.google/models/gemini-image/flash-lite/"&gt;Nano Banana 2 Lite&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+Also known as Gemini 3.1 Flash Lite Image (&lt;code&gt;gemini-3.1-flash-lite-image&lt;/code&gt; &lt;a href="https://ai.google.dev/gemini-api/docs/image-generation"&gt;in their API&lt;/a&gt;), this is the "fastest and cheapest Gemini image model, engineered for velocity and scale".&lt;/p&gt;
+&lt;p&gt;I &lt;a href="https://aistudio.google.com/app/prompts/new_chat?model=gemini-3.1-flash-lite-image"&gt;used AI studio&lt;/a&gt; to run this prompt:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;Do a where's Waldo style image but it's where is the raccoon holding a ham radio&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img alt="Densely illustrated &amp;quot;Where's Waldo&amp;quot;-style cartoon of a woodland festival filled with anthropomorphic animals (bears, foxes, badgers, rabbits, squirrels, owls) under a banner reading &amp;quot;FOREE'S FESTIVAL&amp;quot; and another reading &amp;quot;FOREST FIVAL,&amp;quot; with bunting flags strung between trees, a Ferris wheel on the right, market stalls including one labeled &amp;quot;ACORN FAIR,&amp;quot; signs reading &amp;quot;BANDSTAND,&amp;quot; &amp;quot;HAM RADIO MEET&amp;quot; (appearing twice), and a stage where a bear plays guitar, a raccoon uses a ham radio, a badger plays drums, an owl looks on, and a fox plays trumpet, with crowds of animals wandering forest paths between trees and mountains in the background." src="https://static.simonwillison.net/static/2026/nano-banana-2-lite-raccoon.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;I like that one better than &lt;a href="https://simonwillison.net/2026/Apr/21/gpt-image-2/#nano-banana-2-and-pro"&gt;the results I got from the other Nano Banana models&lt;/a&gt; when I tried this back in April. It spelled Forest Festival wrong in two different ways though.
+
+    &lt;p&gt;&lt;small&gt;&lt;/small&gt;Via &lt;a href="https://news.ycombinator.com/item?id=48735444"&gt;Hacker News&lt;/a&gt;&lt;/small&gt;&lt;/p&gt;
+
+
+    &lt;p&gt;Tags: &lt;a href="https://simonwillison.net/tags/google"&gt;google&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/ai"&gt;ai&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/generative-ai"&gt;generative-ai&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/llms"&gt;llms&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/gemini"&gt;gemini&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/text-to-image"&gt;text-to-image&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/llm-release"&gt;llm-release&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/nano-banana"&gt;nano-banana&lt;/a&gt;&lt;/p&gt;
+
+
+
+</summary><category term="google"/><category term="ai"/><category term="generative-ai"/><category term="llms"/><category term="gemini"/><category term="text-to-image"/><category term="llm-release"/><category term="nano-banana"/></entry><entry><title>What's new in Claude Sonnet 5</title><link href="https://simonwillison.net/2026/Jun/30/claude-sonnet-5/#atom-everything" rel="alternate"/><published>2026-06-30T21:23:02+00:00</published><updated>2026-06-30T21:23:02+00:00</updated><id>https://simonwillison.net/2026/Jun/30/claude-sonnet-5/#atom-everything</id><summary type="html">
+    
+&lt;p&gt;&lt;strong&gt;&lt;a href="https://platform.claude.com/docs/en/about-claude/models/whats-new-sonnet-5"&gt;What&amp;#x27;s new in Claude Sonnet 5&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+Claude Sonnet 5 came out &lt;a href="https://www.anthropic.com/news/claude-sonnet-5"&gt;this morning&lt;/a&gt;. I always head straight for the "what's new" developer docs because they tend to have more actionable information than the official announcement post.&lt;/p&gt;
+&lt;p&gt;Anthropic say of Sonnet 5 that "its performance is close to that of Opus 4.8, but at lower prices". The &lt;a href="https://www-cdn.anthropic.com/9e6a1044980d8c4ed85669faf9c2a8342e2e9f1e/Claude%20Sonnet%205%20System%20Card.pdf"&gt;system card&lt;/a&gt; helps explain how they were able to release the model without being blocked by the US government:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Sonnet 5 is significantly less capable at cyber tasks than Mythos 5: its safeguards are thus similar to those we apply to Opus 4.7 and Opus 4.8 (models that are more capable than Sonnet 5 but much less capable than Mythos 5).&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Of note from the "what's new" API changes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Sampling parameters &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt;, &lt;code&gt;top_k&lt;/code&gt; are no longer supported.&lt;/li&gt;
+&lt;li&gt;It has a 1 million token context window and 128,000 maximum output tokens.&lt;/li&gt;
+&lt;li&gt;It features "the same set of tools and platform features as Claude Sonnet 4.6"&lt;/li&gt;
+&lt;li&gt;Adaptive thinking is on by default, unless you specify &lt;code&gt;"thinking": {type: "disabled"}&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;The pricing is the same as Sonnet 4.6: $3/million input, $15/million input, with an introductory discount to $2/$10 until 31st August. But...&lt;/li&gt;
+&lt;li&gt;The model has a new tokenizer, where "The same input text produces approximately 30% more tokens than on Claude Sonnet 4.6." - effectively a 30% price increase.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I used my &lt;a href="https://tools.simonwillison.net/claude-token-counter"&gt;Claude Token Counter&lt;/a&gt; tool to try out the new tokenizer. Here are my results for several larger documents:&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Document&lt;/th&gt;
+      &lt;th&gt;Sonnet 4.6&lt;/th&gt;
+      &lt;th&gt;Opus 4.7&lt;/th&gt;
+      &lt;th&gt;Sonnet 5&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;a href="https://github.com/simonw/udhr-markdown/blob/main/declarations/eng.md"&gt;Universal Declaration of Human Rights (English)&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;b&gt;2,356&lt;/b&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;b&gt;3,347&lt;/b&gt;&lt;br&gt;1.42x&lt;/td&gt;
+      &lt;td&gt;&lt;b&gt;3,341&lt;/b&gt;&lt;br&gt;1.42x&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;a href="https://github.com/simonw/udhr-markdown/blob/main/declarations/spa.md"&gt;Universal Declaration of Human Rights (Spanish)&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;b&gt;3,572&lt;/b&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;b&gt;4,753&lt;/b&gt;&lt;br&gt;1.33x&lt;/td&gt;
+      &lt;td&gt;&lt;b&gt;4,747&lt;/b&gt;&lt;br&gt;1.33x&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;a href="https://github.com/simonw/udhr-markdown/blob/main/declarations/cmn_hans.md"&gt;Universal Declaration of Human Rights (Chinese, Mandarin Simplified)&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;b&gt;3,334&lt;/b&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;b&gt;3,366&lt;/b&gt;&lt;br&gt;1.01x&lt;/td&gt;
+      &lt;td&gt;&lt;b&gt;3,360&lt;/b&gt;&lt;br&gt;1.01x&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;a href="https://github.com/simonw/sqlite-utils/blob/79117b9d110d72f46dab5fe2cda412ff4789ab55/sqlite_utils/db.py"&gt;sqlite_utils/db.py&lt;/a&gt; (4,279 lines of Python)&lt;/td&gt;
+      &lt;td&gt;&lt;b&gt;44,014&lt;/b&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;b&gt;56,118&lt;/b&gt;&lt;br&gt;1.28x&lt;/td&gt;
+      &lt;td&gt;&lt;b&gt;56,113&lt;/b&gt;&lt;br&gt;1.27x&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;So the new token is roughly 1.4x times more expensive for English, 1.33x for Spanish, 1.28x for Python code and effectively the same cost for Simplified Mandarin.&lt;/p&gt;
+&lt;p&gt;Here's &lt;a href="https://gist.github.com/simonw/a89e756b621a31e8ffc210e3428efa77"&gt;the pelican&lt;/a&gt;. It's nothing to write home about. Sonnet 5 thinks it looks like a goose.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Illustration of a white goose riding a bicycle, with one wing extended forward to grip the handlebar, set against a plain white background with a brown ground line." src="https://static.simonwillison.net/static/2026/sonnet-5-pelican.png" /&gt;
+
+    &lt;p&gt;&lt;small&gt;&lt;/small&gt;Via &lt;a href="https://news.ycombinator.com/item?id=48736605"&gt;Hacker News&lt;/a&gt;&lt;/small&gt;&lt;/p&gt;
+
+
+    &lt;p&gt;Tags: &lt;a href="https://simonwillison.net/tags/ai"&gt;ai&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/generative-ai"&gt;generative-ai&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/llms"&gt;llms&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/anthropic"&gt;anthropic&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/claude"&gt;claude&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/llm-pricing"&gt;llm-pricing&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/pelican-riding-a-bicycle"&gt;pelican-riding-a-bicycle&lt;/a&gt;, &lt;a href="https://simonwillison.net/tags/llm-release"&gt;llm-release&lt;/a&gt;&lt;/p&gt;
+
+
+
+</summary><category term="ai"/><category term="generative-ai"/><category term="llms"/><category term="anthropic"/><category term="claude"/><category term="llm-pricing"/><category term="pelican-riding-a-bicycle"/><category term="llm-release"/></entry></feed>

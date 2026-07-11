@@ -26,12 +26,22 @@ const dependencies = [1]RepoImport{
             "lib/skeleton.hoon",
             "lib/strand.hoon",
             "lib/strandio.hoon",
+            "lib/test.hoon",
             "lib/verb.hoon",
+            "lib/wasm/lia.hoon",
+            "lib/wasm/parser.hoon",
+            "lib/wasm/validator.hoon",
+            "lib/wasm/runner/engine.hoon",
+            "lib/wasm/runner/op-def.hoon",
             "mar/bill.hoon",
             "mar/kelvin.hoon",
             "mar/mime.hoon",
+            "mar/wasm.hoon",
             "sur/spider.hoon",
             "sur/verb.hoon",
+            "sur/wasm/engine.hoon",
+            "sur/wasm/lia.hoon",
+            "sur/wasm/wasm.hoon",
         },
     },
 };
@@ -107,6 +117,8 @@ fn buildDesk(step: *std.Build.Step, allocator: std.mem.Allocator, copy_target: ?
         try copyDirContents(allocator, "desk", "dist");
     }
 
+    try buildParser(step);
+
     for (dependencies) |dep| {
         try importDependency(step, allocator, dep, "dist");
     }
@@ -117,6 +129,14 @@ fn buildDesk(step: *std.Build.Step, allocator: std.mem.Allocator, copy_target: ?
         const target_path = try expandHomePath(allocator, step, target);
         try copyDistToTarget(allocator, step, target_path);
     }
+}
+
+fn buildParser(step: *std.Build.Step) !void {
+    std.debug.print("Building RSS parser Wasm module...\n", .{});
+    try run(step, &.{ "zig", "build", "--build-file", "parser/build.zig", "wasm" });
+    const source_path = "parser/zig-out/bin/rss-parser.wasm";
+    if (!pathExists(source_path)) return step.fail("parser did not produce {s}", .{source_path});
+    try copyFilePath(source_path, "dist/wasm/rss-parser.wasm");
 }
 
 fn clean() !void {

@@ -1,2 +1,3 @@
 dist
 .zig-cache
+parser/zig-out
