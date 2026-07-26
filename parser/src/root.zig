@@ -58,6 +58,9 @@ const Capture = enum {
 const RecordField = struct { scope: u8, tag: u8 };
 var record_output: [max_output]u8 = undefined;
 var record_output_len: usize = 0;
+var staging: [512 * 1024]u8 = undefined;
+var staging_len: usize = 0;
+var staging_active: bool = false;
 
 const Text = struct {
     bytes: [max_text]u8 = undefined,
@@ -145,9 +148,10 @@ pub export fn __wbindgen_malloc(len: u32, alignment: u32) u32 {
     return @intCast(@intFromPtr(&heap[start]));
 }
 
-pub export fn parse_feed(ptr: u32, len: u32) u32 {
+pub export fn parse_feed(ptr: u32, len: u32, known_ptr: u32, known_len: u32) u32 {
     const body: []const u8 = if (len == 0) &.{} else @as([*]const u8, @ptrFromInt(ptr))[0..len];
-    const parsed = parse(body);
+    const known: []const u8 = if (known_len == 0) &.{} else @as([*]const u8, @ptrFromInt(known_ptr))[0..known_len];
+    const parsed = parse(body, known);
     writeHeader(len, parsed.kind, parsed.status, parsed.payload_len);
     return @intCast(@intFromPtr(&output));
 }
@@ -158,7 +162,7 @@ pub export fn parse_feed_len() u32 {
 
 const ParseResult = struct { kind: Kind, status: Status, payload_len: u32 };
 
-fn parse(body: []const u8) ParseResult {
+fn parse(body: []const u8, known: []const u8) ParseResult {
     var writer = Writer{ .pos = header_len + 12 };
     var kind: Kind = .unknown;
     var status: Status = .ok;
@@ -168,6 +172,8 @@ fn parse(body: []const u8) ParseResult {
     var item: Item = .{};
     var item_count: u32 = 0;
     record_output_len = 0;
+    staging_len = 0;
+    staging_active = false;
     var depth: usize = 0;
     var item_depth: ?usize = null;
     var capture: Capture = .none;
@@ -218,21 +224,30 @@ fn parse(body: []const u8) ParseResult {
                 break;
             }
             if (item_depth) |d| if (depth == d and (std.mem.eql(u8, name, "item") or std.mem.eql(u8, name, "entry"))) {
-                if (item_count >= max_items) {
-                    status = .output_too_large;
-                    break;
-                }
-                writer.text(item.title.slice());
-                writer.text(item.link.slice());
-                writer.text(item.description.slice());
-                writer.text(item.id.slice());
-                if (writer.failed) {
-                    status = .output_too_large;
-                    break;
-                }
-                item_count += 1;
+                const key = if (item.link.len != 0) item.link.slice() else item.id.slice();
                 item_depth = null;
+                staging_active = false;
                 capture = .none;
+                if (key.len != 0 and knownContains(known, key)) {
+                    staging_len = 0;
+                } else {
+                    if (item_count >= max_items) {
+                        status = .output_too_large;
+                        break;
+                    }
+                    writer.text(item.title.slice());
+                    writer.text(item.link.slice());
+                    writer.text(item.description.slice());
+                    writer.text(item.id.slice());
+                    if (writer.failed or staging_len > record_output.len - record_output_len) {
+                        status = .output_too_large;
+                        break;
+                    }
+                    @memcpy(record_output[record_output_len..][0..staging_len], staging[0..staging_len]);
+                    record_output_len += staging_len;
+                    staging_len = 0;
+                    item_count += 1;
+                }
             };
             if (recordField(kind, capture)) |field| {
                 const owner = if (field.scope == 2 or field.scope == 4) item_count else 0;
@@ -284,6 +299,8 @@ fn parse(body: []const u8) ParseResult {
         if ((kind == .rss and std.mem.eql(u8, name, "item")) or (kind == .atom and std.mem.eql(u8, name, "entry"))) {
             item.clear();
             item_depth = depth;
+            staging_active = true;
+            staging_len = 0;
         }
         if (kind == .atom and std.mem.eql(u8, name, "link")) {
             if (attribute(content[name_end..], "href")) |href| {
@@ -342,21 +359,39 @@ fn parse(body: []const u8) ParseResult {
 }
 
 fn appendRecord(field: RecordField, owner: u32, values: []const []const u8) bool {
+    const buf: []u8 = if (staging_active) &staging else &record_output;
+    const len_ptr: *usize = if (staging_active) &staging_len else &record_output_len;
     if (values.len > 255) return false;
     var required: usize = 8;
     for (values) |value| required += 4 + value.len;
-    if (required > record_output.len - record_output_len) return false;
-    record_output[record_output_len..][0..4].* = .{ field.scope, field.tag, @intCast(values.len), 0 };
-    std.mem.writeInt(u32, record_output[record_output_len + 4 ..][0..4], owner, .little);
-    var pos = record_output_len + 8;
+    if (required > buf.len - len_ptr.*) return false;
+    buf[len_ptr.*..][0..4].* = .{ field.scope, field.tag, @intCast(values.len), 0 };
+    std.mem.writeInt(u32, buf[len_ptr.* + 4 ..][0..4], owner, .little);
+    var pos = len_ptr.* + 8;
     for (values) |value| {
-        std.mem.writeInt(u32, record_output[pos..][0..4], @intCast(value.len), .little);
+        std.mem.writeInt(u32, buf[pos..][0..4], @intCast(value.len), .little);
         pos += 4;
-        @memcpy(record_output[pos..][0..value.len], value);
+        @memcpy(buf[pos..][0..value.len], value);
         pos += value.len;
     }
-    record_output_len += required;
+    len_ptr.* += required;
     return true;
+}
+
+fn knownContains(known: []const u8, key: []const u8) bool {
+    if (known.len < 4) return false;
+    const count = std.mem.readInt(u32, known[0..4], .little);
+    var pos: usize = 4;
+    var n: u32 = 0;
+    while (n < count) : (n += 1) {
+        if (pos + 4 > known.len) return false;
+        const len = std.mem.readInt(u32, known[pos..][0..4], .little);
+        pos += 4;
+        if (pos + len > known.len) return false;
+        if (std.mem.eql(u8, known[pos..][0..len], key)) return true;
+        pos += len;
+    }
+    return false;
 }
 
 fn appendClosedRecord(field: RecordField, owner: u32, capture: Capture, feed_title: *Text, feed_link: *Text, scalar: *Text, item: *Item) bool {
@@ -634,18 +669,18 @@ fn writeHeader(input_len: u32, kind: Kind, status: Status, payload_len: u32) voi
 }
 
 test "streams RSS core fields" {
-    const r = parse("<rss><channel><title>A &amp; B</title><link>https://x</link><item><title>One</title><link>https://i</link><description><![CDATA[Hello]]></description></item></channel></rss>");
+    const r = parse("<rss><channel><title>A &amp; B</title><link>https://x</link><item><title>One</title><link>https://i</link><description><![CDATA[Hello]]></description></item></channel></rss>", &.{});
     try std.testing.expectEqual(Kind.rss, r.kind);
     try std.testing.expectEqual(Status.ok, r.status);
     try std.testing.expect(r.payload_len > 20);
 }
 test "streams Atom core fields" {
-    const r = parse("<feed xmlns=\"x\"><title>Feed</title><link href=\"https://f\"/><entry><title>Entry</title><link href=\"https://e\"/><summary>Text</summary></entry></feed>");
+    const r = parse("<feed xmlns=\"x\"><title>Feed</title><link href=\"https://f\"/><entry><title>Entry</title><link href=\"https://e\"/><summary>Text</summary></entry></feed>", &.{});
     try std.testing.expectEqual(Kind.atom, r.kind);
     try std.testing.expectEqual(Status.ok, r.status);
 }
 test "appends tagged RSS channel scalars after the fixed core" {
-    const r = parse("<rss><channel><title>A</title><link>x</link><description>Desc</description><language>en</language></channel></rss>");
+    const r = parse("<rss><channel><title>A</title><link>x</link><description>Desc</description><language>en</language></channel></rss>", &.{});
     try std.testing.expectEqual(Status.ok, r.status);
     const records_start = header_len + 12 + 1 + 1;
     const expected = [_]u8{
@@ -659,7 +694,7 @@ test "appends tagged RSS channel scalars after the fixed core" {
 }
 
 test "appends tagged Atom feed scalars after the fixed core" {
-    const r = parse("<feed><title>A</title><link href=\"x\"/><id>urn:test</id><rights>All</rights></feed>");
+    const r = parse("<feed><title>A</title><link href=\"x\"/><id>urn:test</id><rights>All</rights></feed>", &.{});
     try std.testing.expectEqual(Status.ok, r.status);
     const records_start = header_len + 12 + 1 + 1;
     const expected = [_]u8{
@@ -674,7 +709,7 @@ test "appends tagged Atom feed scalars after the fixed core" {
     try std.testing.expectEqualSlices(u8, &expected, output[records_start .. records_start + expected.len]);
 }
 test "rejects malformed XML" {
-    const r = parse("<rss><channel></rss>");
+    const r = parse("<rss><channel></rss>", &.{});
     try std.testing.expectEqual(Status.malformed_xml, r.status);
 }
 
@@ -688,7 +723,7 @@ test "truncates oversized text fields instead of failing the feed" {
         .{long},
     );
     defer std.testing.allocator.free(feed);
-    const r = parse(feed);
+    const r = parse(feed, &.{});
     try std.testing.expectEqual(Kind.rss, r.kind);
     try std.testing.expectEqual(Status.ok, r.status);
 }
@@ -696,7 +731,7 @@ test "truncates oversized text fields instead of failing the feed" {
 test "Hacker News snapshot has ordered RSS items" {
     const snapshot = try std.fs.cwd().readFileAlloc(std.testing.allocator, "testdata/hacker-news.rss.xml", 2 * 1024 * 1024);
     defer std.testing.allocator.free(snapshot);
-    const r = parse(snapshot);
+    const r = parse(snapshot, &.{});
     try std.testing.expectEqual(Kind.rss, r.kind);
     try std.testing.expectEqual(Status.ok, r.status);
     try std.testing.expect(r.payload_len > 100);
@@ -705,7 +740,7 @@ test "Hacker News snapshot has ordered RSS items" {
 test "Simon Willison snapshot has ordered Atom entries" {
     const snapshot = try std.fs.cwd().readFileAlloc(std.testing.allocator, "testdata/simon-willison.atom.xml", 2 * 1024 * 1024);
     defer std.testing.allocator.free(snapshot);
-    const r = parse(snapshot);
+    const r = parse(snapshot, &.{});
     try std.testing.expectEqual(Kind.atom, r.kind);
     try std.testing.expectEqual(Status.ok, r.status);
     try std.testing.expect(r.payload_len > 100);
@@ -746,4 +781,105 @@ fn validatePayloadRecords(r: ParseResult) !void {
         while (i < value_count) : (i += 1) try skipTestText(payload, &pos);
     }
     try std.testing.expectEqual(payload.len, pos);
+}
+
+fn makeKnown(a: std.mem.Allocator, urls: []const []const u8) ![]u8 {
+    var size: usize = 4;
+    for (urls) |u| size += 4 + u.len;
+    const buf = try a.alloc(u8, size);
+    std.mem.writeInt(u32, buf[0..4], @intCast(urls.len), .little);
+    var pos: usize = 4;
+    for (urls) |u| {
+        std.mem.writeInt(u32, buf[pos..][0..4], @intCast(u.len), .little);
+        pos += 4;
+        @memcpy(buf[pos..][0..u.len], u);
+        pos += u.len;
+    }
+    return buf;
+}
+
+fn readItemCount(r: ParseResult) !u32 {
+    const payload = output[header_len..][0..r.payload_len];
+    var pos: usize = 0;
+    try skipTestText(payload, &pos);
+    try skipTestText(payload, &pos);
+    return try readTestU32(payload, &pos);
+}
+
+test "skips items whose link is known" {
+    const known = try makeKnown(std.testing.allocator, &.{"https://a"});
+    defer std.testing.allocator.free(known);
+    const r = parse("<rss><channel><title>T</title><link>x</link><item><title>A</title><link>https://a</link></item><item><title>B</title><link>https://b</link></item></channel></rss>", known);
+    try std.testing.expectEqual(Status.ok, r.status);
+    try std.testing.expectEqual(@as(u32, 1), try readItemCount(r));
+}
+
+test "falls back to guid when link is empty" {
+    const known = try makeKnown(std.testing.allocator, &.{"urn:a"});
+    defer std.testing.allocator.free(known);
+    const r = parse("<rss><channel><title>T</title><link>x</link><item><title>A</title><guid>urn:a</guid></item></channel></rss>", known);
+    try std.testing.expectEqual(Status.ok, r.status);
+    try std.testing.expectEqual(@as(u32, 0), try readItemCount(r));
+}
+
+test "items with no link and no id are never deduplicated" {
+    const known = try makeKnown(std.testing.allocator, &.{""});
+    defer std.testing.allocator.free(known);
+    const r = parse("<rss><channel><title>T</title><link>x</link><item><title>A</title></item></channel></rss>", known);
+    try std.testing.expectEqual(Status.ok, r.status);
+    try std.testing.expectEqual(@as(u32, 1), try readItemCount(r));
+}
+
+test "skipped atom entry discards its staged records" {
+    const known = try makeKnown(std.testing.allocator, &.{"https://e"});
+    defer std.testing.allocator.free(known);
+    const r = parse("<feed><title>F</title><link href=\"https://f\"/><entry><title>E</title><link href=\"https://e\"/><category term=\"zig\"/><published>2026-01-01T00:00:00Z</published></entry></feed>", known);
+    try std.testing.expectEqual(Status.ok, r.status);
+    try std.testing.expectEqual(@as(u32, 0), try readItemCount(r));
+    // no scope-4 records remain in the payload
+    var pos: usize = 0;
+    const payload = output[header_len..][0..r.payload_len];
+    try skipTestText(payload, &pos);
+    try skipTestText(payload, &pos);
+    _ = try readTestU32(payload, &pos);
+    while (pos < payload.len) {
+        try std.testing.expect(payload[pos] != 4);
+        const value_count = payload[pos + 2];
+        pos += 8;
+        var i: u8 = 0;
+        while (i < value_count) : (i += 1) try skipTestText(payload, &pos);
+    }
+}
+
+test "kept items renumber owners densely after a skip" {
+    const known = try makeKnown(std.testing.allocator, &.{"https://a"});
+    defer std.testing.allocator.free(known);
+    const r = parse("<rss><channel><title>T</title><link>x</link><item><title>A</title><link>https://a</link><pubDate>Mon, 01 Jan 2024 00:00:00 GMT</pubDate></item><item><title>B</title><link>https://b</link><pubDate>Tue, 02 Jan 2024 00:00:00 GMT</pubDate></item></channel></rss>", known);
+    try std.testing.expectEqual(Status.ok, r.status);
+    try std.testing.expectEqual(@as(u32, 1), try readItemCount(r));
+    // find the scope-2 pubDate record and check owner == 0
+    const payload = output[header_len..][0..r.payload_len];
+    var pos: usize = 0;
+    try skipTestText(payload, &pos);
+    try skipTestText(payload, &pos);
+    _ = try readTestU32(payload, &pos);
+    try skipTestText(payload, &pos);
+    try skipTestText(payload, &pos);
+    try skipTestText(payload, &pos);
+    try skipTestText(payload, &pos);
+    var found = false;
+    while (pos < payload.len) {
+        const scope = payload[pos];
+        const tag = payload[pos + 1];
+        const value_count = payload[pos + 2];
+        const owner = std.mem.readInt(u32, payload[pos + 4 ..][0..4], .little);
+        pos += 8;
+        var i: u8 = 0;
+        while (i < value_count) : (i += 1) try skipTestText(payload, &pos);
+        if (scope == 2 and tag == 9) {
+            found = true;
+            try std.testing.expectEqual(@as(u32, 0), owner);
+        }
+    }
+    try std.testing.expect(found);
 }

@@ -77,7 +77,7 @@
         :~  :*  %pass  /rss-sub/refresh-feeds
                 %arvo  %k
                 %fard  q.byk.bowl
-                %fetch-feeds  [%noun !>(links)]
+                %fetch-feeds  [%noun !>([links feeds])]
             ==
         ==
       ::
@@ -91,7 +91,7 @@
         :~  :*  %pass  /rss-sub/add-feeds
                 %arvo  %k
                 %fard  q.byk.bowl
-                %fetch-feeds  [%noun !>(links.act)]
+                %fetch-feeds  [%noun !>([links.act feeds])]
             ==
         ==
       ==
@@ -205,218 +205,6 @@
           =/  results  !<((list result) vase)
           =/  new-feeds  (add-results:help results now.bowl feeds)
           [(result-facts:help results) this(feeds new-feeds)]
-        ::
-        ::  parse full feed and index all items/entries
-        [%rss-sub %index =link:ra ~]
-          ?>  ?=([%khan %arow *] sign-arvo)
-          ?.  ?=(%& -.p.sign-arvo)
-            ~&  >>>  "{<q.byk.bowl>}: failed to parse rss channel or atom feed at {<(@t (slav %t link.pole))>}"
-            `this
-          ?>  ?=([%khan %arow %.y %noun *] sign-arvo)
-          =/  [%khan %arow %.y %noun =vase]  sign-arvo
-          =/  res  !<([?(%rss %atom) feed=* items=(list manx)] vase)
-          ?-  -.res
-              %rss
-            =/  new-feeds
-              %-  ~(put by feeds)
-              :-  (slav %t link.pole)
-              :-  now.bowl
-              %-  some
-              ^-  feed:rs
-              :-  %.y
-              ^-  channel:rss:ra
-              :*  %channel
-                  ~
-                  ((list channel-element:rss:ra) feed.res)
-                  ~
-              ==
-            :_  this(feeds new-feeds)
-            :-  :*  %give  %fact  ~[/x/rss-sub/urls]
-                    [%feed-urls !>(~(tap in ~(key by new-feeds)))]
-                ==
-            %+  turn
-              items.res
-            |=  =manx
-            ^-  card
-            :*  %pass  /rss-sub/update/item/[link.pole]
-                %arvo  %k
-                %fard  q.byk.bowl
-                %rss-item  [%noun !>(manx)]
-            ==
-          ::
-              %atom
-            =/  new-feeds
-              %-  ~(put by feeds)
-              :-  (slav %t link.pole)
-              :-  now.bowl
-              %-  some
-              ^-  feed:rs
-              :-  %.n
-              ^-  feed:atom:ra
-              [%feed ~ ((list feed-element:atom:ra) feed.res) ~]
-            :_  this(feeds new-feeds)
-            :-  :*  %give  %fact  ~[/x/rss-sub/urls]
-                    [%feed-urls !>(~(tap in ~(key by new-feeds)))]
-                ==
-            %+  turn
-              items.res
-            |=  =manx
-            ^-  card
-            :*  %pass  /rss-sub/update/atom-entry/[link.pole]
-                %arvo  %k
-                %fard  q.byk.bowl
-                %atom-entry  [%noun !>(manx)]
-            ==
-          ==
-        ::
-        ::  update: parse rss/atom and dispatch to item/entry checker
-        [%rss-sub %update link=@ta ~]
-          =/  =link:ra  (@t (slav %t link.pole))
-          ?>  ?=([%khan %arow *] sign-arvo)
-          ?.  ?=(%& -.p.sign-arvo)
-            `this
-          ?>  ?=([%khan %arow %.y %noun *] sign-arvo)
-          =/  [%khan %arow %.y %noun =vase]  sign-arvo
-          =/  res  !<([?(%rss %atom) feed=* items=(list manx)] vase)
-          ?~  items.res
-            `this
-          ?-  -.res
-              %rss
-            :_  this
-            :~  :*  %pass      /rss-sub/check/latest/item/[link.pole]
-                    %arvo      %k
-                    %fard      q.byk.bowl
-                    %rss-item  [%noun !>(i.items.res)]
-                ==
-            ==
-          ::
-              %atom
-            :_  this
-            :~  :*  %pass        /rss-sub/check/latest/entry/[link.pole]
-                    %arvo        %k
-                    %fard        q.byk.bowl
-                    %atom-entry  [%noun !>(i.items.res)]
-                ==
-            ==
-          ==
-        ::
-        ::  check latest rss item %pub-date
-        [%rss-sub %check %latest %item link=@ta ~]
-          =/  =link:ra  (@t (slav %t link.pole))
-          ?>  ?=([%khan %arow *] sign-arvo)
-          ?.  ?=(%& -.p.sign-arvo)
-            `this
-          ?>  ?=([%khan %arow %.y %noun *] sign-arvo)
-          =/  [%khan %arow %.y %noun =vase]  sign-arvo
-          =/  =item:rss:ra  !<(item:rss:ra vase)
-          =/  prev-updated
-            =/  old  (~(get by feeds) link)
-            ?~  old  *@da
-            p.u.old
-          =/  check-updated  (rss-item-published:help item)
-          ?~  check-updated
-            `this
-          ?.  (gth u.check-updated prev-updated)
-            `this
-          :_  this
-          :~  :*  %pass      /rss-sub/index/[link.pole]
-                  %arvo      %k
-                  %fard      q.byk.bowl
-                  %rss-atom  [%noun !>([u.check-updated link])]
-              ==
-          ==
-        ::
-        ::  check latest atom entry %published / %updated
-        [%rss-sub %check %latest %entry link=@ta ~]
-          =/  =link:ra  (@t (slav %t link.pole))
-          ?>  ?=([%khan %arow *] sign-arvo)
-          ?.  ?=(%& -.p.sign-arvo)
-            `this
-          ?>  ?=([%khan %arow %.y %noun *] sign-arvo)
-          =/  [%khan %arow %.y %noun =vase]  sign-arvo
-          =/  =entry:atom:ra  !<(entry:atom:ra vase)
-          =/  prev-updated
-            =/  old  (~(get by feeds) link)
-            ?~  old  *@da
-            p.u.old
-          =/  check-updated  (atom-entry-published:help entry)
-          ?~  check-updated
-            `this
-          ?.  (gth u.check-updated prev-updated)
-            `this
-          :_  this
-          :~  :*  %pass      /rss-sub/index/[link.pole]
-                  %arvo      %k
-                  %fard      q.byk.bowl
-                  %rss-atom  [%noun !>([u.check-updated link])]
-              ==
-          ==
-        ::
-        ::  update rss channel with new item
-        [%rss-sub %update %item =link:ra ~]
-          ?>  ?=([%khan %arow *] sign-arvo)
-          ?.  ?=(%& -.p.sign-arvo)
-            ~&  >>>  "{<q.byk.bowl>}: invalid rss item from url {<(@t (slav %t link.pole))>}"
-            `this
-          ~&  >  "{<q.byk.bowl>}: parsed rss item from url {<(@t (slav %t link.pole))>}"
-          ?>  ?=([%khan %arow %.y %noun *] sign-arvo)
-          =/  [%khan %arow %.y %noun =vase]  sign-arvo
-          =/  =item:rss:ra  !<(item:rss:ra vase)
-          =/  item-updated  (rss-item-published:help item)
-          =/  cached  (~(get by feeds) (@t (slav %t link.pole)))
-          ?~  cached  `this
-          ?<  ?=(~ q.u.cached)
-          ?>  -.u.q.u.cached
-          ?>  ?=([%channel *] +.u.q.u.cached)
-          =/  =channel:rss:ra  +.u.q.u.cached
-          :-  :~  :*  %give  %fact  ~[/rss-sub/feed/[link.pole]]
-                      [%rss-item !>(item)]
-                  ==
-              ==
-          %=  this
-            feeds  %-  ~(put by feeds)
-                   :-  (@t (slav %t link.pole))
-                   :-  ?~(item-updated p.u.cached ?:((gth u.item-updated p.u.cached) u.item-updated p.u.cached))
-                   %-  some
-                   ^-  feed:rs
-                   :-  %.y
-                   ^-  channel:rss:ra
-                   %=  channel
-                     items  (~(put in items.channel) item)
-          ==       ==
-        ::
-        ::  update atom feed with new entry
-        [%rss-sub %update %atom-entry =link:ra ~]
-          ?>  ?=([%khan %arow *] sign-arvo)
-          ?.  ?=(%& -.p.sign-arvo)
-            ~&  >>>  "{<q.byk.bowl>}: invalid atom entry from url {<(@t (slav %t link.pole))>}"
-            `this
-          ~&  >  "{<q.byk.bowl>}: parsed atom entry from url {<(@t (slav %t link.pole))>}"
-          ?>  ?=([%khan %arow %.y %noun *] sign-arvo)
-          =/  [%khan %arow %.y %noun =vase]  sign-arvo
-          =/  =entry:atom:ra  !<(entry:atom:ra vase)
-          =/  entry-updated  (atom-entry-published:help entry)
-          =/  cached  (~(get by feeds) (@t (slav %t link.pole)))
-          ?~  cached  `this
-          ?<  ?=(~ q.u.cached)
-          ?:  -.u.q.u.cached  `this
-          ?>  ?=([%feed *] +.u.q.u.cached)
-          =/  af=feed:atom:ra  +.u.q.u.cached
-          :-  :~  :*  %give  %fact  ~[/rss-sub/feed/[link.pole]]
-                      [%atom-entry !>(entry)]
-                  ==
-              ==
-          %=  this
-            feeds  %-  ~(put by feeds)
-                   :-  (@t (slav %t link.pole))
-                   :-  ?~(entry-updated p.u.cached ?:((gth u.entry-updated p.u.cached) u.entry-updated p.u.cached))
-                   %-  some
-                   ^-  feed:rs
-                   :-  %.n
-                   ^-  feed:atom:ra
-                   %=  af
-                     entries  (~(put in entries.af) entry)
-          ==       ==
       ==
     ::
     ++  on-agent
@@ -451,11 +239,20 @@
         cur      (add-result i.results now cur)
       ==
     ::
+    ::  merge a parsed result into the cached feeds: the parser only
+    ::  returns unknown items, so union them into any same-kind cache
     ++  add-result
       |=  [res=result now=@da cur=feeds:rs]
       ^-  feeds:rs
+      =/  old  (~(get by cur) link.res)
       ?-    -.res
           %rss
+        =/  items=(set item:rss:ra)
+          =/  new  (~(gas in *(set item:rss:ra)) items.res)
+          ?~  old  new
+          ?~  q.u.old  new
+          ?.  ?=(%& -.u.q.u.old)  new
+          (~(uni in items.p.u.q.u.old) new)
         %-  ~(put by cur)
         :-  link.res
         :-  now
@@ -463,13 +260,15 @@
         ^-  feed:rs
         :-  %.y
         ^-  channel:rss:ra
-        :*  %channel
-            ~
-            channel.res
-            (rss-items-set items.res)
-        ==
+        [%channel ~ channel.res items]
       ::
           %atom
+        =/  entries=(set entry:atom:ra)
+          =/  new  (~(gas in *(set entry:atom:ra)) entries.res)
+          ?~  old  new
+          ?~  q.u.old  new
+          ?:  ?=(%& -.u.q.u.old)  new
+          (~(uni in entries.p.u.q.u.old) new)
         %-  ~(put by cur)
         :-  link.res
         :-  now
@@ -477,11 +276,7 @@
         ^-  feed:rs
         :-  %.n
         ^-  feed:atom:ra
-        :*  %feed
-            ~
-            feed.res
-            (atom-entries-set entries.res)
-        ==
+        [%feed ~ feed.res entries]
       ==
     ::
     ++  feed-added-facts
@@ -546,94 +341,6 @@
             %atom-entry  !>(entry)
         ==
       ==
-    ::
-    ++  rss-items-set
-      |=  items=(list item:rss:ra)
-      ^-  (set item:rss:ra)
-      =/  out=(set item:rss:ra)  *(set item:rss:ra)
-      |-
-      ?~  items
-        out
-      %=  $
-        items  t.items
-        out    (~(put in out) i.items)
-      ==
-    ::
-    ++  atom-entries-set
-      |=  entries=(list entry:atom:ra)
-      ^-  (set entry:atom:ra)
-      =/  out=(set entry:atom:ra)  *(set entry:atom:ra)
-      |-
-      ?~  entries
-        out
-      %=  $
-        entries  t.entries
-        out      (~(put in out) i.entries)
-      ==
-    ::
-    ++  rss-item-published
-      |=  =item:rss:ra
-      ^-  (unit @da)
-      |-
-      ?~  p.item
-        ~
-      ?:  ?=([%pub-date *] i.p.item)
-        `p.i.p.item
-      $(p.item t.p.item)
-    ::
-    ++  atom-entry-published
-      |=  =entry:atom:ra
-      ^-  (unit @da)
-      |-
-      ?~  p.entry
-        ~
-      ?:  ?=([%published *] i.p.entry)
-        `p.i.p.entry
-      ?:  ?=([%updated *] i.p.entry)
-        `p.i.p.entry
-      $(p.entry t.p.entry)
-    ::
-    ++  make-refresh-cards
-      |=  [link=(unit link:ra) =desk =feeds:rs]
-      ^-  (list card:agent:gall)
-      ?~  link
-        ::  refresh all links
-        %+  turn
-          ~(tap in ~(key by feeds))
-        |=  =link:ra
-        %:  make-refresh-card
-            link
-            p:(~(got by feeds) link)
-            desk
-        ==
-      ::  refresh given link
-      ?.  (~(has by feeds) u.link)
-        ~
-      :~  %:  make-refresh-card
-              u.link
-              p:(~(got by feeds) u.link)
-              desk
-          ==
-      ==
-    ::
-    ++  make-refresh-card
-      |=  [=link:ra =updated:rs =desk]
-      ^-  card:agent:gall
-      :*  %pass
-          /rss-sub/update/(scot %t link)
-          %arvo
-          %k
-          %fard
-          desk
-          %rss-atom
-          %noun
-          !>([updated link])
-      ==
-    ::
-    ::  XX convert rss time to @da
-    ::
-    ::  XX convert atom time to @da
-    ::
     --
   --
 --

@@ -522,8 +522,21 @@
 |=  arg=vase
 =/  m  (strand ,vase)
 ^-  form:m
-=/  [source=link:ra body=@t]  !<([link:ra @t] arg)
+=/  [source=link:ra body=@t known=(list link:ra)]  !<([link:ra @t (list link:ra)] arg)
 =/  body-len=@  (met 3 body)
+=/  known-len=@
+  %+  roll  known
+  |=  [url=@t len=@]
+  :(add len 4 (met 3 url))
+=.  known-len  (add 4 known-len)
+=/  known-blob=@
+  %+  can  3
+  :-  [4 (lent known)]
+  %-  zing
+  %+  turn  known
+  |=  url=@t
+  ^-  (list [@ @])
+  ~[[4 (met 3 url)] [(met 3 url) url]]
 =/  parsed=(unit wasm-result)
   %-  yield-need:wasm  =<  -
   %^  (run-once:wasm (unit wasm-result) vase)  [rss-parser *vase^~]  %$
@@ -531,8 +544,12 @@
   =/  arr  (arrows:wasm vase)
   =,  arr
   ;<  in=@      try:m  (call-1 '__wbindgen_malloc' body-len 1 ~)
+  ?>  (gth in 0)
   ;<  *         try:m  (memwrite in body-len body)
-  ;<  out=@     try:m  (call-1 'parse_feed' in body-len ~)
+  ;<  kin=@     try:m  (call-1 '__wbindgen_malloc' known-len 4 ~)
+  ?>  (gth kin 0)
+  ;<  *         try:m  (memwrite kin known-len known-blob)
+  ;<  out=@     try:m  (call-1 'parse_feed' in body-len kin known-len ~)
   ;<  output-length=@  try:m  (call-1 'parse_feed_len' ~)
   ?>  (gte output-length 16)
   ;<  header=octs  try:m  (memread out 16)

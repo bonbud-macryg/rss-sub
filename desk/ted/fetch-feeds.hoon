@@ -5,13 +5,16 @@
 ::  threads on unique Khan wires, and +app-cons combines the strands so all
 ::  request cards are emitted before waiting for responses.
 ::
-/-  spider, ra=rss-atom, rs=rss-sub
+/-  spider, ra=rss-atom
 /+  io=strandio
 =,  strand=strand:spider
 =,  strand-fail:strand-fail:strand
 ::
 ^-  thread:spider
 =>  |%
+    ::  same shape as feeds:rss-sub
+    +$  feeds
+      (map link:ra (pair @da (unit (each channel:rss:ra feed:atom:ra))))
     +$  result
       $%  [%rss =link:ra channel=(list channel-element:rss:ra) items=(list item:rss:ra)]
           [%atom =link:ra feed=(list feed-element:atom:ra) entries=(list entry:atom:ra)]
@@ -117,47 +120,23 @@
         (take-thread-wire wire)
       (pure:m res)
     ::
-    ++  parse-rss-item
-      |=  [=link:ra =manx]
-      =/  m  (strand ,(unit item:rss:ra))
-      ^-  form:m
-      =/  =wire  /parse-rss-item/(scot %uv (sham [link manx]))
-      ;<  res=(unit vase)  bind:m
-        (run-thread-wire %rss-item !>(manx) wire)
-      ?~  res
-        %-  pure:m
-        ~
-      =/  item=item:rss:ra  !<(item:rss:ra u.res)
-      (pure:m `item)
-    ::
-    ++  parse-atom-entry
-      |=  [=link:ra =manx]
-      =/  m  (strand ,(unit entry:atom:ra))
-      ^-  form:m
-      =/  =wire  /parse-atom-entry/(scot %uv (sham [link manx]))
-      ;<  res=(unit vase)  bind:m
-        (run-thread-wire %atom-entry !>(manx) wire)
-      ?~  res
-        %-  pure:m
-        ~
-      =/  entry=entry:atom:ra  !<(entry:atom:ra u.res)
-      (pure:m `entry)
-    ::
     ++  parse-feed
-      |=  [=link:ra body=@t]
+      |=  [=link:ra body=@t known=(list link:ra)]
       =/  m  (strand ,(unit result))
       ^-  form:m
       =/  =wire  /parse-feed/(scot %uv (sham link))
       ;<  res=(unit vase)  bind:m
-        (run-thread-wire %rss-wasm !>([link body]) wire)
+        (run-thread-wire %rss-wasm !>([link body known]) wire)
       ?~  res
         %-  pure:m
         ~
       =/  parsed=result  !<(result u.res)
       (pure:m `parsed)
     ::
+    ::  fetch and parse one feed; results and facts stay keyed to the
+    ::  original url even when the fetch followed a redirect
     ++  process-feed
-      |=  =link:ra
+      |=  [=link:ra known=(list link:ra)]
       =/  m  (strand ,(unit result))
       ^-  form:m
       ;<  fetched=(unit [link:ra body=@t])  bind:m
@@ -165,8 +144,52 @@
       ?~  fetched
         %-  pure:m
         ~
-      =/  [=link:ra body=@t]  u.fetched
-      (parse-feed link body)
+      (parse-feed link body.u.fetched known)
+    ::
+    ::  dedup key of a cached item: first %link, else first %guid / %id
+    ++  rss-item-key
+      |=  =item:rss:ra
+      ^-  (unit @t)
+      =/  lnk=(unit @t)
+        |-
+        ?~  p.item  ~
+        ?:  ?=([%link *] i.p.item)  `p.i.p.item
+        $(p.item t.p.item)
+      ?:  &(?=(^ lnk) !=('' u.lnk))  lnk
+      =/  gid=(unit @t)
+        |-
+        ?~  p.item  ~
+        ?:  ?=([%guid *] i.p.item)  `q.i.p.item
+        $(p.item t.p.item)
+      ?:  &(?=(^ gid) !=('' u.gid))  gid
+      ~
+    ::
+    ++  atom-entry-key
+      |=  =entry:atom:ra
+      ^-  (unit @t)
+      =/  lnk=(unit @t)
+        |-
+        ?~  p.entry  ~
+        ?:  ?=([%link *] i.p.entry)  `p.i.p.entry
+        $(p.entry t.p.entry)
+      ?:  &(?=(^ lnk) !=('' u.lnk))  lnk
+      =/  gid=(unit @t)
+        |-
+        ?~  p.entry  ~
+        ?:  ?=([%id *] i.p.entry)  `p.i.p.entry
+        $(p.entry t.p.entry)
+      ?:  &(?=(^ gid) !=('' u.gid))  gid
+      ~
+    ::
+    ++  known-urls
+      |=  [=link:ra =feeds]
+      ^-  (list link:ra)
+      =/  entry  (~(get by feeds) link)
+      ?~  entry  ~
+      ?~  q.u.entry  ~
+      ?:  ?=(%& -.u.q.u.entry)
+        (murn ~(tap in items.p.u.q.u.entry) rss-item-key)
+      (murn ~(tap in entries.p.u.q.u.entry) atom-entry-key)
     ::
     ++  app-cons
       |*  [hed=(strand-form-raw:rand *) tel=(strand-form-raw:rand *)]
@@ -214,12 +237,15 @@
 |=  arg=vase
 =/  m  (strand ,vase)
 ^-  form:m
-=/  links=(list link:ra)  (arg-links arg)
+=/  [links=(list link:ra) =feeds]
+  =/  try  (mule |.(!<([links=(list link:ra) =feeds] arg)))
+  ?:  ?=(%& -.try)  p.try
+  [(arg-links arg) *feeds]
 ;<  result-units=(list (unit result))  bind:m
   %+  roll  links
   |=  [link=link:ra acc=(strand-form-raw:rand (list (unit result)))]
   ^-  (strand-form-raw:rand (list (unit result)))
-  (app-cons (process-feed link) acc)
+  (app-cons (process-feed link (known-urls link feeds)) acc)
 =/  results=(list result)
   %+  murn  result-units
   |=  res=(unit result)
