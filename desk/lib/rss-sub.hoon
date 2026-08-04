@@ -51,6 +51,7 @@
     ++  on-poke
       |=  [=mark =vase]
       ^-  (quip card _this)
+      ?>  =(our src):bowl
       ?.  =(%rss-sub mark)
         =^  cards  inner  (on-poke:og mark vase)
         [cards this]
@@ -99,6 +100,7 @@
     ++  on-watch
       |=  =path
       ^-  (quip card _this)
+      ?>  =(our src):bowl
       ?+    path  =^  cards  inner  (on-watch:og path)
                   [cards this]
           [%rss-sub %feeds ~]
