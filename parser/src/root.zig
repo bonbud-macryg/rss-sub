@@ -407,7 +407,15 @@ fn appendClosedRecord(field: RecordField, owner: u32, capture: Capture, feed_tit
 
 fn selectCapture(kind: Kind, in_item: bool, name: []const u8, depth: usize, stack: *const [64][64]u8, stack_len: *const [64]u8) Capture {
     const parent = parentName(depth, stack, stack_len);
-    if (!in_item and kind == .rss) {
+    // only capture direct children of the feed or item container, so
+    // nested blocks like <image> can't leak text into feed fields
+    const container: []const u8 = switch (kind) {
+        .rss => if (in_item) "item" else "channel",
+        .atom => if (in_item) "entry" else "feed",
+        .unknown => "",
+    };
+    const direct = parent != null and std.mem.eql(u8, parent.?, container);
+    if (!in_item and kind == .rss and direct) {
         if (std.mem.eql(u8, name, "description")) return .channel_description;
         if (std.mem.eql(u8, name, "language")) return .channel_language;
         if (std.mem.eql(u8, name, "pubDate")) return .channel_pub_date;
@@ -421,31 +429,33 @@ fn selectCapture(kind: Kind, in_item: bool, name: []const u8, depth: usize, stac
         if (std.mem.eql(u8, name, "ttl")) return .channel_ttl;
         if (std.mem.eql(u8, name, "category")) return .channel_category;
     }
-    if (!in_item and kind == .atom) {
+    if (!in_item and kind == .atom and direct) {
         if (std.mem.eql(u8, name, "id")) return .atom_id;
         if (std.mem.eql(u8, name, "updated")) return .atom_updated;
         if (std.mem.eql(u8, name, "icon")) return .atom_icon;
         if (std.mem.eql(u8, name, "logo")) return .atom_logo;
         if (std.mem.eql(u8, name, "rights")) return .atom_rights;
         if (std.mem.eql(u8, name, "subtitle")) return .atom_subtitle;
+    }
+    if (!in_item and kind == .atom) {
         if (std.mem.eql(u8, name, "name") and parent != null and std.mem.eql(u8, parent.?, "author")) return .atom_feed_author;
         if (std.mem.eql(u8, name, "name") and parent != null and std.mem.eql(u8, parent.?, "contributor")) return .atom_feed_contributor;
     }
-    if (std.mem.eql(u8, name, "title")) return if (in_item) .item_title else .feed_title;
-    if (std.mem.eql(u8, name, "link") and kind == .rss) return if (in_item) .item_link else .feed_link;
-    if (in_item and (std.mem.eql(u8, name, "description") or std.mem.eql(u8, name, "summary"))) return .item_description;
+    if (direct and std.mem.eql(u8, name, "title")) return if (in_item) .item_title else .feed_title;
+    if (direct and std.mem.eql(u8, name, "link") and kind == .rss) return if (in_item) .item_link else .feed_link;
+    if (in_item and direct and (std.mem.eql(u8, name, "description") or std.mem.eql(u8, name, "summary"))) return .item_description;
     if (in_item and kind == .atom and std.mem.eql(u8, name, "content")) return .none;
-    if (in_item and kind == .rss and std.mem.eql(u8, name, "author")) return .item_author;
-    if (in_item and kind == .rss and std.mem.eql(u8, name, "comments")) return .item_comments;
-    if (in_item and kind == .rss and std.mem.eql(u8, name, "pubDate")) return .item_pub_date;
-    if (in_item and kind == .rss and std.mem.eql(u8, name, "category")) return .item_category;
-    if (in_item and kind == .rss and std.mem.eql(u8, name, "source")) return .item_source;
-    if (in_item and kind == .atom and std.mem.eql(u8, name, "updated")) return .atom_entry_updated;
-    if (in_item and kind == .atom and std.mem.eql(u8, name, "published")) return .atom_entry_published;
-    if (in_item and kind == .atom and std.mem.eql(u8, name, "rights")) return .atom_entry_rights;
+    if (in_item and direct and kind == .rss and std.mem.eql(u8, name, "author")) return .item_author;
+    if (in_item and direct and kind == .rss and std.mem.eql(u8, name, "comments")) return .item_comments;
+    if (in_item and direct and kind == .rss and std.mem.eql(u8, name, "pubDate")) return .item_pub_date;
+    if (in_item and direct and kind == .rss and std.mem.eql(u8, name, "category")) return .item_category;
+    if (in_item and direct and kind == .rss and std.mem.eql(u8, name, "source")) return .item_source;
+    if (in_item and direct and kind == .atom and std.mem.eql(u8, name, "updated")) return .atom_entry_updated;
+    if (in_item and direct and kind == .atom and std.mem.eql(u8, name, "published")) return .atom_entry_published;
+    if (in_item and direct and kind == .atom and std.mem.eql(u8, name, "rights")) return .atom_entry_rights;
     if (in_item and kind == .atom and std.mem.eql(u8, name, "name") and parent != null and std.mem.eql(u8, parent.?, "author")) return .atom_entry_author;
     if (in_item and kind == .atom and std.mem.eql(u8, name, "name") and parent != null and std.mem.eql(u8, parent.?, "contributor")) return .atom_entry_contributor;
-    if (in_item and ((kind == .rss and std.mem.eql(u8, name, "guid")) or (kind == .atom and std.mem.eql(u8, name, "id")))) return .item_id;
+    if (in_item and direct and ((kind == .rss and std.mem.eql(u8, name, "guid")) or (kind == .atom and std.mem.eql(u8, name, "id")))) return .item_id;
     return .none;
 }
 
@@ -708,6 +718,18 @@ test "appends tagged Atom feed scalars after the fixed core" {
     };
     try std.testing.expectEqualSlices(u8, &expected, output[records_start .. records_start + expected.len]);
 }
+test "image block does not leak into channel title and link" {
+    const r = parse("<rss><channel><title>T</title><link>https://x</link><image><title>Logo</title><link>https://y</link><url>https://z.png</url></image></channel></rss>", &.{});
+    try std.testing.expectEqual(Status.ok, r.status);
+    const payload = output[header_len..][0..r.payload_len];
+    var pos: usize = 0;
+    const title_len = try readTestU32(payload, &pos);
+    try std.testing.expectEqualStrings("T", payload[pos..][0..title_len]);
+    pos += title_len;
+    const link_len = try readTestU32(payload, &pos);
+    try std.testing.expectEqualStrings("https://x", payload[pos..][0..link_len]);
+}
+
 test "rejects malformed XML" {
     const r = parse("<rss><channel></rss>", &.{});
     try std.testing.expectEqual(Status.malformed_xml, r.status);
