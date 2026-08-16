@@ -57,6 +57,7 @@
       ;<  response=(unit client-response:iris)  bind:m
         (take-maybe-response-wire wire)
       ?~  response
+        ~&  >>>  [%fetch-cancelled link]
         %-  pure:m
         ~
       =/  =client-response:iris  u.response
@@ -66,6 +67,7 @@
         ?.  ?|  =(301 status-code)
                 =(307 status-code)
             ==
+          ~&  >>>  [%fetch-failed link status-code]
           %-  pure:m
           ~
         %=  $
@@ -74,10 +76,8 @@
           (malt headers)
         'location'
         ==
-      ?:  (gte status-code 500)
-        %-  pure:m
-        ~
       ?:  (gte status-code 400)
+        ~&  >>>  [%fetch-failed link status-code]
         %-  pure:m
         ~
       (pure:m `[link `@t`q.data.u.full-file.client-response])
@@ -128,6 +128,7 @@
       ;<  res=(unit vase)  bind:m
         (run-thread-wire %rss-wasm !>([link body known]) wire)
       ?~  res
+        ~&  >>>  [%parse-failed link]
         %-  pure:m
         ~
       =/  parsed=result  !<(result u.res)
@@ -240,6 +241,7 @@
 =/  [links=(list link:ra) =feeds]
   =/  try  (mule |.(!<([links=(list link:ra) =feeds] arg)))
   ?:  ?=(%& -.try)  p.try
+  ~&  >>>  [%fetch-feeds %typed-arg-parse-failed %falling-back-to-raw-links]
   [(arg-links arg) *feeds]
 ;<  result-units=(list (unit result))  bind:m
   %+  roll  links
